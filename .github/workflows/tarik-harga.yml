@@ -1,0 +1,21 @@
+name: Tarik harga pangan (PIHPS BI)
+
+on:
+  schedule:
+    - cron: "17 2 * * *"   # setiap hari pukul 09.17 WIB
+  workflow_dispatch:        # tombol "Run workflow" untuk menjalankan manual
+
+jobs:
+  tarik:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Tarik dan simpan harga
+        run: node scripts/tarik-pihps.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

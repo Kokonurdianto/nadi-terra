@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Nadi Terra Smart Farming</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Nadi Terra: platform agribisnis digital Indonesia. Harga komoditas resmi, diagnosa penyakit tanaman, pasar hasil tani, dan forum pakar dalam satu tempat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: situs produk dengan bar atas tetap; modul sebagai halaman hash; beranda editorial, modul bergaya alat kerja */
+:root{
+  --bg:#f1f4ee; --surface:#fff; --sunken:#e5ebe0; --line:#cfd9c9;
+  --ink:#122219; --muted:#56685b;
+  --palm:#1d5434; --palm-soft:#d5e8d9;
+  --kunyit:#d9961a; --kunyit-soft:#f8e7c2;
+  --good:#2b7a47; --warn:#a96d12; --bad:#b23a2a;
+  --good-bg:#dbeee0; --warn-bg:#f8e9cc; --bad-bg:#f6dcd6;
+  --hero:#123a24; --hero-ink:#eef6ea;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1510; --surface:#152019; --sunken:#1b2820; --line:#2a3a2f;
+  --ink:#e5eee3; --muted:#9db0a1;
+  --palm:#7fcb98; --palm-soft:#1d3827;
+  --kunyit:#f0b23c; --kunyit-soft:#3a2d12;
+  --good:#7fcb98; --warn:#f0b23c; --bad:#ee8b7b;
+  --good-bg:#1d3827; --warn-bg:#3a2d12; --bad-bg:#3d1e19;
+  --hero:#0f2a1a; --hero-ink:#eef6ea; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1510; --surface:#152019; --sunken:#1b2820; --line:#2a3a2f;
+  --ink:#e5eee3; --muted:#9db0a1;
+  --palm:#7fcb98; --palm-soft:#1d3827;
+  --kunyit:#f0b23c; --kunyit-soft:#3a2d12;
+  --good:#7fcb98; --warn:#f0b23c; --bad:#ee8b7b;
+  --good-bg:#1d3827; --warn-bg:#3a2d12; --bad-bg:#3d1e19;
+  --hero:#0f2a1a; --hero-ink:#eef6ea; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+p{margin:0}
+a{color:var(--palm)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--kunyit);outline-offset:2px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.g{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1140px;margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--kunyit)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;gap:16px;height:64px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo b{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1}
+.logo small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.menu{display:flex;gap:2px;margin-left:auto;align-items:center}
+.menu a{padding:8px 11px;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px}
+.menu a:hover{background:var(--sunken)}
+.menu a.on{background:var(--palm-soft);color:var(--palm)}
+.menu a.cta{background:var(--palm);color:var(--surface);margin-left:6px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-weight:600}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:10px;border:0;background:var(--palm);color:var(--surface);font-weight:700;text-decoration:none;font-size:15px}
+.btn:disabled{opacity:.55;cursor:progress}
+.btn.kun{background:var(--kunyit);color:#1c1302}
+.btn.ghost{background:transparent;color:var(--palm);border:1.5px solid var(--palm)}
+.btn.danger{background:transparent;color:var(--bad);border:1.5px solid var(--bad)}
+.btn.sm{padding:7px 12px;font-size:13.5px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:var(--good-bg);color:var(--good)}.wn{background:var(--warn-bg);color:var(--warn)}.bd{background:var(--bad-bg);color:var(--bad)}.nt{background:var(--sunken);color:var(--muted)}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+@media (prefers-reduced-motion:no-preference){.live.ok::before{animation:blink 1.6s ease-in-out infinite}@keyframes blink{50%{opacity:.25}}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.note{font-size:13.5px;background:var(--kunyit-soft);border:1px dashed var(--kunyit);border-radius:10px;padding:10px 14px;color:var(--ink)}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+
+.hero{background:var(--hero);color:var(--hero-ink);position:relative;overflow:hidden}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:64px 72px}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--kunyit)}
+.hero p.lead{font-size:18px;margin-top:18px;max-width:34em;opacity:.88}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero .btn.ghost{color:var(--hero-ink);border-color:rgba(238,246,234,.5)}
+.pulse{position:absolute;inset:auto 0 0 0;height:90px;width:100%;opacity:.35;pointer-events:none}
+.ticker{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;min-width:0}
+.ticker .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);gap:10px}
+.ticker .row:last-of-type{border:0}
+.ticker small{opacity:.75;font-size:12px}
+.ticker .up{color:#7fdc9c}.ticker .dn{color:#ff9d8c}
+.up{color:var(--good)}.dn{color:var(--bad)}
+
+section.s{padding-block:64px}
+.sh{display:flex;flex-direction:column;gap:10px;max-width:640px;margin-bottom:32px}
+.sh h2{font-size:clamp(26px,3.6vw,40px);font-weight:800}
+.mods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mod{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.mod:hover{border-color:var(--palm)}
+.mod .ic{width:46px;height:46px;border-radius:12px;background:var(--palm-soft);color:var(--palm);display:grid;place-items:center}
+.mod .ic svg{width:26px;height:26px}
+.mod h3{font-size:21px}
+.mod span.go{margin-top:auto;font-weight:700;color:var(--palm);font-size:14px}
+.mod.wide{grid-column:span 2;background:var(--palm);color:var(--surface);border-color:transparent}
+.mod.wide .ic{background:rgba(255,255,255,.15);color:var(--surface)}
+.mod.wide span.go{color:var(--kunyit)}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:f}
+.flow div{border-top:3px solid var(--palm);padding-top:14px}
+.flow b{font-family:var(--f-display);font-size:18px;display:block;margin-bottom:6px}
+.flow div::before{counter-increment:f;content:"Langkah " counter(f);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;display:block;margin-bottom:6px}
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.who .card h3{font-size:18px;margin-bottom:6px}
+.band{background:var(--palm-soft)}
+.sdg{display:flex;flex-wrap:wrap;gap:10px}
+.sdg span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:600;font-size:14px}
+.sdg b{font-family:var(--f-mono);color:var(--palm);margin-right:6px}
+
+.ph{padding-block:36px 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.ph h1{font-size:clamp(28px,4.4vw,44px);font-weight:800;margin-top:6px}
+.ph p{margin-top:8px;max-width:40em;color:var(--muted)}
+.pg{padding-bottom:64px;display:flex;flex-direction:column;gap:18px}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--palm);color:var(--surface);border-color:var(--palm)}
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.search{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);width:260px;max-width:100%}
+.tblw{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--line);white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:var(--sunken)}
+.tbl tr.sel td{background:var(--palm-soft)}
+.r{text-align:right}
+.split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.wait{display:flex;flex-wrap:wrap;gap:8px}
+
+.fld{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:600}
+.fld input,.fld select,.fld textarea{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-weight:500;font-size:15px;width:100%}
+.fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fg .full{grid-column:1/-1}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}
+.chk input{width:18px;height:18px;accent-color:var(--palm)}
+
+.steps{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700}
+.steps span{padding:6px 12px;border-radius:999px;background:var(--sunken);color:var(--muted)}
+.steps span.on{background:var(--palm);color:var(--surface)}
+.crops{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.crop{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:18px 14px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.crop:hover{border-color:var(--palm)}
+.crop b{font-family:var(--f-display);font-size:18px}
+.crop small{color:var(--muted)}
+.sym{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sym label{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer}
+.sym input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--palm)}
+.sym label:has(input:checked){border-color:var(--palm);background:var(--palm-soft)}
+.res{display:flex;flex-direction:column;gap:14px}
+.dx{border:1px solid var(--line);border-left:5px solid var(--palm);background:var(--surface);border-radius:12px;padding:18px}
+.dx.lo{border-left-color:var(--line)}
+.dx h3{font-size:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.dx ul{margin:10px 0 0;padding-left:20px}
+.dx li+li{margin-top:4px}
+.meter{height:8px;background:var(--sunken);border-radius:9px;margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--palm)}
+
+.listings{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.lst{display:flex;flex-direction:column;gap:8px}
+.lst h3{font-size:18px;overflow-wrap:anywhere}
+.lst .price{font-family:var(--f-mono);font-size:20px;color:var(--palm)}
+.lst .meta{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.lst .wa{display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--sunken);border-radius:8px;padding:8px 10px;font-size:13px;margin-top:auto}
+.thread{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.thread:last-child{border:0}
+.av{width:40px;height:40px;border-radius:50%;background:var(--palm-soft);color:var(--palm);display:grid;place-items:center;font-weight:800;flex:none;font-family:var(--f-display)}
+.thread h4{font-size:17px;overflow-wrap:anywhere}
+.thread .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.thread p{overflow-wrap:anywhere}
+.reply{margin-top:8px;background:var(--sunken);border-radius:10px;padding:10px 12px;font-size:14px;overflow-wrap:anywhere}
+.reply.pk{background:var(--palm-soft)}
+.rform{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.rform .row2{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:end}
+
+.techs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tech h3{font-size:19px;margin:8px 0 6px}
+.tech dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px;margin:12px 0 0}
+.tech dt{color:var(--muted);font-weight:600}.tech dd{margin:0}
+
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.plan{display:flex;flex-direction:column;gap:14px}
+.plan.hl{border:2px solid var(--palm);padding:19px}
+.plan .amt{font-family:var(--f-display);font-size:34px;font-weight:800}
+.plan .amt small{font-size:14px;font-weight:500;color:var(--muted);font-family:var(--f-body)}
+.plan ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:14.5px}
+.plan li{padding-left:24px;position:relative}
+.plan li::before{content:"";position:absolute;left:2px;top:7px;width:12px;height:7px;border-left:2.5px solid var(--palm);border-bottom:2.5px solid var(--palm);transform:rotate(-45deg)}
+.plan .btn{margin-top:auto}
+
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs button{background:none;border:0;padding:10px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--palm);border-bottom-color:var(--palm)}
+.adm-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.adm-row:last-child{border:0}
+.adm-row>div{min-width:0;flex:1}
+
+footer{background:var(--hero);color:var(--hero-ink);padding-block:40px calc(40px + env(safe-area-inset-bottom,0px))}
+footer .in{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;font-size:14px}
+footer a{color:var(--hero-ink);opacity:.85;text-decoration:none;display:block;padding:3px 0}
+footer h4{font-size:14px;margin-bottom:8px;color:var(--kunyit)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:10px;font-weight:600;z-index:60;max-width:calc(100% - 32px)}
+
+@media (max-width:920px){
+  .menu{display:none;position:absolute;top:64px;left:-16px;right:-16px;flex-direction:column;align-items:stretch;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px))}
+  .menu.open{display:flex}
+  .menu a{padding:12px}
+  .menu a.cta{margin:6px 0 0;text-align:center}
+  .burger{display:block}
+  .hero .in{grid-template-columns:1fr;padding-block:44px 56px}
+  .mods,.plans{grid-template-columns:1fr}
+  .mod.wide{grid-column:auto}
+  .flow,.who{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split{grid-template-columns:1fr}
+  footer .in{grid-template-columns:1fr}
+}
+@media (max-width:560px){.flow,.who,.sym,.fg{grid-template-columns:1fr}.search{width:100%}.rform .row2{grid-template-columns:1fr}}
+</style>
+
+<header class="top g">
+  <div class="in">
+    <a class="logo" href="#beranda" aria-label="Nadi Terra, ke beranda">
+      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#d9961a"/><path d="M5 22h8l3-7 4 13 3-9 2 3h10" fill="none" stroke="#123a24" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>Nadi Terra</b><small>Smart Farming</small></span>
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu"></nav>
+  </div>
+</header>
+<main id="app"></main>
+<footer class="g">
+  <div class="in">
+    <div><b style="font-family:var(--f-display);font-size:22px">Nadi Terra</b><p style="margin-top:8px;opacity:.8;max-width:30em">Platform agribisnis digital yang menghubungkan petani, pekebun, pedagang, dan pakar dalam satu ekosistem data. Dikembangkan oleh tim mahasiswa Agribisnis, Institut Teknologi Sawit Indonesia, Medan.</p></div>
+    <div><h4>Modul</h4><a href="#harga">Terra Price</a><a href="#diagnosa">Terra Diagnose</a><a href="#pasar">Terra Market</a><a href="#forum">Expert Connect</a><a href="#teknologi">Terra Tech Hub</a></div>
+    <div><h4>Perusahaan</h4><a href="#tentang">Tentang kami</a><a href="#paket">Paket layanan</a><a href="#admin">Masuk admin</a></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+/* =====================================================================
+   KONEKSI
+   ===================================================================== */
+const CFG = window.NT_CONFIG || {};
+const LIVE = !!(CFG.supabaseUrl && CFG.supabaseAnonKey && window.supabase);
+const sb = LIVE ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
+
+/* =====================================================================
+   DATA TETAP
+   ===================================================================== */
+const IC={
+ price:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+ diag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 1 8-1.3 5-4.7 8-9 10z"/><path d="M2 21c0-3 1.9-5.4 5-6"/></svg>',
+ hub:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+ expert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>',
+ market:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M3 9h18M9 20v-6h6v6"/></svg>'
+};
+const KATEGORI=['Perkebunan','Pangan','Kelautan','Kehutanan','Hortikultura','Peternakan'];
+// Komoditas strategis yang ditargetkan tampil (dipakai untuk daftar "menunggu data" dan pilihan admin)
+const STRATEGIS=[
+ ['TBS kelapa sawit (umur 10–20 th)','Perkebunan','kg'],['Minyak sawit (CPO)','Perkebunan','kg'],['Inti sawit (kernel)','Perkebunan','kg'],
+ ['Karet (bokar)','Perkebunan','kg'],['Kakao biji kering','Perkebunan','kg'],['Kopi robusta (biji)','Perkebunan','kg'],['Kopi arabika (biji)','Perkebunan','kg'],
+ ['Pinang kering','Perkebunan','kg'],['Kelapa butir','Perkebunan','butir'],['Gabah kering panen','Pangan','kg'],['Jagung pipil kering','Pangan','kg'],
+ ['Udang vaname','Kelautan','kg'],['Tuna segar','Kelautan','kg'],['Rumput laut kering','Kelautan','kg'],['Kayu sengon olahan','Kehutanan','m³'],['Rotan asalan','Kehutanan','kg']
+];
+
+const DIAG={
+ sawit:{n:'Kelapa sawit',sym:['Pelepah bawah layu dan patah menggantung seperti rok','Muncul jamur berbentuk kipas/papan di pangkal batang','Banyak daun tombak (pupus) tidak membuka','Pupus/daun muda membusuk dan berbau','Daun tua menguning oranye, bagian tengah tetap hijau','Ujung anak daun mengering, daun tua kuning kusam','Daun muda keriput, mengait seperti mata kail','Buah banyak yang tidak jadi/sedikit dalam tandan'],
+  dx:[
+   {n:'Busuk pangkal batang (Ganoderma)',m:[0,1,2],s:'bd',a:['Bongkar pokok terserang beserta akarnya, cacah dan keluarkan dari kebun','Buat parit isolasi di sekitar pokok sakit agar tidak menular lewat akar','Aplikasikan agen hayati Trichoderma pada lubang tanam dan pokok sehat di sekitarnya','Laporkan ke penyuluh atau konsultasikan ke PPKS Medan']},
+   {n:'Busuk pupus / busuk tombak',m:[2,3],s:'wn',a:['Potong bagian pupus yang busuk sampai jaringan sehat','Semprot fungisida berbahan aktif tembaga pada titik tumbuh','Perbaiki drainase, hindari genangan di sekitar pokok']},
+   {n:'Kekurangan magnesium (Mg)',m:[4],s:'wn',a:['Berikan kieserit sesuai dosis rekomendasi analisis daun','Pupuk diletakkan di piringan yang sudah bersih gulma']},
+   {n:'Kekurangan kalium (K)',m:[5],s:'wn',a:['Berikan MOP/KCl sesuai rekomendasi','Kembalikan tankos atau pelepah ke gawangan untuk menambah bahan organik']},
+   {n:'Kekurangan boron (B)',m:[6],s:'wn',a:['Berikan borat sesuai dosis anjuran, jangan berlebihan karena boron mudah meracuni']},
+   {n:'Penyerbukan kurang baik',m:[7],s:'nt',a:['Kurangi insektisida yang bisa membunuh kumbang penyerbuk Elaeidobius kamerunicus','Sediakan bunga jantan yang cukup di blok kebun','Pertimbangkan penyerbukan bantuan bila populasi kumbang rendah']}
+  ]},
+ padi:{n:'Padi',sym:['Bercak berbentuk belah ketupat abu-abu di daun','Leher malai busuk sehingga malai patah dan hampa','Tepi daun menguning lalu mengering dari ujung (kresek)','Daun menguning-oranye, tanaman kerdil, anakan sedikit','Rumpun mengering coklat seperti terbakar, berpusat dan meluas','Banyak serangga kecil coklat di pangkal batang'],
+  dx:[
+   {n:'Penyakit blas',m:[0,1],s:'bd',a:['Kurangi pupuk nitrogen berlebih','Gunakan varietas tahan blas pada musim berikutnya','Semprot fungisida yang dianjurkan saat gejala awal dan menjelang keluar malai']},
+   {n:'Hawar daun bakteri (kresek)',m:[2],s:'wn',a:['Atur pengairan berselang, hindari genangan terus-menerus','Kurangi urea, seimbangkan dengan kalium','Bersihkan sisa jerami yang terinfeksi']},
+   {n:'Tungro',m:[3],s:'bd',a:['Cabut dan benamkan tanaman sakit','Kendalikan wereng hijau sebagai penularnya','Tanam serempak dengan petani sekitar']},
+   {n:'Serangan wereng batang coklat',m:[4,5],s:'bd',a:['Amati pangkal rumpun secara rutin','Gunakan insektisida selektif bila melewati ambang ekonomi','Hindari penyemprotan yang membunuh musuh alami seperti laba-laba']}
+  ]},
+ kakao:{n:'Kakao',sym:['Buah muncul bercak coklat kehitaman lalu busuk seluruhnya','Ada lapisan putih seperti tepung di permukaan buah busuk','Daun menguning dengan bintik hijau, lalu gugur','Ranting mati dari ujung, berkas pembuluh bergaris coklat','Biji dalam buah lengket satu sama lain dan kehitaman','Ada lubang kecil di kulit buah'],
+  dx:[
+   {n:'Busuk buah (Phytophthora)',m:[0,1],s:'bd',a:['Petik dan benamkan buah busuk','Pangkas tajuk agar kebun tidak lembap','Panen sering, minimal seminggu sekali']},
+   {n:'VSD (vascular streak dieback)',m:[2,3],s:'bd',a:['Pangkas ranting sakit 30 cm di bawah gejala','Gunakan klon tahan VSD untuk peremajaan']},
+   {n:'Penggerek buah kakao (PBK)',m:[4,5],s:'wn',a:['Lakukan sarungisasi buah muda dengan plastik','Panen sering dan sanitasi kulit buah']}
+  ]},
+ kopi:{n:'Kopi',sym:['Bercak kuning-oranye seperti serbuk di bawah daun','Daun banyak gugur, ranting gundul','Ada lubang kecil di ujung buah','Buah muda banyak rontok'],
+  dx:[
+   {n:'Karat daun kopi',m:[0,1],s:'bd',a:['Atur naungan dan pangkas agar sirkulasi udara baik','Semprot fungisida tembaga pada awal musim hujan','Gunakan varietas tahan karat saat peremajaan']},
+   {n:'Penggerek buah kopi (PBKo)',m:[2,3],s:'wn',a:['Petik bersih semua buah saat panen, termasuk yang jatuh','Pasang perangkap berbahan atraktan','Manfaatkan jamur Beauveria bassiana']}
+  ]}
+};
+const TECH=[
+ {t:'Mulsa tandan kosong sawit',kat:'Limbah jadi input',d:'Tankos dihamparkan di gawangan atau piringan untuk menjaga kelembapan tanah dan menambah bahan organik.',cocok:'Sawit, tumpang sari di gawangan',biaya:'Rendah',sumber:'Limbah pabrik kelapa sawit'},
+ {t:'Agen hayati Trichoderma',kat:'Pengendalian hayati',d:'Jamur antagonis yang menekan patogen tular tanah seperti Ganoderma. Diberikan di lubang tanam dan sekitar pokok.',cocok:'Sawit, kakao, hortikultura',biaya:'Rendah',sumber:'Laboratorium agensia hayati daerah'},
+ {t:'Biochar dan kompos',kat:'Kesuburan tanah',d:'Arang hayati dari limbah pertanian memperbaiki daya simpan air dan hara, cocok untuk tanah masam.',cocok:'Hampir semua komoditas',biaya:'Rendah–sedang',sumber:'Produksi sendiri atau kelompok tani'},
+ {t:'Drone penyemprot',kat:'Mekanisasi',d:'Penyemprotan lebih cepat dan merata pada hamparan luas, mengurangi paparan pestisida ke petani.',cocok:'Padi, jagung, sawit muda',biaya:'Tinggi (bisa sewa jasa)',sumber:'Penyedia jasa alsintan'},
+ {t:'Sensor kelembapan tanah',kat:'Smart farming',d:'Mengukur air tanah secara berkala sehingga penyiraman tepat waktu dan hemat air.',cocok:'Hortikultura, pembibitan',biaya:'Sedang',sumber:'Penyedia perangkat IoT pertanian'},
+ {t:'Peremajaan Sawit Rakyat (PSR)',kat:'Program pemerintah',d:'Bantuan dana peremajaan untuk pekebun sawit rakyat yang memenuhi syarat legalitas lahan dan kelembagaan.',cocok:'Pekebun sawit rakyat',biaya:'Dibantu dana BPDP',sumber:'Dinas perkebunan setempat'}
+];
+
+/* =====================================================================
+   MODE DEMO (dipakai bila database belum disambungkan)
+   Harga TBS di bawah adalah penetapan Disbun Sumut yang sebenarnya;
+   baris lain bertanda "contoh".
+   ===================================================================== */
+const DEMO={
+ harga:[
+  {id:1,komoditas:'TBS kelapa sawit (umur 10–20 th)',kategori:'Perkebunan',wilayah:'Sumatera Utara',satuan:'kg',harga:3632.42,periode_mulai:'2026-10-07',periode_akhir:'2026-10-13',tingkat:'produsen',sumber:'Penetapan Disbun Sumut (via InfoSAWIT)',sumber_url:'https://www.infosawit.com/2026/10/12/harga-tbs-sawit-sumut-periode-7-13-oktober-2026-umur-10-20-tahun-rp3-63242-per-kg/',metode:'admin',created_at:'2026-10-12T05:00:00Z'},
+  {id:2,komoditas:'TBS kelapa sawit (umur 10–20 th)',kategori:'Perkebunan',wilayah:'Sumatera Utara',satuan:'kg',harga:3740.41,periode_mulai:'2026-10-21',periode_akhir:'2026-10-27',tingkat:'produsen',sumber:'Penetapan Disbun Sumut (via InfoSAWIT)',sumber_url:'https://www.infosawit.com/2026/10/23/harga-tbs-sawit-sumut-periode-21-27-oktober-2026-naik-rp7023-per-kg-umur-10-20-tahun-rp3-74041/',metode:'admin',created_at:'2026-10-23T05:00:00Z'},
+  {id:3,komoditas:'TBS kelapa sawit (umur 10–20 th)',kategori:'Perkebunan',wilayah:'Sumatera Utara',satuan:'kg',harga:3477,periode_mulai:'2026-10-28',periode_akhir:'2026-11-03',tingkat:'produsen',sumber:'Penetapan Disbun Sumut (via Bisnis.com)',sumber_url:'https://sumatra.bisnis.com/read/20261030/533/2017008/harga-tbs-sawit-sumut-28-oktober-3-november-turun-jadi-rp3477-per-kg',metode:'admin',catatan:'Angka dibulatkan sesuai judul berita.',created_at:'2026-10-30T05:00:00Z'},
+  {id:4,komoditas:'Beras kualitas medium I',kategori:'Pangan',wilayah:'Sumatera Utara',satuan:'kg',harga:14200,periode_mulai:'2026-10-31',tingkat:'konsumen',sumber:'Contoh tampilan (bukan data resmi)',metode:'contoh',created_at:'2026-10-31T02:00:00Z'},
+  {id:5,komoditas:'Beras kualitas medium I',kategori:'Pangan',wilayah:'Sumatera Utara',satuan:'kg',harga:14250,periode_mulai:'2026-11-02',tingkat:'konsumen',sumber:'Contoh tampilan (bukan data resmi)',metode:'contoh',created_at:'2026-11-02T02:00:00Z'},
+  {id:6,komoditas:'Gula pasir lokal',kategori:'Pangan',wilayah:'Sumatera Utara',satuan:'kg',harga:18000,periode_mulai:'2026-11-02',tingkat:'konsumen',sumber:'Contoh tampilan (bukan data resmi)',metode:'contoh',created_at:'2026-11-02T02:00:00Z'}
+ ],
+ iklan:[
+  {id:1,jenis:'Jual',barang:'TBS kelapa sawit',jumlah:'± 2 ton / 2 minggu',harga:'3.400',lokasi:'Kab. Deli Serdang',nama:'Contoh penjual',whatsapp:'0812-0000-0000',status:'tayang',created_at:'2026-11-02T03:00:00Z',contoh:true},
+  {id:2,jenis:'Beli',barang:'Jagung pipil kering',jumlah:'Butuh 5 ton',harga:'Nego',lokasi:'Kota Medan',nama:'Contoh pembeli',whatsapp:'0852-0000-0000',status:'tayang',created_at:'2026-11-01T03:00:00Z',contoh:true}
+ ],
+ tanya:[
+  {id:1,nama:'Contoh petani',komoditas:'Kelapa sawit',judul:'Pelepah bawah patah menggantung, apakah Ganoderma?',isi:'Umur tanaman 12 tahun, sudah 3 pokok begini di blok yang sama.',status:'tayang',created_at:'2026-11-01T08:00:00Z',jawaban:[{id:1,nama:'Contoh pakar',isi:'Cek pangkal batang. Kalau ada jamur seperti kipas, kemungkinan besar Ganoderma. Segera isolasi dengan parit.',is_pakar:true,status:'tayang',created_at:'2026-11-01T10:00:00Z'}]}
+ ]
+};
+let demoSeq=100;
+
+/* =====================================================================
+   UTIL
+   ===================================================================== */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rp=n=>'Rp'+Number(n).toLocaleString('id-ID',{maximumFractionDigits:2});
+const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'';
+const BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const tgl=d=>{if(!d)return'';const x=new Date(d+'T00:00:00');return `${x.getDate()} ${BLN[x.getMonth()]} ${x.getFullYear()}`};
+const periode=r=>{if(!r.periode_akhir||r.periode_akhir===r.periode_mulai)return tgl(r.periode_mulai);const a=new Date(r.periode_mulai+'T00:00:00'),b=new Date(r.periode_akhir+'T00:00:00');return `${a.getDate()} ${BLN[a.getMonth()]}${a.getFullYear()!==b.getFullYear()?' '+a.getFullYear():''} – ${b.getDate()} ${BLN[b.getMonth()]} ${b.getFullYear()}`};
+function lalu(iso){const s=(Date.now()-new Date(iso))/1000;if(s<60)return'baru saja';if(s<3600)return Math.floor(s/60)+' menit lalu';if(s<86400)return Math.floor(s/3600)+' jam lalu';if(s<86400*30)return Math.floor(s/86400)+' hari lalu';return new Date(iso).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,3000)}
+function chg(r){if(r.harga_sebelumnya==null)return'<span class="muted">baru</span>';const c=(r.harga-r.harga_sebelumnya)/r.harga_sebelumnya*100;const t=Math.abs(c).toLocaleString('id-ID',{maximumFractionDigits:2})+'%';return c>0.005?`<span class="up">▲ ${t}</span>`:c<-0.005?`<span class="dn">▼ ${t}</span>`:'<span class="muted">= 0%</span>'}
+function metodeBadge(r){return r.metode==='otomatis'?'<span class="pill ok">Otomatis</span>':r.metode==='contoh'?'<span class="pill wn">Contoh</span>':'<span class="pill nt">Penetapan</span>'}
+function errMsg(e){const m=(e&&e.message)||String(e);if(/row-level security|permission/i.test(m))return'Anda tidak punya izin untuk tindakan ini.';if(/check constraint/i.test(m))return'Isian belum sesuai format. Periksa panjang teks dan nomor WhatsApp.';if(/duplicate|unique/i.test(m))return'Data dengan komoditas, wilayah, tanggal, dan sumber yang sama sudah ada.';if(/fetch|network/i.test(m))return'Koneksi internet terputus. Coba lagi.';return m}
+
+/* =====================================================================
+   LAPISAN DATA (Supabase atau demo)
+   ===================================================================== */
+const S={harga:null,iklan:null,tanya:null,hist:{},session:null,admin:false,conn:LIVE?'menyambung':'demo',err:{}};
+function latestFrom(rows){const g={};rows.slice().sort((a,b)=>a.periode_mulai<b.periode_mulai?-1:a.periode_mulai>b.periode_mulai?1:a.id-b.id).forEach(r=>{const k=r.komoditas+'|'+r.wilayah;const prev=g[k];g[k]={...r,harga_sebelumnya:prev?prev.harga:null}});return Object.values(g)}
+function withTimeout(p,ms=10000){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Server tidak menjawab dalam 10 detik. Periksa koneksi lalu muat ulang halaman.')),ms))])}
+async function q(builder){const {data,error}=await withTimeout(builder);if(error)throw error;return data}
+
+const API={
+ async harga(){ if(!LIVE)return latestFrom(DEMO.harga); return q(sb.from('harga_terbaru').select('*')) },
+ async hist(kom,wil){ if(!LIVE)return DEMO.harga.filter(r=>r.komoditas===kom&&r.wilayah===wil).sort((a,b)=>a.periode_mulai<b.periode_mulai?-1:1);
+   return q(sb.from('harga').select('id,harga,periode_mulai,periode_akhir,sumber,sumber_url').eq('komoditas',kom).eq('wilayah',wil).order('periode_mulai',{ascending:true}).limit(60)) },
+ async iklan(){ if(!LIVE)return DEMO.iklan.slice(); return q(sb.from('iklan').select('*').order('created_at',{ascending:false}).limit(80)) },
+ async addIklan(r){ if(!LIVE){DEMO.iklan.unshift({...r,id:++demoSeq,status:'tayang',created_at:new Date().toISOString()});return} const {error}=await withTimeout(sb.from('iklan').insert(r));if(error)throw error },
+ async tanya(){ if(!LIVE)return DEMO.tanya.slice(); return q(sb.from('pertanyaan').select('*, jawaban(*)').order('created_at',{ascending:false}).limit(50)) },
+ async addTanya(r){ if(!LIVE){DEMO.tanya.unshift({...r,id:++demoSeq,status:'tayang',created_at:new Date().toISOString(),jawaban:[]});return} const {error}=await withTimeout(sb.from('pertanyaan').insert(r));if(error)throw error },
+ async addJawab(r){ if(!LIVE){const t=DEMO.tanya.find(x=>x.id===r.pertanyaan_id);t&&t.jawaban.push({...r,id:++demoSeq,status:'tayang',created_at:new Date().toISOString()});return} const {error}=await withTimeout(sb.from('jawaban').insert(r));if(error)throw error },
+ async addHarga(r){ const {error}=await withTimeout(sb.from('harga').insert(r));if(error)throw error },
+ async delHarga(id){ const {error}=await withTimeout(sb.from('harga').delete().eq('id',id));if(error)throw error },
+ async hargaTerakhir(){ return q(sb.from('harga').select('*').order('created_at',{ascending:false}).limit(25)) },
+ async setStatus(tbl,id,status){ const {error}=await withTimeout(sb.from(tbl).update({status}).eq('id',id));if(error)throw error }
+};
+
+async function load(key){
+  try{
+    if(key==='harga'){S.harga=await API.harga();S.hist={}}
+    if(key==='iklan')S.iklan=await API.iklan();
+    if(key==='tanya')S.tanya=await API.tanya();
+    S.err[key]=null;
+  }catch(e){S.err[key]=errMsg(e)}
+  fill(key);
+}
+
+/* realtime: setiap perubahan di database memicu muat ulang data terkait */
+const debounced={};
+function soon(key){clearTimeout(debounced[key]);debounced[key]=setTimeout(()=>load(key),400)}
+function startRealtime(){
+  if(!LIVE)return;
+  sb.channel('nadi-terra')
+   .on('postgres_changes',{event:'*',schema:'public',table:'harga'},()=>soon('harga'))
+   .on('postgres_changes',{event:'*',schema:'public',table:'iklan'},()=>soon('iklan'))
+   .on('postgres_changes',{event:'*',schema:'public',table:'pertanyaan'},()=>soon('tanya'))
+   .on('postgres_changes',{event:'*',schema:'public',table:'jawaban'},()=>soon('tanya'))
+   .subscribe(st=>{S.conn=st==='SUBSCRIBED'?'langsung':(st==='CHANNEL_ERROR'||st==='TIMED_OUT'||st==='CLOSED')?'putus':'menyambung';fillConn()});
+  // cadangan: segarkan berkala (mis. bila iklan disembunyikan admin)
+  setInterval(()=>{if(document.visibilityState==='visible'){load('harga');load('iklan');load('tanya')}},90000);
+}
+async function initAuth(){
+  if(!LIVE)return;
+  const {data}=await sb.auth.getSession();S.session=data.session;await checkAdmin();
+  sb.auth.onAuthStateChange((_e,session)=>{S.session=session;setTimeout(async()=>{await checkAdmin();load('iklan');load('tanya');if(cur==='admin'||cur==='forum')render()},0)});
+}
+async function checkAdmin(){if(!S.session){S.admin=false;return}try{const {data}=await sb.rpc('is_admin');S.admin=!!data}catch(e){S.admin=false}}
+
+function connPill(){
+  if(S.conn==='demo')return'<span class="pill wn">Mode demo · belum tersambung database</span>';
+  if(S.conn==='langsung')return'<span class="pill ok live">Tersambung · pembaruan langsung</span>';
+  if(S.conn==='putus')return'<span class="pill bd live">Koneksi terputus, mencoba lagi…</span>';
+  return'<span class="pill nt live">Menyambung…</span>';
+}
+function fillConn(){$$('[data-conn]').forEach(e=>e.innerHTML=connPill())}
+
+/* =====================================================================
+   HALAMAN
+   ===================================================================== */
+const NAV=[['beranda','Beranda'],['harga','Harga'],['diagnosa','Diagnosa'],['pasar','Pasar'],['forum','Forum Pakar'],['teknologi','Tech Hub'],['tentang','Tentang']];
+let cur='beranda';
+let ui={kat:'Semua',q:'',sel:null,dg:{step:1,crop:null,picked:[]},mf:'Semua',reply:null,tab:'harga'};
+
+const P={
+beranda(){return `
+  <section class="hero g">
+    <svg class="pulse" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H360l30-40 40 70 30-50 20 20h720" fill="none" stroke="#d9961a" stroke-width="2"/></svg>
+    <div class="in">
+      <div>
+        <span class="eyebrow">Platform agribisnis digital Indonesia</span>
+        <h1 style="margin-top:14px">Rasakan denyut <em>harga, kebun, dan pasar</em> dalam satu genggaman.</h1>
+        <p class="lead">Nadi Terra membantu petani dan pekebun mengecek harga komoditas dari sumber resmi, mengenali penyakit tanaman, menjual hasil panen, dan bertanya langsung ke pakar.</p>
+        <div class="acts"><a class="btn kun" href="#harga">Cek harga terbaru</a><a class="btn ghost" href="#diagnosa">Coba diagnosa tanaman</a></div>
+      </div>
+      <div class="ticker">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><b>Terra Price</b><small data-tick-status></small></div>
+        <div id="ticker"><p class="small" style="opacity:.75;padding:10px 0">Memuat harga…</p></div>
+        <a href="#harga" style="color:var(--kunyit);font-weight:700;font-size:14px;text-decoration:none;display:inline-block;margin-top:10px">Lihat semua harga →</a>
+      </div>
+    </div>
+  </section>
+  <section class="s g"><div class="in">
+    <div class="sh"><span class="eyebrow">Lima modul inti</span><h2>Semua yang dibutuhkan dari kebun sampai pembeli</h2></div>
+    <div class="mods">
+      <a class="mod wide" href="#harga"><span class="ic">${IC.price}</span><h3>Terra Price</h3><p>Harga pangan diperbarui otomatis setiap hari dari Panel Harga Bank Indonesia, dan harga TBS mengikuti penetapan Disbun setiap minggu. Setiap angka menampilkan sumber dan tanggalnya.</p><span class="go">Buka Terra Price →</span></a>
+      <a class="mod" href="#diagnosa"><span class="ic">${IC.diag}</span><h3>Terra Diagnose</h3><p>Pilih gejala yang terlihat di tanaman, dapatkan dugaan penyakit dan langkah penanganannya.</p><span class="go">Mulai diagnosa →</span></a>
+      <a class="mod" href="#pasar"><span class="ic">${IC.market}</span><h3>Terra Market</h3><p>Pasang iklan jual atau beli hasil panen. Iklan langsung tampil untuk semua pengunjung.</p><span class="go">Ke pasar →</span></a>
+      <a class="mod" href="#forum"><span class="ic">${IC.expert}</span><h3>Expert Connect</h3><p>Tanya masalah kebun ke komunitas dan pakar. Jawaban pakar ditandai khusus.</p><span class="go">Buka forum →</span></a>
+      <a class="mod" href="#teknologi"><span class="ic">${IC.hub}</span><h3>Terra Tech Hub</h3><p>Teknologi dan program pertanian yang sudah terbukti, dijelaskan dengan bahasa sederhana.</p><span class="go">Lihat teknologi →</span></a>
+    </div>
+  </div></section>
+  <section class="s g band"><div class="in">
+    <div class="sh"><span class="eyebrow">Cara kerja</span><h2>Empat langkah, tanpa ribet</h2></div>
+    <div class="flow">
+      <div><b>Cek harga</b><p>Lihat harga resmi terbaru sebelum bertemu pengepul, supaya punya pegangan saat tawar-menawar.</p></div>
+      <div><b>Rawat kebun</b><p>Kenali gejala penyakit lebih awal lewat Terra Diagnose sebelum menyebar.</p></div>
+      <div><b>Tanya pakar</b><p>Masalah yang belum terjawab bisa ditanyakan di forum dan dijawab pakar.</p></div>
+      <div><b>Jual hasil panen</b><p>Pasang iklan di Terra Market dan terima tawaran langsung dari pembeli.</p></div>
+    </div>
+  </div></section>
+  <section class="s g"><div class="in">
+    <div class="sh"><span class="eyebrow">Untuk siapa</span><h2>Dibuat untuk semua pelaku rantai pasok</h2></div>
+    <div class="who">
+      <div class="card"><h3>Petani & pekebun</h3><p class="muted">Harga, diagnosa, dan pasar dalam bahasa yang mudah dipahami.</p></div>
+      <div class="card"><h3>Kelompok tani & koperasi</h3><p class="muted">Jual bersama dalam jumlah besar dan pantau harga acuan.</p></div>
+      <div class="card"><h3>Penyuluh & mahasiswa</h3><p class="muted">Rujukan teknologi dan data harga untuk pendampingan.</p></div>
+      <div class="card"><h3>Perusahaan & lembaga</h3><p class="muted">Paket analitik data komoditas untuk perencanaan dan riset.</p></div>
+    </div>
+  </div></section>
+  <section class="s g band"><div class="in">
+    <div class="sh"><span class="eyebrow">Tujuan yang lebih besar</span><h2>Mendukung Tujuan Pembangunan Berkelanjutan</h2></div>
+    <div class="sdg">${[['1','Tanpa kemiskinan'],['2','Tanpa kelaparan'],['8','Pekerjaan layak'],['9','Industri & inovasi'],['10','Kurangi kesenjangan'],['12','Produksi bertanggung jawab'],['13','Aksi iklim'],['17','Kemitraan']].map(x=>`<span><b>SDG ${x[0]}</b>${x[1]}</span>`).join('')}</div>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#paket">Lihat paket layanan</a><a class="btn ghost" href="#tentang">Tentang Nadi Terra</a></div>
+  </div></section>`},
+
+harga(){return `<div class="g"><div class="in">
+  <div class="ph"><div><span class="eyebrow">Terra Price</span><h1>Harga komoditas terbaru</h1><p>Setiap angka mencantumkan sumber dan periodenya. Ketuk satu komoditas untuk melihat riwayatnya.</p></div><span data-conn>${connPill()}</span></div>
+  <div class="pg">
+    <div class="tools"><div class="chips" role="group" aria-label="Filter kategori">${['Semua',...KATEGORI.slice(0,4)].map(s=>`<button class="chip" data-kat="${s}" aria-pressed="${s===ui.kat}">${s}</button>`).join('')}</div>
+    <input class="search" id="pq" type="search" placeholder="Cari komoditas…" value="${esc(ui.q)}" aria-label="Cari komoditas"></div>
+    <div class="split"><div class="card" style="padding:6px 6px 0" id="hlist"></div><div class="card" id="hdetail" style="display:flex;flex-direction:column;gap:14px"></div></div>
+    <div class="card"><h2 style="font-size:18px;margin-bottom:10px">Komoditas strategis yang belum ada datanya</h2><div class="wait" id="hwait"></div>
+    <p class="muted small" style="margin-top:12px">Komoditas ini belum memiliki sumber harga terbuka yang bisa ditarik otomatis. Tim Nadi Terra menambahkannya dari pengumuman resmi.</p></div>
+  </div></div></div>`},
+
+diagnosa(){
+  const st=['Pilih tanaman','Pilih gejala','Hasil'];const d=ui.dg;let body='';
+  if(d.step===1){body=`<div class="crops">${Object.entries(DIAG).map(([id,c])=>`<button class="crop" data-crop="${id}"><b>${c.n}</b><small>${c.dx.length} masalah umum · ${c.sym.length} gejala</small></button>`).join('')}</div>`}
+  else if(d.step===2){const c=DIAG[d.crop];body=`<div class="card"><h2 style="font-size:22px;margin-bottom:4px">Gejala apa yang terlihat di ${c.n.toLowerCase()}?</h2><p class="muted" style="margin-bottom:16px">Centang semua yang sesuai.</p>
+    <div class="sym">${c.sym.map((s,i)=>`<label><input type="checkbox" id="sy${i}" data-sym="${i}" ${d.picked.includes(i)?'checked':''}><span>${s}</span></label>`).join('')}</div>
+    <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap"><button class="btn ghost" data-back="1">Ganti tanaman</button><button class="btn" id="dgo">Lihat hasil diagnosa</button></div></div>`}
+  else{const c=DIAG[d.crop];const sc=c.dx.map(x=>{const hit=x.m.filter(i=>d.picked.includes(i)).length;return{...x,hit,p:hit?Math.round(hit/x.m.length*100):0}}).filter(x=>x.hit).sort((a,b)=>b.p-a.p||b.hit-a.hit);
+    body=`<div class="res">${sc.map((x,i)=>`<div class="dx ${i?'lo':''}"><h3>${x.n} <span class="pill ${x.s}">${x.s==='bd'?'Serius':x.s==='wn'?'Perlu ditangani':'Perhatikan'}</span></h3><p class="muted" style="margin-top:6px">Kecocokan gejala ${x.hit} dari ${x.m.length}</p><div class="meter"><i style="width:${x.p}%"></i></div><ul>${x.a.map(a=>`<li>${a}</li>`).join('')}</ul></div>`).join('')}
+    <p class="note">Hasil ini adalah dugaan awal berdasarkan gejala yang terlihat, bukan diagnosis laboratorium. Untuk kepastian, konsultasikan ke penyuluh pertanian setempat atau tanyakan di Forum Pakar.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" data-back="2">Ubah gejala</button><button class="btn ghost" data-back="1">Tanaman lain</button><a class="btn" href="#forum">Tanya pakar</a></div></div>`}
+  return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Terra Diagnose</span><h1>Kenali masalah tanaman lebih awal</h1><p>Pencocokan gejala berdasarkan pedoman budidaya. Versi lanjutan akan menambah analisis foto.</p></div></div>
+  <div class="pg"><div class="steps">${st.map((s,i)=>`<span class="${d.step===i+1?'on':''}">${i+1}. ${s}</span>`).join('')}</div>${body}</div></div></div>`},
+
+pasar(){return `<div class="g"><div class="in">
+  <div class="ph"><div><span class="eyebrow">Terra Market</span><h1>Pasar hasil tani</h1><p>Pasang iklan jual atau beli. Pembeli menghubungi penjual langsung lewat WhatsApp.</p></div><span data-conn>${connPill()}</span></div>
+  <div class="pg">
+   <div class="tools"><div class="chips" role="group" aria-label="Jenis iklan">${['Semua','Jual','Beli'].map(s=>`<button class="chip" data-mf="${s}" aria-pressed="${s===ui.mf}">${s}</button>`).join('')}</div><button class="btn sm" id="topasang">Pasang iklan</button></div>
+   <div class="listings" id="mlist"></div>
+   <div class="card" id="pasang"><h2 style="font-size:22px;margin-bottom:14px">Pasang iklan baru</h2>
+    <form id="mform" class="fg">
+     <label class="fld">Jenis<select id="mt"><option>Jual</option><option>Beli</option></select></label>
+     <label class="fld">Komoditas / barang<input id="mk" required minlength="2" maxlength="80" placeholder="Contoh: TBS sawit"></label>
+     <label class="fld">Jumlah<input id="mq" required maxlength="40" placeholder="Contoh: 2 ton"></label>
+     <label class="fld">Harga per satuan (Rp)<input id="mh" required maxlength="20" placeholder="Contoh: 3.400 atau Nego"></label>
+     <label class="fld">Lokasi<input id="ml" required minlength="2" maxlength="60" placeholder="Kabupaten/kota"></label>
+     <label class="fld">Nama<input id="mp" required minlength="2" maxlength="40"></label>
+     <label class="fld full">Nomor WhatsApp<input id="mw" required pattern="[0-9+ \\-]{8,20}" maxlength="20" inputmode="tel" placeholder="0812-3456-7890"></label>
+     <div class="full"><button class="btn" type="submit" id="msub">Tayangkan iklan</button></div>
+    </form>
+    <p class="muted small" style="margin-top:12px">Iklan langsung tampil untuk semua pengunjung. Nomor WhatsApp akan terlihat publik. Iklan yang melanggar aturan akan disembunyikan admin.</p>
+   </div>
+  </div></div></div>`},
+
+forum(){return `<div class="g"><div class="in">
+  <div class="ph"><div><span class="eyebrow">Expert Connect</span><h1>Forum pakar & komunitas</h1><p>Tanyakan masalah kebun. Jawaban dari pakar Nadi Terra diberi tanda khusus.</p></div><span data-conn>${connPill()}</span></div>
+  <div class="pg"><div class="split">
+   <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan terbaru</h2><div id="flist"></div></div>
+   <div class="card"><h2 style="font-size:20px;margin-bottom:12px">Ajukan pertanyaan</h2>
+     <form id="fform" style="display:flex;flex-direction:column;gap:12px">
+      <label class="fld">Nama<input id="fn" required minlength="2" maxlength="40"></label>
+      <label class="fld">Komoditas<select id="fk">${['Kelapa sawit','Padi','Kakao','Kopi','Karet','Pinang','Jagung','Lainnya'].map(x=>`<option>${x}</option>`).join('')}</select></label>
+      <label class="fld">Judul pertanyaan<input id="ft" required minlength="5" maxlength="120"></label>
+      <label class="fld">Ceritakan masalahnya<textarea id="fb" rows="4" required minlength="5" maxlength="1000" placeholder="Umur tanaman, lokasi, gejala yang terlihat…"></textarea></label>
+      <button class="btn" type="submit" id="fsub">Kirim pertanyaan</button>
+     </form></div>
+  </div></div></div></div>`},
+
+teknologi(){return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Terra Tech Hub</span><h1>Teknologi & program pertanian</h1><p>Pilihan teknologi yang sudah dipakai di lapangan, lengkap dengan kecocokan komoditas dan perkiraan biaya.</p></div></div>
+  <div class="pg"><div class="techs">${TECH.map(t=>`<div class="card tech"><span class="pill nt">${t.kat}</span><h3>${t.t}</h3><p>${t.d}</p><dl><dt>Cocok untuk</dt><dd>${t.cocok}</dd><dt>Biaya</dt><dd>${t.biaya}</dd><dt>Didapat dari</dt><dd>${t.sumber}</dd></dl></div>`).join('')}</div></div></div></div>`},
+
+paket(){return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Paket layanan</span><h1>Mulai gratis, upgrade saat butuh</h1><p>Fitur dasar selalu gratis untuk petani. Paket berbayar membuka data lebih dalam dan konsultasi pakar.</p></div></div>
+  <div class="pg"><div class="plans">
+   <div class="card plan"><h3>Gratis</h3><div class="amt">Rp0</div><ul><li>Harga komoditas terbaru beserta sumbernya</li><li>Diagnosa berdasarkan gejala</li><li>Pasang iklan di Terra Market</li><li>Bertanya dan menjawab di forum</li></ul><a class="btn ghost" href="#harga">Mulai sekarang</a></div>
+   <div class="card plan hl"><span class="pill ok" style="align-self:flex-start">Paling cocok untuk petani</span><h3>Premium</h3><div class="amt">Rp49.000<small> / bulan</small></div><p class="muted" style="margin-top:-8px;font-size:14px">atau Rp399.000 / tahun (hemat 32%)</p><ul><li>Semua fitur Gratis</li><li>Diagnosa dengan foto tanaman</li><li>Konsultasi langsung dengan pakar</li><li>Riwayat harga panjang</li><li>Laporan kebun pribadi</li></ul><button class="btn" data-plan>Segera hadir</button></div>
+   <div class="card plan"><h3>Bisnis & lembaga</h3><div class="amt">Rp2 jt<small> / bulan, mulai</small></div><p class="muted" style="margin-top:-8px;font-size:14px">Basic Rp2 jt · Pro Rp5 jt · Enterprise Rp10 jt</p><ul><li>Akses data komoditas lewat API</li><li>Laporan tren mingguan</li><li>Dashboard analitik khusus</li><li>Pendampingan tim Nadi Terra</li></ul><a class="btn ghost" href="#tentang">Hubungi tim</a></div>
+  </div><p class="note">Paket berbayar belum dibuka. Fitur gratis sudah bisa dipakai sekarang.</p></div></div></div>`},
+
+tentang(){return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Tentang kami</span><h1>Nadi Terra</h1><p>Platform agribisnis digital yang lahir dari ruang kelas Agribisnis Institut Teknologi Sawit Indonesia, Medan.</p></div></div>
+  <div class="pg"><div class="split">
+   <div class="card" style="display:flex;flex-direction:column;gap:16px">
+    <div><span class="eyebrow">Visi</span><p style="margin-top:6px;font-size:17px">Menjadi infrastruktur informasi digital utama ekosistem agribisnis Indonesia yang menghubungkan setiap pelaku rantai nilai pertanian, dari petani di desa terpencil hingga korporasi, dalam satu ekosistem data yang transparan dan akurat.</p></div>
+    <div><span class="eyebrow">Misi</span><ol style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Membangun platform digital agribisnis terpadu yang dapat diakses seluruh lapisan masyarakat pertanian Indonesia.</li><li>Menghadirkan teknologi yang menyelesaikan persoalan nyata di lapangan, dari deteksi penyakit tanaman hingga informasi harga panen.</li><li>Mendorong transformasi digital pertanian secara inklusif, berkelanjutan, dan berdampak pada kesejahteraan petani.</li></ol></div>
+   </div>
+   <div class="card" style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Kontak</span><p><b>PT Nadi Terra Digital Agribisnis</b> (dalam pendirian)</p><p class="muted">Institut Teknologi Sawit Indonesia<br>Jl. Willem Iskandar, Medan, Sumatera Utara</p><p class="muted small">Sumber data harga: Panel Harga Pangan Bank Indonesia (PIHPS) dan penetapan harga TBS Dinas Perkebunan.</p></div>
+  </div></div></div></div>`},
+
+admin(){
+  let body;
+  if(!LIVE)body=`<div class="card"><h2 style="font-size:20px">Database belum disambungkan</h2><p class="muted" style="margin-top:8px">Isi <b>config.js</b> dengan Project URL dan anon key dari Supabase, lalu unggah ulang website. Halaman admin aktif setelah itu.</p></div>`;
+  else if(!S.session)body=`<div class="card" style="max-width:440px"><h2 style="font-size:20px;margin-bottom:12px">Masuk admin</h2><form id="lform" style="display:flex;flex-direction:column;gap:12px"><label class="fld">Email<input id="le" type="email" required autocomplete="username"></label><label class="fld">Kata sandi<input id="lp" type="password" required autocomplete="current-password"></label><button class="btn" id="lsub">Masuk</button></form><p class="muted small" style="margin-top:12px">Akun admin dibuat oleh pemilik proyek di dashboard Supabase.</p></div>`;
+  else if(!S.admin)body=`<div class="card"><p>Akun <b>${esc(S.session.user.email)}</b> belum terdaftar sebagai admin.</p><p class="muted small" style="margin-top:6px">Daftarkan lewat perintah di bagian 8 file schema.sql.</p><button class="btn ghost sm" id="logout" style="margin-top:12px">Keluar</button></div>`;
+  else{
+    const tabs=[['harga','Input harga'],['moderasi','Moderasi']];
+    body=`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><p class="muted">Masuk sebagai <b>${esc(S.session.user.email)}</b></p><button class="btn ghost sm" id="logout">Keluar</button></div>
+    <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${ui.tab===k}" data-tab="${k}">${l}</button>`).join('')}</div>`;
+    if(ui.tab==='harga'){
+      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:12px">Tambah harga</h2>
+      <form id="hform" class="fg">
+        <label class="fld full">Komoditas<input id="hk" list="hkl" required minlength="2" maxlength="80" placeholder="Pilih atau ketik"><datalist id="hkl">${STRATEGIS.map(s=>`<option value="${esc(s[0])}">`).join('')}</datalist></label>
+        <label class="fld">Kategori<select id="hc">${KATEGORI.map(k=>`<option>${k}</option>`).join('')}</select></label>
+        <label class="fld">Tingkat harga<select id="ht"><option value="produsen">Produsen/petani</option><option value="pedagang besar">Pedagang besar</option><option value="konsumen">Konsumen</option><option value="ekspor">Ekspor</option></select></label>
+        <label class="fld">Harga (Rp)<input id="hh" type="number" step="0.01" min="1" required inputmode="decimal"></label>
+        <label class="fld">Satuan<input id="hs" value="kg" required maxlength="20"></label>
+        <label class="fld">Periode mulai<input id="hm" type="date" required></label>
+        <label class="fld">Periode akhir (opsional)<input id="ha" type="date"></label>
+        <label class="fld full">Wilayah<input id="hw" value="Sumatera Utara" required maxlength="60"></label>
+        <label class="fld full">Sumber<input id="hsr" required minlength="2" maxlength="120" placeholder="Contoh: Penetapan Disbun Sumut"></label>
+        <label class="fld full">Tautan sumber (opsional)<input id="hu" type="url" placeholder="https://"></label>
+        <label class="fld full">Catatan (opsional)<input id="hn" maxlength="200"></label>
+        <div class="full"><button class="btn" id="hsub">Simpan harga</button></div>
+      </form></div>
+      <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Input terakhir</h2><div id="arecent"><p class="muted">Memuat…</p></div></div></div>`;
+    }else{
+      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan</h2><div id="amod-tanya"></div></div></div>
+      <p class="muted small">Jawab sebagai pakar langsung dari halaman Forum Pakar saat masuk sebagai admin.</p>`;
+    }
+  }
+  return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Ruang admin</span><h1>Kelola data Nadi Terra</h1></div><span data-conn>${connPill()}</span></div><div class="pg">${body}</div></div></div>`;
+}
+};
+
+/* =====================================================================
+   PENGISIAN BAGIAN DINAMIS (dipanggil ulang saat data berubah)
+   ===================================================================== */
+function loadingOr(key,html){if(S.err[key])return`<div class="empty"><p>${esc(S.err[key])}</p><button class="btn sm ghost" data-retry="${key}" style="margin-top:10px">Coba lagi</button></div>`;return html}
+function fill(key){
+  if(key==='harga'){fillTicker();if(cur==='harga'){fillHargaList();fillHargaDetail();fillWait()}}
+  if(key==='iklan'){if(cur==='pasar')fillIklan();if(cur==='admin'&&ui.tab==='moderasi')fillMod()}
+  if(key==='tanya'){if(cur==='forum')fillTanya();if(cur==='admin'&&ui.tab==='moderasi')fillMod()}
+  $$('[data-retry]').forEach(b=>b.onclick=()=>{S.err[b.dataset.retry]=null;load(b.dataset.retry)});
+}
+function fillTicker(){
+  const el=$('#ticker');if(!el)return;const st=$('[data-tick-status]');
+  if(st)st.textContent=LIVE?(S.conn==='langsung'?'tersambung':''):'mode demo';
+  if(S.err.harga){el.innerHTML=`<p class="small" style="opacity:.8;padding:10px 0">${esc(S.err.harga)}</p>`;return}
+  if(!S.harga)return;
+  const rows=S.harga.slice().sort((a,b)=>(a.metode==='contoh')-(b.metode==='contoh')||(b.periode_mulai>a.periode_mulai?1:-1)).slice(0,5);
+  el.innerHTML=rows.length?rows.map(r=>`<div class="row"><div style="min-width:0"><b style="font-weight:600">${esc(r.komoditas)}</b><br><small>${esc(r.wilayah)} · ${periode(r)}</small></div><div style="text-align:right"><b class="num">${rp(r.harga)}</b><br><small class="num">${chg(r)}</small></div></div>`).join(''):'<p class="small" style="opacity:.8;padding:10px 0">Belum ada data harga.</p>';
+}
+const hkey=r=>r.komoditas+'|'+r.wilayah;
+function hargaFiltered(){return (S.harga||[]).filter(r=>(ui.kat==='Semua'||r.kategori===ui.kat)&&r.komoditas.toLowerCase().includes(ui.q.toLowerCase())).sort((a,b)=>a.kategori.localeCompare(b.kategori)||a.komoditas.localeCompare(b.komoditas))}
+function fillHargaList(){
+  const el=$('#hlist');if(!el)return;
+  if(!S.harga&&!S.err.harga){el.innerHTML='<div class="empty">Memuat harga…</div>';return}
+  const rows=hargaFiltered();
+  if(rows.length&&(!ui.sel||!rows.find(r=>hkey(r)===ui.sel)))ui.sel=hkey(rows[0]);
+  el.innerHTML=loadingOr('harga',rows.length?`<div class="tblw"><table class="tbl"><thead><tr><th>Komoditas</th><th class="r">Harga</th><th class="r">Perubahan</th><th>Periode</th><th>Asal data</th></tr></thead><tbody>
+   ${rows.map(r=>`<tr class="click ${hkey(r)===ui.sel?'sel':''}" data-h="${esc(hkey(r))}" tabindex="0"><td><b>${esc(r.komoditas)}</b><br><span class="muted small">${esc(r.wilayah)} · ${esc(r.tingkat)}</span></td><td class="r num">${rp(r.harga)}<br><span class="muted small">/ ${esc(r.satuan)}</span></td><td class="r num">${chg(r)}</td><td class="small">${periode(r)}</td><td>${metodeBadge(r)}</td></tr>`).join('')}
+   </tbody></table></div>`:`<div class="empty">${S.harga.length?'Tidak ada komoditas yang cocok.':'Belum ada data harga. Admin dapat menambahkannya di halaman Admin.'}</div>`);
+  $$('[data-h]').forEach(tr=>{const go=()=>{ui.sel=tr.dataset.h;fillHargaList();fillHargaDetail()};tr.onclick=go;tr.onkeydown=e=>{if(e.key==='Enter')go()}});
+}
+async function fillHargaDetail(){
+  const el=$('#hdetail');if(!el)return;
+  const r=(S.harga||[]).find(x=>hkey(x)===ui.sel);
+  if(!r){el.innerHTML='<p class="muted">Pilih komoditas untuk melihat detail.</p>';return}
+  const key=r.komoditas+'|'+r.wilayah;
+  el.innerHTML=`<div><span class="pill nt">${esc(r.kategori)}</span> ${metodeBadge(r)}<h2 style="font-size:23px;margin-top:8px">${esc(r.komoditas)}</h2>
+    <p style="margin-top:6px"><b class="num" style="font-size:28px">${rp(r.harga)}</b> <span class="muted">/ ${esc(r.satuan)}</span> &nbsp;<span class="num">${chg(r)}</span></p>
+    <p class="muted small" style="margin-top:4px">${esc(r.wilayah)} · harga ${esc(r.tingkat)} · periode ${periode(r)}</p></div>
+    <div class="chart" id="hchart"><p class="muted small">Memuat riwayat…</p></div>
+    <p class="small">Sumber: ${safeUrl(r.sumber_url)?`<a href="${esc(r.sumber_url)}" target="_blank" rel="noopener">${esc(r.sumber)}</a>`:esc(r.sumber)}${r.catatan?`<br><span class="muted">${esc(r.catatan)}</span>`:''}</p>
+    <div style="border-top:1px solid var(--line);padding-top:14px"><b>Hitung nilai jual</b><div class="fg" style="margin-top:10px;align-items:end"><label class="fld">Jumlah (${esc(r.satuan)})<input id="calc" type="number" min="0" inputmode="decimal" value="1000"></label><p style="padding-bottom:10px">≈ <b class="num" id="calco"></b></p></div></div>`;
+  const c=$('#calc'),o=$('#calco');const u=()=>o.textContent=rp(Math.round((+c.value||0)*r.harga));c.oninput=u;u();
+  try{ if(!S.hist[key])S.hist[key]=await API.hist(r.komoditas,r.wilayah);
+    const ch=$('#hchart');if(ch&&ui.sel===key)ch.innerHTML=histChart(S.hist[key],r);
+  }catch(e){const ch=$('#hchart');if(ch)ch.innerHTML=`<p class="muted small">${esc(errMsg(e))}</p>`}
+}
+function histChart(h,r){
+  if(h.length<2)return'<p class="muted small">Riwayat akan muncul setelah ada minimal dua periode data.</p>';
+  const W=560,H=220,pl=74,pr=16,pt=16,pb=30,v=h.map(x=>+x.harga);
+  let mn=Math.min(...v),mx=Math.max(...v);const pad=(mx-mn)*.15||mx*.02;mn-=pad;mx+=pad;
+  const x=i=>pl+i*(W-pl-pr)/(h.length-1),y=val=>pt+(mx-val)*(H-pt-pb)/(mx-mn);
+  let g='';for(let j=0;j<=3;j++){const val=mn+(mx-mn)*j/3;g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(val)}" y2="${y(val)}" stroke="var(--line)"/><text x="${pl-8}" y="${y(val)+3}" text-anchor="end">${Math.round(val).toLocaleString('id-ID')}</text>`}
+  const step=Math.ceil(h.length/6);h.forEach((p,i)=>{if(i%step===0||i===h.length-1){const d=new Date(p.periode_mulai+'T00:00:00');g+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle">${d.getDate()} ${BLN[d.getMonth()]}</text>`}});
+  const pts=v.map((val,i)=>`${x(i)},${y(val)}`).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Riwayat harga ${esc(r.komoditas)}">${g}<polygon points="${x(0)},${y(mn)} ${pts} ${x(v.length-1)},${y(mn)}" fill="var(--palm-soft)"/><polyline points="${pts}" fill="none" stroke="var(--palm)" stroke-width="2.5" stroke-linejoin="round"/>${v.map((val,i)=>`<circle cx="${x(i)}" cy="${y(val)}" r="${i===v.length-1?5:3}" fill="${i===v.length-1?'var(--kunyit)':'var(--palm)'}" stroke="var(--surface)" stroke-width="1.5"><title>${tgl(h[i].periode_mulai)}: ${rp(val)}</title></circle>`).join('')}</svg><p class="muted small">Riwayat ${h.length} periode, sumbu tegak dalam rupiah per ${esc(r.satuan)}.</p>`;
+}
+function fillWait(){
+  const el=$('#hwait');if(!el||!S.harga)return;
+  const ada=new Set(S.harga.filter(r=>r.metode!=='contoh').map(r=>r.komoditas));
+  const miss=STRATEGIS.filter(s=>!ada.has(s[0]));
+  el.innerHTML=miss.length?miss.map(s=>`<span class="pill nt">${esc(s[0])}</span>`).join(''):'<span class="pill ok">Semua komoditas strategis sudah punya data</span>';
+}
+function fillIklan(){
+  const el=$('#mlist');if(!el)return;
+  if(!S.iklan&&!S.err.iklan){el.innerHTML='<div class="card empty">Memuat iklan…</div>';return}
+  const rows=(S.iklan||[]).filter(x=>x.status==='tayang'&&(ui.mf==='Semua'||x.jenis===ui.mf));
+  el.innerHTML=loadingOr('iklan',rows.length?rows.map(x=>`<div class="card lst"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span class="pill ${x.jenis==='Jual'?'ok':'wn'}">${x.jenis==='Jual'?'Dijual':'Dicari'}</span><span class="muted small">${x.contoh?'Contoh':lalu(x.created_at)}</span></div>
+     <h3>${esc(x.barang)}</h3><div class="price">${/^\d/.test(x.harga)?'Rp'+esc(x.harga):esc(x.harga)}</div>
+     <div class="meta">${esc(x.jumlah)}<br>${esc(x.lokasi)} · ${esc(x.nama)}</div>
+     <div class="wa"><span>WA: <b class="num" style="user-select:all">${esc(x.whatsapp)}</b></span><button class="btn sm ghost" data-copy="${esc(x.whatsapp)}">Salin</button></div></div>`).join(''):'<div class="card empty">Belum ada iklan. Jadilah yang pertama memasang iklan.</div>');
+  bindCopy();
+}
+function fillTanya(){
+  const el=$('#flist');if(!el)return;
+  if(!S.tanya&&!S.err.tanya){el.innerHTML='<div class="empty">Memuat pertanyaan…</div>';return}
+  const rows=(S.tanya||[]).filter(t=>t.status==='tayang');
+  el.innerHTML=loadingOr('tanya',rows.length?rows.map(t=>{const js=(t.jawaban||[]).filter(j=>j.status==='tayang').sort((a,b)=>b.is_pakar-a.is_pakar||(a.created_at<b.created_at?-1:1));
+    return `<div class="thread"><div class="av">${esc((t.nama||'?')[0].toUpperCase())}</div><div style="min-width:0;flex:1"><h4>${esc(t.judul)}</h4><p class="meta">${esc(t.nama)} · ${esc(t.komoditas)} · ${lalu(t.created_at)}</p><p style="margin-top:6px">${esc(t.isi)}</p>
+    ${js.map(j=>`<div class="reply ${j.is_pakar?'pk':''}">${j.is_pakar?'<span class="pill ok" style="margin-right:6px">Pakar</span>':''}<b>${esc(j.nama)}:</b> ${esc(j.isi)}</div>`).join('')}
+    ${js.some(j=>j.is_pakar)?'':'<p class="pill wn" style="margin-top:10px">Menunggu jawaban pakar</p>'}
+    ${ui.reply===t.id?`<form class="rform" data-rf="${t.id}"><div class="row2"><label class="fld">Nama<input id="rn" required minlength="2" maxlength="40" value="${S.admin?'Tim Pakar Nadi Terra':''}"></label><label class="fld">Jawaban<input id="ri" required minlength="2" maxlength="1000"></label><button class="btn sm" id="rsub">Kirim</button></div>${S.admin?'<label class="chk"><input type="checkbox" id="rp" checked> Jawab sebagai pakar</label>':''}</form>`:`<button class="btn sm ghost" data-reply="${t.id}" style="margin-top:10px">Jawab</button>`}
+    </div></div>`}).join(''):'<div class="empty">Belum ada pertanyaan.</div>');
+  $$('[data-reply]').forEach(b=>b.onclick=()=>{ui.reply=+b.dataset.reply;fillTanya();const i=$('#ri');i&&i.focus()});
+  $$('[data-rf]').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const btn=$('#rsub');btn.disabled=true;
+    try{await API.addJawab({pertanyaan_id:+f.dataset.rf,nama:$('#rn').value.trim(),isi:$('#ri').value.trim(),is_pakar:!!($('#rp')&&$('#rp').checked)});ui.reply=null;toast('Jawaban terkirim');if(!LIVE)fillTanya();else load('tanya')}
+    catch(err){toast(errMsg(err));btn.disabled=false}});
+}
+async function fillRecent(){
+  const el=$('#arecent');if(!el)return;
+  try{const rows=await API.hargaTerakhir();
+    el.innerHTML=rows.length?rows.map(r=>`<div class="adm-row"><div><b>${esc(r.komoditas)}</b> · <span class="num">${rp(r.harga)}</span>/${esc(r.satuan)}<br><span class="muted small">${esc(r.wilayah)} · ${periode(r)} · ${esc(r.metode)}</span></div><span data-delwrap="${r.id}"><button class="btn sm danger" data-del="${r.id}">Hapus</button></span></div>`).join(''):'<p class="muted">Belum ada data.</p>';
+    $$('[data-del]').forEach(b=>b.onclick=()=>{const w=b.parentElement;w.innerHTML=`<span class="small">Yakin?</span> <button class="btn sm danger" data-yes>Hapus</button> <button class="btn sm ghost" data-no>Batal</button>`;
+      w.querySelector('[data-no]').onclick=fillRecent;w.querySelector('[data-yes]').onclick=async()=>{try{await API.delHarga(+b.dataset.del);toast('Data dihapus');fillRecent();load('harga')}catch(e){toast(errMsg(e))}}});
+  }catch(e){el.innerHTML=`<p class="muted">${esc(errMsg(e))}</p>`}
+}
+function fillMod(){
+  const mk=(rows,tbl,label)=>rows.length?rows.map(x=>`<div class="adm-row"><div><b>${esc(label(x))}</b><br><span class="muted small">${esc(x.nama)} · ${lalu(x.created_at)}</span></div>${x.status==='tayang'?`<button class="btn sm danger" data-mod="${tbl}:${x.id}:disembunyikan">Sembunyikan</button>`:`<button class="btn sm ghost" data-mod="${tbl}:${x.id}:tayang">Tampilkan lagi</button>`}</div>`).join(''):'<p class="muted">Kosong.</p>';
+  const a=$('#amod-iklan'),b=$('#amod-tanya');
+  if(a)a.innerHTML=mk(S.iklan||[],'iklan',x=>`${x.jenis}: ${x.barang}`);
+  if(b)b.innerHTML=mk(S.tanya||[],'pertanyaan',x=>x.judul);
+  $$('[data-mod]').forEach(btn=>btn.onclick=async()=>{const [t,id,st]=btn.dataset.mod.split(':');btn.disabled=true;try{await API.setStatus(t,+id,st);toast(st==='tayang'?'Ditampilkan lagi':'Disembunyikan');load(t==='iklan'?'iklan':'tanya')}catch(e){toast(errMsg(e));btn.disabled=false}});
+}
+function bindCopy(){$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);toast('Nomor disalin')}catch(e){toast('Tekan lama nomor untuk menyalin')}})}
+
+/* =====================================================================
+   RENDER & INTERAKSI
+   ===================================================================== */
+function render(){
+  let v=location.hash.slice(1);if(!P[v])v='beranda';cur=v;
+  $('#menu').innerHTML=NAV.map(([k,l])=>`<a href="#${k}" class="${k===v?'on':''}" ${k===v?'aria-current="page"':''}>${l}</a>`).join('')+`<a href="#paket" class="cta ${v==='paket'?'on':''}">Paket</a>`;
+  $('#menu').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');
+  $('#app').innerHTML=P[v]();
+  bind(v);
+}
+function bind(v){
+  if(v==='beranda')fillTicker();
+  if(v==='harga'){
+    $$('[data-kat]').forEach(b=>b.onclick=()=>{ui.kat=b.dataset.kat;$$('[data-kat]').forEach(x=>x.setAttribute('aria-pressed',x===b));ui.sel=null;fillHargaList();fillHargaDetail()});
+    $('#pq').oninput=e=>{ui.q=e.target.value;ui.sel=null;fillHargaList();fillHargaDetail()};
+    fillHargaList();fillHargaDetail();fillWait();
+  }
+  if(v==='diagnosa'){
+    $$('[data-crop]').forEach(b=>b.onclick=()=>{ui.dg={step:2,crop:b.dataset.crop,picked:[]};render()});
+    $$('[data-sym]').forEach(c=>c.onchange=()=>{const i=+c.dataset.sym;ui.dg.picked=c.checked?[...ui.dg.picked,i]:ui.dg.picked.filter(x=>x!==i)});
+    $$('[data-back]').forEach(b=>b.onclick=()=>{ui.dg.step=+b.dataset.back;if(ui.dg.step===1)ui.dg.picked=[];render()});
+    const go=$('#dgo');if(go)go.onclick=()=>{if(!ui.dg.picked.length){toast('Pilih minimal satu gejala');return}ui.dg.step=3;render();scrollTo(0,0)};
+  }
+  if(v==='pasar'){
+    $$('[data-mf]').forEach(b=>b.onclick=()=>{ui.mf=b.dataset.mf;$$('[data-mf]').forEach(x=>x.setAttribute('aria-pressed',x===b));fillIklan()});
+    $('#topasang').onclick=()=>{$('#pasang').scrollIntoView({behavior:'smooth'});$('#mk').focus({preventScroll:true})};
+    $('#mform').onsubmit=async e=>{e.preventDefault();const g=id=>$('#'+id).value.trim();const btn=$('#msub');btn.disabled=true;
+      try{await API.addIklan({jenis:g('mt'),barang:g('mk'),jumlah:g('mq'),harga:g('mh'),lokasi:g('ml'),nama:g('mp'),whatsapp:g('mw')});e.target.reset();toast('Iklan tayang');if(!LIVE)S.iklan=await API.iklan();else await load('iklan');fillIklan();scrollTo({top:0,behavior:'smooth'})}
+      catch(err){toast(errMsg(err))}btn.disabled=false};
+    fillIklan();
+  }
+  if(v==='forum'){
+    $('#fform').onsubmit=async e=>{e.preventDefault();const g=id=>$('#'+id).value.trim();const btn=$('#fsub');btn.disabled=true;
+      try{await API.addTanya({nama:g('fn'),komoditas:g('fk'),judul:g('ft'),isi:g('fb')});e.target.reset();toast('Pertanyaan terkirim');if(!LIVE)S.tanya=await API.tanya();else await load('tanya');fillTanya()}
+      catch(err){toast(errMsg(err))}btn.disabled=false};
+    fillTanya();
+  }
+  if(v==='paket')$$('[data-plan]').forEach(b=>b.onclick=()=>toast('Paket Premium segera dibuka'));
+  if(v==='admin'&&LIVE){
+    const lf=$('#lform');if(lf)lf.onsubmit=async e=>{e.preventDefault();const btn=$('#lsub');btn.disabled=true;
+      const {error}=await sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value});
+      if(error){toast('Email atau kata sandi salah');btn.disabled=false}};
+    const lo=$('#logout');if(lo)lo.onclick=()=>sb.auth.signOut();
+    $$('[data-tab]').forEach(b=>b.onclick=()=>{ui.tab=b.dataset.tab;render()});
+    const hf=$('#hform');
+    if(hf){
+      $('#hm').value=new Date().toISOString().slice(0,10);
+      $('#hk').onchange=()=>{const s=STRATEGIS.find(x=>x[0]===$('#hk').value);if(s){$('#hc').value=s[1];$('#hs').value=s[2]}};
+      hf.onsubmit=async e=>{e.preventDefault();const g=id=>$('#'+id).value.trim();const btn=$('#hsub');btn.disabled=true;
+        const row={komoditas:g('hk'),kategori:g('hc'),tingkat:g('ht'),harga:+g('hh'),satuan:g('hs'),periode_mulai:g('hm'),periode_akhir:g('ha')||null,wilayah:g('hw'),sumber:g('hsr'),sumber_url:g('hu')||null,catatan:g('hn')||null,metode:'admin'};
+        if(row.periode_akhir&&row.periode_akhir<row.periode_mulai){toast('Periode akhir tidak boleh sebelum periode mulai');btn.disabled=false;return}
+        try{await API.addHarga(row);toast('Harga tersimpan dan langsung tampil');$('#hh').value='';fillRecent();load('harga')}catch(err){toast(errMsg(err))}btn.disabled=false};
+      fillRecent();
+    }
+    if(ui.tab==='moderasi')fillMod();
+  }
+}
+$('#burger').onclick=()=>{const m=$('#menu');const o=m.classList.toggle('open');$('#burger').setAttribute('aria-expanded',o)};
+addEventListener('hashchange',()=>{render();scrollTo(0,0)});
+
+render();
+load('harga');load('iklan');load('tanya');
+initAuth().then(()=>{if(cur==='admin')render()});
+startRealtime();
+</script>
+
+</body>
+</html>

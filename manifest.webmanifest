@@ -1,0 +1,23 @@
+{
+  "name": "Nadi Terra Smart Farming",
+  "short_name": "Nadi Terra",
+  "description": "Harga komoditas resmi, diagnosa penyakit tanaman, pasar hasil tani, dan forum pakar.",
+  "lang": "id",
+  "start_url": "./#beranda",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#023720",
+  "theme_color": "#023720",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Harga komoditas", "url": "./#harga", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Diagnosa tanaman", "url": "./#diagnosa", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Pasar hasil tani", "url": "./#pasar", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

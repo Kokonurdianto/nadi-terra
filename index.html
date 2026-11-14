@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#023720">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nadi Terra">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -283,6 +291,14 @@ footer .logo{color:var(--foot-ink)}
 footer .logo small{color:var(--foot-ink);opacity:.7}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:700;z-index:60;max-width:calc(100% - 32px);text-align:center}
 
+.install{position:fixed;z-index:45;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:min(400px,calc(100% - 32px));display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px 12px 12px 14px;box-shadow:0 12px 34px rgba(10,30,18,.22)}
+.install .lg{width:44px;height:44px}
+.install div{flex:1;min-width:0}
+.install b{font-family:var(--f-head);font-weight:600;font-size:15px;display:block}
+.install p{font-size:13px;color:var(--muted);line-height:1.4}
+.install .x{background:var(--sunken);border:0;width:34px;height:34px;border-radius:50%;font-size:20px;line-height:1;color:var(--muted);flex:none}
+@media (max-width:920px){.install{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+@media (display-mode:standalone){.top{padding-top:0}}
 @media (max-width:1020px){.svc{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:920px){
   .menu{display:none;position:absolute;top:68px;left:-16px;right:-16px;flex-direction:column;align-items:stretch;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px));box-shadow:var(--shadow)}
@@ -338,6 +354,7 @@ footer .logo small{color:var(--foot-ink);opacity:.7}
   </div>
 </footer>
 <nav class="tabbar" id="tabbar" aria-label="Navigasi utama"></nav>
+<div class="install" id="install" role="dialog" aria-label="Pasang aplikasi" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -1001,6 +1018,30 @@ function bind(v){
 }
 $('#burger').onclick=()=>{const m=$('#menu');const o=m.classList.toggle('open');$('#burger').setAttribute('aria-expanded',o)};
 addEventListener('hashchange',()=>{render();scrollTo(0,0)});
+
+/* =====================================================================
+   APLIKASI DI HP (PWA): tawaran instal + service worker
+   ===================================================================== */
+let instPrompt=null;
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function tutupInstall(){const el=$('#install');el.hidden=true;try{localStorage.setItem('nt_install_tutup',String(Date.now()))}catch(e){}}
+function showInstall(){
+  const el=$('#install');if(!el)return;
+  let t=0;try{t=+localStorage.getItem('nt_install_tutup')||0}catch(e){}
+  if(standalone()||Date.now()-t<7*86400000){el.hidden=true;return}
+  const head=`<span class="lg">${logoHTML(T)}</span>`;
+  if(instPrompt)el.innerHTML=`${head}<div><b>Pasang aplikasi ${esc(T.nama)}</b><p>Buka lebih cepat langsung dari layar HP.</p></div><button class="btn sm" id="inst-go">Instal</button><button class="x" id="inst-x" aria-label="Tutup">×</button>`;
+  else if(isIOS&&matchMedia('(max-width:920px)').matches)el.innerHTML=`${head}<div><b>Pasang aplikasi ${esc(T.nama)}</b><p>Ketuk ikon <b style="display:inline;font-size:13px">Bagikan</b> di Safari, lalu pilih <b style="display:inline;font-size:13px">Tambahkan ke Layar Utama</b>.</p></div><button class="x" id="inst-x" aria-label="Tutup">×</button>`;
+  else{el.hidden=true;return}
+  el.hidden=false;
+  $('#inst-x').onclick=tutupInstall;
+  const go=$('#inst-go');if(go)go.onclick=async()=>{const pr=instPrompt;instPrompt=null;el.hidden=true;try{await pr.prompt();const r=await pr.userChoice;if(r&&r.outcome!=='accepted')tutupInstall()}catch(e){}};
+}
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();instPrompt=e;setTimeout(showInstall,1500)});
+addEventListener('appinstalled',()=>{instPrompt=null;$('#install').hidden=true;toast('Aplikasi terpasang di layar HP')});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+setTimeout(showInstall,2500);
 
 render();
 load('harga');load('iklan');load('tanya');loadT();

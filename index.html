@@ -253,6 +253,9 @@ section.s.last{padding-block:56px 72px}
 .tabs button[aria-selected="true"]{background:var(--brand);color:var(--on-brand)}
 .adm-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .adm-row:last-child{border:0}
+.adm-row.sub{margin-left:10px;padding-left:14px;border-left:3px solid var(--line)}
+.adm-row.sub.off{opacity:.6}
+.reply .hidej{float:right;margin:-2px -4px 4px 10px;padding:3px 10px;font-size:12.5px}
 .adm-row>div{min-width:0;flex:1}
 
 /* ---------- admin: tampilan ---------- */
@@ -842,7 +845,7 @@ admin(){
       </form></div>
       <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Input terakhir</h2><div id="arecent"><p class="muted">Memuat…</p></div></div></div>`;
     }else if(ui.tab==='tampilan'){body+=tampilanHTML()}else{
-      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan</h2><div id="amod-tanya"></div></div></div>
+      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan &amp; jawaban</h2><div id="amod-tanya"></div></div></div>
       <p class="muted small">Jawab sebagai pakar langsung dari halaman Forum Pakar saat masuk sebagai admin.</p>`;
     }
   }
@@ -931,12 +934,15 @@ function fillTanya(){
   const rows=(S.tanya||[]).filter(t=>t.status==='tayang');
   el.innerHTML=loadingOr('tanya',rows.length?rows.map(t=>{const js=(t.jawaban||[]).filter(j=>j.status==='tayang').sort((a,b)=>b.is_pakar-a.is_pakar||(a.created_at<b.created_at?-1:1));
     return `<div class="thread"><div class="av">${esc((t.nama||'?')[0].toUpperCase())}</div><div style="min-width:0;flex:1"><h4>${esc(t.judul)}</h4><p class="meta">${esc(t.nama)} · ${esc(t.komoditas)} · ${lalu(t.created_at)}</p><p style="margin-top:6px">${esc(t.isi)}</p>
-    ${js.map(j=>`<div class="reply ${j.is_pakar?'pk':''}">${j.is_pakar?'<span class="pill ok" style="margin-right:6px">Pakar</span>':''}<b>${esc(j.nama)}:</b> ${esc(j.isi)}</div>`).join('')}
+    ${js.map(j=>`<div class="reply ${j.is_pakar?'pk':''}">${j.is_pakar?'<span class="pill ok" style="margin-right:6px">Pakar</span>':''}${S.admin&&LIVE?`<button class="btn sm danger hidej" data-hidej="${j.id}">Sembunyikan</button>`:''}<b>${esc(j.nama)}:</b> ${esc(j.isi)}</div>`).join('')}
     ${js.some(j=>j.is_pakar)?'':'<p class="pill wn" style="margin-top:10px">Menunggu jawaban pakar</p>'}
     ${ui.reply===t.id?`<form class="rform" data-rf="${t.id}"><label class="fld">Nama<input id="rn" required minlength="2" maxlength="40" value="${S.admin?'Tim Pakar Nadi Terra':''}"></label><label class="fld">Jawaban<textarea id="ri" rows="5" required minlength="2" maxlength="4000" placeholder="Tulis jawaban selengkapnya. Boleh beberapa paragraf."></textarea><span class="hint" data-count="ri"></span></label>${S.admin?'<label class="chk"><input type="checkbox" id="rp" checked> Jawab sebagai pakar</label>':''}<div class="acts-row"><button class="btn sm" id="rsub">Kirim jawaban</button><button type="button" class="btn sm ghost" id="rbatal">Batal</button></div></form>`:`<button class="btn sm ghost" data-reply="${t.id}" style="margin-top:10px">Jawab</button>`}
     </div></div>`}).join(''):'<div class="empty">Belum ada pertanyaan.</div>');
   if(draf.i!=null&&$('#ri')){$('#ri').value=draf.i;if(draf.n!=null)$('#rn').value=draf.n;if(draf.fokus)$('#'+draf.fokus)?.focus()}
   bindCount();
+  $$('[data-hidej]').forEach(b=>b.onclick=async()=>{const w=b.parentElement;b.outerHTML=`<span class="hidej" style="float:right;display:flex;gap:6px;margin-left:10px"><button class="btn sm danger" data-yes style="padding:3px 10px;font-size:12.5px">Ya, sembunyikan</button><button class="btn sm ghost" data-no style="padding:3px 10px;font-size:12.5px">Batal</button></span>`;
+    w.querySelector('[data-no]').onclick=()=>fillTanya();
+    w.querySelector('[data-yes]').onclick=async()=>{try{await API.setStatus('jawaban',+b.dataset.hidej,'disembunyikan');toast('Jawaban disembunyikan. Pertanyaannya tetap tampil.');load('tanya')}catch(e){toast(errMsg(e))}}});
   const rb=$('#rbatal');if(rb)rb.onclick=()=>{ui.reply=null;fillTanya()};
   $$('[data-reply]').forEach(b=>b.onclick=()=>{ui.reply=+b.dataset.reply;fillTanya();const i=$('#ri');i&&i.focus()});
   $$('[data-rf]').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const btn=$('#rsub');btn.disabled=true;
@@ -955,7 +961,11 @@ function fillMod(){
   const mk=(rows,tbl,label)=>rows.length?rows.map(x=>`<div class="adm-row"><div><b>${esc(label(x))}</b><br><span class="muted small">${esc(x.nama)} · ${lalu(x.created_at)}</span></div>${x.status==='tayang'?`<button class="btn sm danger" data-mod="${tbl}:${x.id}:disembunyikan">Sembunyikan</button>`:`<button class="btn sm ghost" data-mod="${tbl}:${x.id}:tayang">Tampilkan lagi</button>`}</div>`).join(''):'<p class="muted">Kosong.</p>';
   const a=$('#amod-iklan'),b=$('#amod-tanya');
   if(a)a.innerHTML=mk(S.iklan||[],'iklan',x=>`${x.jenis}: ${x.barang}`);
-  if(b)b.innerHTML=mk(S.tanya||[],'pertanyaan',x=>x.judul);
+  const tombol=(tbl,x)=>x.status==='tayang'?`<button class="btn sm danger" data-mod="${tbl}:${x.id}:disembunyikan">Sembunyikan</button>`:`<button class="btn sm ghost" data-mod="${tbl}:${x.id}:tayang">Tampilkan lagi</button>`;
+  const tanya=S.tanya||[];
+  if(b)b.innerHTML=tanya.length?tanya.map(x=>`<div class="adm-row"><div><b>${esc(x.judul)}</b>${x.status==='tayang'?'':' <span class="pill nt">disembunyikan</span>'}<br><span class="muted small">Pertanyaan · ${esc(x.nama)} · ${lalu(x.created_at)}</span></div>${tombol('pertanyaan',x)}</div>`+
+    (x.jawaban||[]).slice().sort((p,q)=>p.created_at<q.created_at?-1:1).map(j=>`<div class="adm-row sub ${j.status==='tayang'?'':'off'}"><div><b>${j.is_pakar?'<span class="pill ok">Pakar</span> ':''}${esc(j.nama)}</b>${j.status==='tayang'?'':' <span class="pill nt">disembunyikan</span>'}<br><span class="muted small">${esc(j.isi.length>160?j.isi.slice(0,160)+'…':j.isi)} · ${lalu(j.created_at)}</span></div>${tombol('jawaban',j)}</div>`).join('')
+  ).join(''):'<p class="muted">Kosong.</p>';
   $$('[data-mod]').forEach(btn=>btn.onclick=async()=>{const [t,id,st]=btn.dataset.mod.split(':');btn.disabled=true;try{await API.setStatus(t,+id,st);toast(st==='tayang'?'Ditampilkan lagi':'Disembunyikan');load(t==='iklan'?'iklan':'tanya')}catch(e){toast(errMsg(e));btn.disabled=false}});
 }
 function bindCount(){$$('[data-count]').forEach(h=>{const f=$('#'+h.dataset.count);if(!f)return;const max=+f.getAttribute('maxlength');const u=()=>{const n=f.value.length;h.textContent=`${n.toLocaleString('id-ID')} / ${max.toLocaleString('id-ID')} karakter`;h.style.color=n>max*.95?'var(--bad)':''};f.addEventListener('input',u);u()})}

@@ -141,8 +141,6 @@ section.s{padding-block:56px 0}
 section.s.last{padding-block:56px 72px}
 .svc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .sv{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--card-bd);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);min-width:0}
-.sv:hover{transform:translateY(-2px)}
-@media (prefers-reduced-motion:no-preference){.sv{transition:transform .15s}}
 .sv .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand-ink)}
 .sv:nth-child(2) .ic,.sv:nth-child(4) .ic{background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 55%,var(--ink))}
 .sv .ic svg{width:28px;height:28px}
@@ -285,6 +283,89 @@ section.s.last{padding-block:56px 72px}
 .sticky{position:sticky;top:calc(84px + env(safe-area-inset-top,0px))}
 .acts-row{display:flex;gap:10px;flex-wrap:wrap}
 
+
+/* ---------- animasi kecil ---------- */
+.skel{display:block;max-width:100%;border-radius:10px;background:linear-gradient(90deg,var(--sunken) 0%,color-mix(in srgb,var(--sunken) 35%,var(--surface)) 45%,var(--sunken) 90%);background-size:300% 100%}
+@media (prefers-reduced-motion:no-preference){
+  .skel{animation:kilau 1.4s ease-in-out infinite}
+  @keyframes kilau{from{background-position:100% 0}to{background-position:-100% 0}}
+  .btn,.chip,.quick a,.tabs button,.adm-nav button,.crop,.themes button{transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease,background-color .2s,color .2s}
+  .btn:active,.chip:active,.quick a:active,.adm-nav button:active,.themes button:active{transform:scale(.95)}
+  .pc,.sv,.lst,.crop,.who .card,.tech,.plan,.stat,.dx{transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease}
+  #app>*{animation:masuk .4s cubic-bezier(.2,.8,.2,1)}
+  @keyframes masuk{from{transform:translateY(12px)}}
+  .pgm:not([hidden]){animation:turun .35s ease-out}
+  @keyframes turun{from{transform:translateY(-8px)}}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .btn:hover{filter:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 16%,transparent),0 10px 26px color-mix(in srgb,var(--brand) 38%,transparent)}
+  .btn.ghost:hover,.btn.danger:hover{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 12%,transparent)}
+  .btn.kun:hover{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent),0 10px 26px color-mix(in srgb,var(--accent) 40%,transparent)}
+  .pc:hover,.sv:hover,.lst:hover,.crop:hover,.who .card:hover,.tech:hover,.plan:hover,.stat:hover{transform:translateY(-5px);box-shadow:0 2px 4px rgba(22,40,28,.06),0 20px 44px rgba(22,40,28,.15)}
+  .sv:hover .ic{box-shadow:0 0 0 6px color-mix(in srgb,var(--brand) 12%,transparent)}
+}
+
+/* ---------- pengumuman ---------- */
+.pgm{border-bottom:1px solid var(--line)}
+.pgm.info{background:var(--brand-soft)}
+.pgm.penting{background:var(--accent-soft)}
+.pgm-in{display:flex;align-items:center;gap:12px;padding-block:10px}
+.pgm-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;background:var(--brand);color:var(--on-brand)}
+.pgm.penting .pgm-ic{background:var(--accent);color:#1d1503}
+.pgm-tx{flex:1;min-width:0;font-size:14.5px;line-height:1.45}
+.pgm-tx span{color:var(--muted)}
+.pgm .x{background:transparent;border:0;width:32px;height:32px;border-radius:50%;font-size:20px;color:var(--muted);flex:none}
+.pgm .x:hover{background:var(--sunken)}
+
+/* ---------- dashboard admin ---------- */
+.adm-shell{background:radial-gradient(1100px 620px at 0% 0%,color-mix(in srgb,var(--brand) 20%,transparent),transparent 62%),radial-gradient(900px 520px at 100% 10%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%),var(--bg);padding-block:24px 64px}
+.adm-grid{display:grid;grid-template-columns:236px minmax(0,1fr);gap:20px;align-items:start}
+.glass,.adm-shell .card{background:color-mix(in srgb,var(--surface) 72%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.25);backdrop-filter:blur(16px) saturate(1.25);border:1px solid color-mix(in srgb,var(--surface) 50%,var(--line))}
+.adm-side{position:sticky;top:calc(84px + env(safe-area-inset-top,0px));border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow)}
+.adm-side .logo b{font-size:16px}
+.adm-nav{display:flex;flex-direction:column;gap:4px}
+.adm-nav button{display:flex;align-items:center;gap:10px;background:none;border:0;padding:10px 12px;border-radius:14px;font-weight:700;color:var(--muted);text-align:left;font-size:15px}
+.adm-nav button svg{width:20px;height:20px;flex:none}
+.adm-nav button:hover{background:color-mix(in srgb,var(--surface) 70%,transparent);color:var(--ink)}
+.adm-nav button[aria-current="page"]{background:var(--brand);color:var(--on-brand);box-shadow:0 6px 16px color-mix(in srgb,var(--brand) 30%,transparent)}
+.adm-foot{display:flex;flex-direction:column;gap:8px;align-items:flex-start;border-top:1px solid var(--line);padding-top:12px}
+.adm-foot .pill{white-space:normal}
+.adm-main{display:flex;flex-direction:column;gap:18px;min-width:0}
+.adm-grid>*{min-width:0}
+.sec-h h2.ttl{font-size:18px}
+#rk-bar text{font-size:15px}
+.adm-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.adm-head h1{font-size:clamp(26px,3.2vw,36px);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand-ink);margin-bottom:8px}
+.stat .ic svg{width:24px;height:24px}
+.stat .v{font-family:var(--f-head);font-size:34px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.stat .l{font-weight:800}
+.stat .s{font-size:13px;color:var(--muted)}
+.stat.alert{outline:2px solid var(--accent)}
+.stat.alert .ic{background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 55%,var(--ink))}
+.dash2{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:14px;align-items:start}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;font-weight:700;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.donut{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.donut svg{width:150px;height:150px;flex:none;max-width:100%}
+.donut .dn-v{font-family:var(--f-head);font-size:28px;font-weight:700;fill:var(--ink)}
+.donut .dn-l{font-size:12px;font-weight:700;fill:var(--muted)}
+.health{display:flex;gap:14px;align-items:flex-start}
+.hd{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none}
+.hd svg{width:28px;height:28px}
+@media (prefers-reduced-motion:no-preference){.hd.ok{animation:napas 2.4s ease-in-out infinite}@keyframes napas{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--good) 14%,transparent)}}}
+@media (max-width:920px){
+  .adm-grid{grid-template-columns:1fr}
+  .adm-side{position:static;padding:10px;border-radius:20px;gap:10px}
+  .adm-side>.logo,.adm-foot p{display:none}
+  .adm-nav{flex-direction:row;overflow-x:auto;scrollbar-width:none}
+  .adm-nav button{white-space:nowrap;flex:none}
+  .adm-foot{flex-direction:row;align-items:center;justify-content:space-between;border-top:0;padding-top:0;width:100%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dash2{grid-template-columns:1fr}
+}
 /* ---------- footer ---------- */
 footer{background:var(--foot);color:var(--foot-ink);margin-top:0;padding-block:44px calc(44px + env(safe-area-inset-bottom,0px))}
 footer .in{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px;font-size:15px}
@@ -344,6 +425,7 @@ footer .logo small{color:var(--foot-ink);opacity:.7}
     <nav class="menu" id="menu" aria-label="Semua halaman"></nav>
   </div>
 </header>
+<div id="pgm" hidden></div>
 <main id="app"></main>
 <footer class="g">
   <div class="in">
@@ -512,6 +594,7 @@ function startRealtime(){
    .on('postgres_changes',{event:'*',schema:'public',table:'pertanyaan'},()=>soon('tanya'))
    .on('postgres_changes',{event:'*',schema:'public',table:'jawaban'},()=>soon('tanya'))
    .on('postgres_changes',{event:'*',schema:'public',table:'pengaturan'},()=>loadT())
+   .on('postgres_changes',{event:'*',schema:'public',table:'pengumuman'},()=>loadPgm())
    .subscribe(st=>{S.conn=st==='SUBSCRIBED'?'langsung':(st==='CHANNEL_ERROR'||st==='TIMED_OUT'||st==='CLOSED')?'putus':'menyambung';fillConn()});
   // cadangan: segarkan berkala (mis. bila iklan disembunyikan admin)
   setInterval(()=>{if(document.visibilityState==='visible'){load('harga');load('iklan');load('tanya')}},90000);
@@ -682,7 +765,7 @@ const NAV=[['beranda','Beranda'],['harga','Harga'],['diagnosa','Diagnosa'],['pas
 let cur='beranda';
 const TABS=[['beranda','Beranda','home'],['harga','Harga','price'],['diagnosa','Diagnosa','diag'],['pasar','Pasar','market'],['forum','Forum','expert']];
 const TI={...IC,home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>'};
-let ui={kat:'Semua',q:'',sel:null,dg:{step:1,crop:null,picked:[]},mf:'Semua',reply:null,tab:'harga'};
+let ui={kat:'Semua',q:'',sel:null,dg:{step:1,crop:null,picked:[]},mf:'Semua',reply:null,tab:'ringkasan'};
 
 const P={
 beranda(){return `
@@ -702,7 +785,7 @@ beranda(){return `
   </section>
   <section class="g lift"><div class="in">
     <div class="sec-h"><h2>Harga terbaru</h2><a href="#harga">Lihat semua →</a></div>
-    <div class="strip" id="ticker"><div class="pc"><span class="muted">Memuat harga…</span></div></div>
+    <div class="strip" id="ticker" aria-busy="true">${skPc(4)}</div>
   </div></section>
   <section class="g s"><div class="in">
     <div class="sec-h"><h2>Layanan untuk petani dan pekebun</h2></div>
@@ -819,16 +902,12 @@ tentang(){return `<div class="g"><div class="in"><div class="ph"><div><span clas
   </div></div></div></div>`},
 
 admin(){
-  let body;
-  if(!LIVE){ui.tab='tampilan';body=`<p class="note"><b>Mode demo.</b> Database belum disambungkan, jadi pengaturan tampilan hanya tersimpan di browser ini. Input harga dan moderasi aktif setelah <b>config.js</b> diisi.</p>`+tampilanHTML()}
-  else if(!S.session)body=`<div class="card" style="max-width:440px"><h2 style="font-size:20px;margin-bottom:12px">Masuk admin</h2><form id="lform" style="display:flex;flex-direction:column;gap:12px"><label class="fld">Email<input id="le" type="email" required autocomplete="username"></label><label class="fld">Kata sandi<input id="lp" type="password" required autocomplete="current-password"></label><button class="btn" id="lsub">Masuk</button></form><p class="muted small" style="margin-top:12px">Akun admin dibuat oleh pemilik proyek di dashboard Supabase.</p></div>`;
-  else if(!S.admin)body=`<div class="card"><p>Akun <b>${esc(S.session.user.email)}</b> belum terdaftar sebagai admin.</p><p class="muted small" style="margin-top:6px">Daftarkan lewat perintah di bagian 8 file schema.sql.</p><button class="btn ghost sm" id="logout" style="margin-top:12px">Keluar</button></div>`;
-  else{
-    const tabs=[['harga','Input harga'],['moderasi','Moderasi'],['tampilan','Tampilan']];
-    body=`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><p class="muted">Masuk sebagai <b>${esc(S.session.user.email)}</b></p><button class="btn ghost sm" id="logout">Keluar</button></div>
-    <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${ui.tab===k}" data-tab="${k}">${l}</button>`).join('')}</div>`;
-    if(ui.tab==='harga'){
-      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:12px">Tambah harga</h2>
+  const box=b=>`<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Ruang admin</span><h1>Kelola data Nadi Terra</h1></div><span data-conn>${connPill()}</span></div><div class="pg">${b}</div></div></div>`;
+  if(LIVE&&!S.session)return box(`<div class="card" style="max-width:440px"><h2 style="font-size:20px;margin-bottom:12px">Masuk admin</h2><form id="lform" style="display:flex;flex-direction:column;gap:12px"><label class="fld">Email<input id="le" type="email" required autocomplete="username"></label><label class="fld">Kata sandi<input id="lp" type="password" required autocomplete="current-password"></label><button class="btn" id="lsub">Masuk</button></form><p class="muted small" style="margin-top:12px">Akun admin dibuat oleh pemilik proyek di dashboard Supabase.</p></div>`);
+  if(LIVE&&!S.admin)return box(`<div class="card"><p>Akun <b>${esc(S.session.user.email)}</b> belum terdaftar sebagai admin.</p><p class="muted small" style="margin-top:6px">Daftarkan lewat perintah di bagian 8 file schema.sql.</p><button class="btn ghost sm" id="logout" style="margin-top:12px">Keluar</button></div>`);
+  if(!LIVE&&(ui.tab==='harga'||ui.tab==='moderasi'))ui.tab='ringkasan';
+  let main;
+  if(ui.tab==='harga')main=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:12px">Tambah harga</h2>
       <form id="hform" class="fg">
         <label class="fld full">Komoditas<input id="hk" list="hkl" required minlength="2" maxlength="80" placeholder="Pilih atau ketik"><datalist id="hkl">${STRATEGIS.map(s=>`<option value="${esc(s[0])}">`).join('')}</datalist></label>
         <label class="fld">Kategori<select id="hc">${KATEGORI.map(k=>`<option>${k}</option>`).join('')}</select></label>
@@ -843,13 +922,13 @@ admin(){
         <label class="fld full">Catatan (opsional)<input id="hn" maxlength="200"></label>
         <div class="full"><button class="btn" id="hsub">Simpan harga</button></div>
       </form></div>
-      <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Input terakhir</h2><div id="arecent"><p class="muted">Memuat…</p></div></div></div>`;
-    }else if(ui.tab==='tampilan'){body+=tampilanHTML()}else{
-      body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan &amp; jawaban</h2><div id="amod-tanya"></div></div></div>
+      <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Input terakhir</h2><div id="arecent">${skRows(3)}</div></div></div>`;
+  else if(ui.tab==='moderasi')main=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan &amp; jawaban</h2><div id="amod-tanya"></div></div></div>
       <p class="muted small">Jawab sebagai pakar langsung dari halaman Forum Pakar saat masuk sebagai admin.</p>`;
-    }
-  }
-  return `<div class="g"><div class="in"><div class="ph"><div><span class="eyebrow">Ruang admin</span><h1>Kelola data Nadi Terra</h1></div><span data-conn>${connPill()}</span></div><div class="pg">${body}</div></div></div>`;
+  else if(ui.tab==='pengumuman')main=pgmAdminHTML();
+  else if(ui.tab==='tampilan')main=tampilanHTML();
+  else{ui.tab='ringkasan';main=ringkasanHTML()}
+  return adminShell(main);
 }
 };
 
@@ -858,6 +937,7 @@ admin(){
    ===================================================================== */
 function loadingOr(key,html){if(S.err[key])return`<div class="empty"><p>${esc(S.err[key])}</p><button class="btn sm ghost" data-retry="${key}" style="margin-top:10px">Coba lagi</button></div>`;return html}
 function fill(key){
+  if(cur==='admin'&&ui.tab==='ringkasan'&&$('#st-iklan'))loadRingkasan();
   if(key==='harga'){fillTicker();if(cur==='harga'){fillHargaList();fillHargaDetail();fillWait()}}
   if(key==='iklan'){if(cur==='pasar')fillIklan();if(cur==='admin'&&ui.tab==='moderasi')fillMod()}
   if(key==='tanya'){if(cur==='forum')fillTanya();if(cur==='admin'&&ui.tab==='moderasi')fillMod()}
@@ -869,15 +949,16 @@ function fillTicker(){
   if(!S.harga)return;
   const rows=S.harga.slice().sort((a,b)=>(a.metode==='contoh')-(b.metode==='contoh')||(b.periode_mulai>a.periode_mulai?1:-1)).slice(0,8);
   el.innerHTML=rows.length?rows.map(r=>`<a class="pc" href="#harga" data-pick="${esc(r.komoditas+'|'+r.wilayah)}"><span class="top-row"><span class="kat">${esc(r.kategori)}</span>${metodeBadge(r)}</span>
-    <span class="nm">${esc(r.komoditas)}</span><span class="pr num">${rp(r.harga)}<small> / ${esc(r.satuan)}</small></span><span class="num small">${chg(r)}</span>
+    <span class="nm">${esc(r.komoditas)}</span><span class="pr num"><span data-cu="${r.harga}" data-fmt="rp">${rp(r.harga)}</span><small> / ${esc(r.satuan)}</small></span><span class="num small">${chg(r)}</span>
     <span class="ft">${esc(r.wilayah)} · ${periode(r)}</span></a>`).join(''):'<div class="pc"><span class="muted">Belum ada data harga.</span></div>';
+  el.removeAttribute('aria-busy');if(rows.length&&!el.dataset.anim){el.dataset.anim='1';countUpAll(el)}
   $$('[data-pick]').forEach(a=>a.onclick=()=>{ui.sel=a.dataset.pick;ui.q='';ui.kat='Semua'});
 }
 const hkey=r=>r.komoditas+'|'+r.wilayah;
 function hargaFiltered(){return (S.harga||[]).filter(r=>(ui.kat==='Semua'||r.kategori===ui.kat)&&r.komoditas.toLowerCase().includes(ui.q.toLowerCase())).sort((a,b)=>a.kategori.localeCompare(b.kategori)||a.komoditas.localeCompare(b.komoditas))}
 function fillHargaList(){
   const el=$('#hlist');if(!el)return;
-  if(!S.harga&&!S.err.harga){el.innerHTML='<div class="empty">Memuat harga…</div>';return}
+  if(!S.harga&&!S.err.harga){el.innerHTML=skRows(4);return}
   const rows=hargaFiltered();
   if(rows.length&&(!ui.sel||!rows.find(r=>hkey(r)===ui.sel)))ui.sel=hkey(rows[0]);
   el.innerHTML=loadingOr('harga',rows.length?`<div class="tblw"><table class="tbl"><thead><tr><th>Komoditas</th><th class="r">Harga</th><th class="r">Perubahan</th><th>Periode</th><th>Asal data</th></tr></thead><tbody>
@@ -893,7 +974,7 @@ async function fillHargaDetail(){
   el.innerHTML=`<div><span class="pill nt">${esc(r.kategori)}</span> ${metodeBadge(r)}<h2 style="font-size:23px;margin-top:8px">${esc(r.komoditas)}</h2>
     <p style="margin-top:6px"><b class="num" style="font-size:28px">${rp(r.harga)}</b> <span class="muted">/ ${esc(r.satuan)}</span> &nbsp;<span class="num">${chg(r)}</span></p>
     <p class="muted small" style="margin-top:4px">${esc(r.wilayah)} · harga ${esc(r.tingkat)} · periode ${periode(r)}</p></div>
-    <div class="chart" id="hchart"><p class="muted small">Memuat riwayat…</p></div>
+    <div class="chart" id="hchart">${sk('100%',180)}</div>
     <p class="small">Sumber: ${safeUrl(r.sumber_url)?`<a href="${esc(r.sumber_url)}" target="_blank" rel="noopener">${esc(r.sumber)}</a>`:esc(r.sumber)}${r.catatan?`<br><span class="muted">${esc(r.catatan)}</span>`:''}</p>
     <div style="border-top:1px solid var(--line);padding-top:14px"><b>Hitung nilai jual</b><div class="fg" style="margin-top:10px;align-items:end"><label class="fld">Jumlah (${esc(r.satuan)})<input id="calc" type="number" min="0" inputmode="decimal" value="1000"></label><p style="padding-bottom:10px">≈ <b class="num" id="calco"></b></p></div></div>`;
   const c=$('#calc'),o=$('#calco');const u=()=>o.textContent=rp(Math.round((+c.value||0)*r.harga));c.oninput=u;u();
@@ -919,7 +1000,7 @@ function fillWait(){
 }
 function fillIklan(){
   const el=$('#mlist');if(!el)return;
-  if(!S.iklan&&!S.err.iklan){el.innerHTML='<div class="card empty">Memuat iklan…</div>';return}
+  if(!S.iklan&&!S.err.iklan){el.innerHTML=skLst(3);return}
   const rows=(S.iklan||[]).filter(x=>x.status==='tayang'&&(ui.mf==='Semua'||x.jenis===ui.mf));
   el.innerHTML=loadingOr('iklan',rows.length?rows.map(x=>`<div class="card lst"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span class="pill ${x.jenis==='Jual'?'ok':'wn'}">${x.jenis==='Jual'?'Dijual':'Dicari'}</span><span class="muted small">${x.contoh?'Contoh':lalu(x.created_at)}</span></div>
      <h3>${esc(x.barang)}</h3><div class="price">${/^\d/.test(x.harga)?'Rp'+esc(x.harga):esc(x.harga)}</div>
@@ -930,7 +1011,7 @@ function fillIklan(){
 function fillTanya(){
   const el=$('#flist');if(!el)return;
   const draf={n:$('#rn')?.value,i:$('#ri')?.value,fokus:document.activeElement&&document.activeElement.id};
-  if(!S.tanya&&!S.err.tanya){el.innerHTML='<div class="empty">Memuat pertanyaan…</div>';return}
+  if(!S.tanya&&!S.err.tanya){el.innerHTML=skThread(3);return}
   const rows=(S.tanya||[]).filter(t=>t.status==='tayang');
   el.innerHTML=loadingOr('tanya',rows.length?rows.map(t=>{const js=(t.jawaban||[]).filter(j=>j.status==='tayang').sort((a,b)=>b.is_pakar-a.is_pakar||(a.created_at<b.created_at?-1:1));
     return `<div class="thread"><div class="av">${esc((t.nama||'?')[0].toUpperCase())}</div><div style="min-width:0;flex:1"><h4>${esc(t.judul)}</h4><p class="meta">${esc(t.nama)} · ${esc(t.komoditas)} · ${lalu(t.created_at)}</p><p style="margin-top:6px">${esc(t.isi)}</p>
@@ -974,6 +1055,187 @@ function bindCopy(){$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await n
 /* =====================================================================
    RENDER & INTERAKSI
    ===================================================================== */
+/* =====================================================================
+   ANIMASI KECIL: kerangka berkilau (skeleton) dan angka menghitung naik
+   ===================================================================== */
+const DIAM=()=>matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sk=(w,h,mt=0)=>`<span class="skel" style="width:${w};height:${h}px;margin-top:${mt}px"></span>`;
+const skPc=n=>Array.from({length:n},()=>`<div class="pc" aria-hidden="true">${sk('40%',12)}${sk('85%',16,10)}${sk('60%',28,8)}${sk('45%',12,16)}</div>`).join('');
+const skRows=n=>`<div aria-hidden="true" style="padding:12px;display:flex;flex-direction:column;gap:16px">${Array.from({length:n},()=>`<div style="display:flex;gap:16px;align-items:center"><div style="flex:1;display:flex;flex-direction:column;gap:8px">${sk('55%',14)}${sk('35%',11)}</div>${sk('80px',18)}</div>`).join('')}</div>`;
+const skLst=n=>Array.from({length:n},()=>`<div class="card lst" aria-hidden="true">${sk('30%',20)}${sk('75%',18,8)}${sk('45%',24,6)}${sk('90%',12,6)}${sk('100%',38,10)}</div>`).join('');
+const skThread=n=>Array.from({length:n},()=>`<div class="thread" aria-hidden="true"><span class="skel" style="width:42px;height:42px;border-radius:50%;flex:none"></span><div style="flex:1;display:flex;flex-direction:column;gap:8px">${sk('70%',16)}${sk('40%',11)}${sk('95%',12,4)}${sk('80%',12)}</div></div>`).join('');
+function countUp(el,to,fmt){
+  if(DIAM()||!isFinite(to)){el.textContent=fmt(to);return}
+  const t0=performance.now(),d=750;
+  const step=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=fmt(p<1?Math.round(to*e):to);if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+}
+function countUpAll(root){$$('[data-cu]').forEach(el=>{if(root&&!root.contains(el))return;const v=+el.dataset.cu;const f=el.dataset.fmt==='rp'?rp:(n=>Number(n).toLocaleString('id-ID'));countUp(el,v,f)})}
+
+/* =====================================================================
+   PENGUMUMAN: ditulis admin, tampil sebagai banner untuk semua pengunjung
+   ===================================================================== */
+DEMO.pengumuman=[];
+S.pgm=null;S.pgmErr=null;
+const hariIni=()=>new Date(Date.now()+7*3600e3).toISOString().slice(0,10);
+const pgmAktif=p=>p.aktif&&(!p.berakhir||p.berakhir>=hariIni());
+API.pengumuman=async()=>{if(!LIVE)return DEMO.pengumuman.slice();return q(sb.from('pengumuman').select('*').order('created_at',{ascending:false}).limit(30))};
+API.addPgm=async r=>{if(!LIVE){DEMO.pengumuman.unshift({...r,id:++demoSeq,aktif:true,created_at:new Date().toISOString()});return}const {error}=await withTimeout(sb.from('pengumuman').insert(r));if(error)throw error};
+API.setPgm=async(id,aktif)=>{if(!LIVE){const p=DEMO.pengumuman.find(x=>x.id===id);if(p)p.aktif=aktif;return}const {error}=await withTimeout(sb.from('pengumuman').update({aktif}).eq('id',id));if(error)throw error};
+API.delPgm=async id=>{if(!LIVE){DEMO.pengumuman=DEMO.pengumuman.filter(x=>x.id!==id);return}const {error}=await withTimeout(sb.from('pengumuman').delete().eq('id',id));if(error)throw error};
+async function loadPgm(){try{S.pgm=await API.pengumuman();S.pgmErr=null}catch(e){S.pgm=[];S.pgmErr=/pengumuman|relation|schema cache|does not exist/i.test(e.message||'')?'missing':errMsg(e)}fillBanner();if(cur==='admin'&&ui.tab==='pengumuman')fillPgmAdmin()}
+const tautanOk=u=>/^(https?:\/\/|#[a-z0-9-]+$)/i.test(u||'');
+function fillBanner(){
+  const el=$('#pgm');if(!el)return;
+  const p=(S.pgm||[]).find(pgmAktif);
+  let tutup='';try{tutup=localStorage.getItem('nt_pgm_tutup')||''}catch(e){}
+  if(!p||tutup===String(p.id)){el.hidden=true;el.innerHTML='';return}
+  el.hidden=false;el.className='pgm '+(p.tingkat==='penting'?'penting':'info');
+  const link=tautanOk(p.tautan)?`<a class="btn sm ${p.tingkat==='penting'?'kun':''}" href="${esc(p.tautan)}" ${p.tautan.startsWith('#')?'':'target="_blank" rel="noopener"'}>Lihat</a>`:'';
+  el.innerHTML=`<div class="g"><div class="in pgm-in"><span class="pgm-ic" aria-hidden="true">${p.tingkat==='penting'?'!':'i'}</span><div class="pgm-tx"><b>${esc(p.judul)}</b>${p.isi?` <span>${esc(p.isi)}</span>`:''}</div>${link}<button class="x" id="pgm-x" aria-label="Tutup pengumuman">×</button></div></div>`;
+  $('#pgm-x').onclick=()=>{try{localStorage.setItem('nt_pgm_tutup',String(p.id))}catch(e){}el.hidden=true};
+}
+function pgmAdminHTML(){
+  return `${S.pgmErr==='missing'?'<p class="note"><b>Satu langkah lagi:</b> jalankan file <b>supabase/pengumuman.sql</b> di Supabase › SQL Editor supaya pengumuman bisa disimpan.</p>':''}
+  <div class="split">
+    <div class="card"><h2 class="ttl">Tulis pengumuman</h2>
+      <form id="pform" class="fg">
+        <label class="fld full">Judul<input id="pj" required minlength="3" maxlength="90" placeholder="Contoh: Harga TBS Sumut naik minggu ini"><span class="hint" data-count="pj"></span></label>
+        <label class="fld full">Isi singkat (opsional)<textarea id="pi" rows="3" maxlength="400" placeholder="Satu atau dua kalimat penjelasan"></textarea><span class="hint" data-count="pi"></span></label>
+        <label class="fld">Jenis<select id="pt"><option value="info">Info biasa</option><option value="penting">Penting (warna mencolok)</option></select></label>
+        <label class="fld">Tampil sampai (opsional)<input id="pb" type="date"></label>
+        <label class="fld full">Tautan tombol "Lihat" (opsional)<input id="pu" maxlength="300" placeholder="#harga atau https://…"><span class="hint">Pakai #harga, #pasar, #forum untuk halaman di website ini.</span></label>
+        <div class="full"><button class="btn" id="psub">Terbitkan pengumuman</button></div>
+      </form>
+      <p class="muted small" style="margin-top:12px">Pengumuman aktif terbaru tampil di bagian atas semua halaman. Pengunjung bisa menutupnya.</p></div>
+    <div class="card"><h2 class="ttl">Daftar pengumuman</h2><div id="plist">${skRows(3)}</div></div>
+  </div>`;
+}
+function fillPgmAdmin(){
+  const el=$('#plist');if(!el)return;
+  if(!S.pgm){el.innerHTML=skRows(3);return}
+  const rows=S.pgm;
+  el.innerHTML=rows.length?rows.map(p=>{const st=pgmAktif(p)?['ok','Tayang']:!p.aktif?['nt','Nonaktif']:['wn','Kedaluwarsa'];
+    return `<div class="adm-row"><div><b>${esc(p.judul)}</b> <span class="pill ${st[0]}">${st[1]}</span>${p.tingkat==='penting'?' <span class="pill wn">Penting</span>':''}<br><span class="muted small">${lalu(p.created_at)}${p.berakhir?' · sampai '+tgl(p.berakhir):''}</span></div>
+    <span class="acts-row" data-pw="${p.id}">${p.aktif?`<button class="btn sm ghost" data-pact="${p.id}:0">Nonaktifkan</button>`:`<button class="btn sm ghost" data-pact="${p.id}:1">Aktifkan</button>`}<button class="btn sm danger" data-pdel="${p.id}">Hapus</button></span></div>`}).join(''):'<p class="muted">Belum ada pengumuman.</p>';
+  $$('[data-pact]').forEach(b=>b.onclick=async()=>{const [id,a]=b.dataset.pact.split(':');b.disabled=true;try{await API.setPgm(+id,a==='1');toast(a==='1'?'Pengumuman tayang lagi':'Pengumuman dinonaktifkan');loadPgm()}catch(e){toast(errMsg(e));b.disabled=false}});
+  $$('[data-pdel]').forEach(b=>b.onclick=()=>{const w=b.parentElement;w.innerHTML=`<span class="small">Hapus permanen?</span><button class="btn sm danger" data-yes>Hapus</button><button class="btn sm ghost" data-no>Batal</button>`;
+    w.querySelector('[data-no]').onclick=fillPgmAdmin;w.querySelector('[data-yes]').onclick=async()=>{try{await API.delPgm(+b.dataset.pdel);toast('Pengumuman dihapus');loadPgm()}catch(e){toast(errMsg(e))}}});
+}
+function bindPgmAdmin(){
+  const f=$('#pform');if(!f)return;bindCount();
+  f.onsubmit=async e=>{e.preventDefault();const g=id=>$('#'+id).value.trim();const btn=$('#psub');
+    const r={judul:g('pj'),isi:g('pi')||null,tingkat:g('pt'),berakhir:g('pb')||null,tautan:g('pu')||null};
+    if(r.tautan&&!tautanOk(r.tautan)){toast('Tautan harus diawali #nama-halaman atau https://');return}
+    if(r.berakhir&&r.berakhir<hariIni()){toast('Tanggal tampil sampai sudah lewat');return}
+    btn.disabled=true;try{await API.addPgm(r);f.reset();bindCount();try{localStorage.removeItem('nt_pgm_tutup')}catch(_){}toast('Pengumuman tayang di website');loadPgm()}catch(err){toast(errMsg(err))}btn.disabled=false};
+  fillPgmAdmin();
+}
+
+/* =====================================================================
+   DASHBOARD ADMIN V2
+   ===================================================================== */
+const AIC={
+ ringkasan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>',
+ harga:IC.price,
+ moderasi:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+ pengumuman:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 9a3 3 0 0 1 0 6M19 6a7 7 0 0 1 0 12"/></svg>',
+ tampilan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4A5.6 5.6 0 0 0 22 10c0-4.4-4.5-8-10-8z"/></svg>',
+ robot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 14h.01M15 14h.01"/></svg>'
+};
+const ADM_MENU=[['ringkasan','Ringkasan'],['harga','Input harga'],['moderasi','Moderasi'],['pengumuman','Pengumuman'],['tampilan','Tampilan']];
+const ADM_JUDUL={ringkasan:['Ringkasan','Kondisi Nadi Terra hari ini dalam sekali lihat.'],harga:['Input harga','Tambahkan harga dari pengumuman resmi, misalnya penetapan TBS Disbun.'],moderasi:['Moderasi','Sembunyikan iklan, pertanyaan, atau jawaban yang melanggar aturan.'],pengumuman:['Pengumuman','Info singkat yang tampil di bagian atas website untuk semua pengunjung.'],tampilan:['Tampilan','Logo, foto, warna, dan tulisan website.']};
+function sapaan(){const h=(new Date().getUTCHours()+7)%24;return h<11&&h>=4?'Selamat pagi':h<15&&h>=11?'Selamat siang':h<18&&h>=15?'Selamat sore':'Selamat malam'}
+S.rk=null;S.rkErr=null;
+API.ringkasan=async()=>{
+  if(!LIVE)return{iklan:DEMO.iklan.slice(),tanya:DEMO.tanya.slice(),robot:null};
+  const [iklan,tanya,robot]=await Promise.all([
+    q(sb.from('iklan').select('id,jenis,status,created_at').order('created_at',{ascending:false}).limit(1000)),
+    q(sb.from('pertanyaan').select('id,judul,nama,komoditas,status,created_at,jawaban(id,is_pakar,status,created_at)').order('created_at',{ascending:false}).limit(500)),
+    q(sb.from('harga').select('created_at,periode_mulai').eq('metode','otomatis').order('created_at',{ascending:false}).limit(1))]);
+  return{iklan,tanya,robot:robot[0]||null};
+};
+let rkTimer=null;
+function loadRingkasan(){clearTimeout(rkTimer);rkTimer=setTimeout(async()=>{try{S.rk=await API.ringkasan();S.rkErr=null}catch(e){S.rkErr=errMsg(e)}fillRingkasan()},250)}
+function ringkasanHTML(){
+  const stat=k=>`<div class="card stat" id="st-${k}">${sk('44px',44)}${sk('50%',30,10)}${sk('70%',13,4)}</div>`;
+  return `<div class="stats">${['iklan','tunggu','jawab','kom'].map(stat).join('')}</div>
+  <div class="dash2">
+    <div class="card"><div class="sec-h" style="margin-bottom:6px"><h2 class="ttl" style="margin:0">Aktivitas 14 hari terakhir</h2><span class="legend"><span><i style="background:var(--brand)"></i>Iklan</span><span><i style="background:var(--accent)"></i>Pertanyaan</span></span></div><div class="chart" id="rk-bar">${sk('100%',190,8)}</div></div>
+    <div class="card"><h2 class="ttl">Iklan aktif di pasar</h2><div id="rk-donut">${sk('100%',150)}</div></div>
+  </div>
+  <div class="dash2">
+    <div class="card"><div class="sec-h" style="margin-bottom:4px"><h2 class="ttl" style="margin:0">Menunggu jawaban pakar</h2><a href="#forum">Buka forum →</a></div><div id="rk-tunggu">${skRows(3)}</div></div>
+    <div class="card"><h2 class="ttl">Robot harga otomatis</h2><div id="rk-robot">${skRows(1)}</div></div>
+  </div>`;
+}
+const wib=iso=>new Date(new Date(iso).getTime()+7*3600e3).toISOString().slice(0,10);
+function fillRingkasan(){
+  if(!$('#st-iklan'))return;
+  if(S.rkErr){$('#rk-bar').innerHTML=`<p class="muted">${esc(S.rkErr)}</p>`;return}
+  const d=S.rk;if(!d)return;
+  const now=Date.now(),wk=now-7*86400e3;
+  const aktif=d.iklan.filter(x=>x.status==='tayang'),jual=aktif.filter(x=>x.jenis==='Jual').length,beli=aktif.length-jual;
+  const tunggu=d.tanya.filter(t=>t.status==='tayang'&&!(t.jawaban||[]).some(j=>j.is_pakar&&j.status==='tayang'));
+  const jawabMinggu=d.tanya.reduce((a,t)=>a+(t.jawaban||[]).filter(j=>new Date(j.created_at)>=wk).length,0);
+  const iklanBaru=d.iklan.filter(x=>new Date(x.created_at)>=wk).length;
+  const kom=new Set((S.harga||[]).filter(r=>r.metode!=='contoh').map(r=>r.komoditas)).size;
+  const card=(k,ic,v,l,s,cls='')=>{const el=$('#st-'+k);el.className='card stat '+cls;el.innerHTML=`<span class="ic">${ic}</span><span class="v" data-cu="${v}">${v}</span><span class="l">${l}</span><span class="s">${s}</span>`};
+  card('iklan',IC.market,aktif.length,'Iklan aktif',`${iklanBaru} iklan baru minggu ini`);
+  card('tunggu',IC.expert,tunggu.length,'Menunggu pakar',tunggu.length?'Pertanyaan belum dijawab pakar':'Semua pertanyaan sudah dijawab',tunggu.length?'alert':'');
+  card('jawab',AIC.moderasi,jawabMinggu,'Jawaban minggu ini','Dari pakar dan komunitas');
+  card('kom',IC.price,kom,'Komoditas berharga',`${STRATEGIS.length} komoditas strategis ditargetkan`);
+  countUpAll($('.stats'));
+  // grafik batang
+  const days=[];for(let i=13;i>=0;i--)days.push(new Date(now+7*3600e3-i*86400e3).toISOString().slice(0,10));
+  const ci={},ct={};d.iklan.forEach(x=>{const k=wib(x.created_at);ci[k]=(ci[k]||0)+1});d.tanya.forEach(x=>{const k=wib(x.created_at);ct[k]=(ct[k]||0)+1});
+  const mx=Math.max(1,...days.map(k=>Math.max(ci[k]||0,ct[k]||0)));const stp=Math.max(1,Math.ceil(mx/4)),top=stp*4;
+  const W=640,H=230,pl=30,pr=8,pt=12,pb=30,gw=(W-pl-pr)/14,bw=Math.min(14,gw*.32);
+  const y=v=>pt+(top-v)*(H-pt-pb)/top;let g='';
+  for(let v=0;v<=top;v+=stp)g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  days.forEach((k,i)=>{const cx=pl+gw*i+gw/2,a=ci[k]||0,b=ct[k]||0,dt=new Date(k+'T00:00:00');
+    g+=`<g><title>${dt.getDate()} ${BLN[dt.getMonth()]}: ${a} iklan, ${b} pertanyaan</title><rect x="${cx-bw-1}" y="${y(a)}" width="${bw}" height="${Math.max(0,y(0)-y(a))}" rx="4" fill="var(--brand)"/><rect x="${cx+1}" y="${y(b)}" width="${bw}" height="${Math.max(0,y(0)-y(b))}" rx="4" fill="var(--accent)"/></g>`;
+    if(i%2===1||i===13)g+=`<text x="${cx}" y="${H-10}" text-anchor="middle">${i===13?'Hari ini':dt.getDate()+' '+BLN[dt.getMonth()]}</text>`});
+  const kosong=!days.some(k=>ci[k]||ct[k]);
+  $('#rk-bar').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Jumlah iklan dan pertanyaan per hari, 14 hari terakhir">${g}</svg>${kosong?'<p class="muted small">Belum ada iklan atau pertanyaan baru dalam 14 hari terakhir.</p>':''}`;
+  // donat jual/beli
+  const tot=jual+beli,C=2*Math.PI*54,fr=tot?jual/tot:0;
+  $('#rk-donut').innerHTML=tot?`<div class="donut"><svg viewBox="0 0 140 140" role="img" aria-label="${jual} iklan jual, ${beli} iklan beli"><circle cx="70" cy="70" r="54" fill="none" stroke="var(--accent)" stroke-width="18"/><circle cx="70" cy="70" r="54" fill="none" stroke="var(--brand)" stroke-width="18" stroke-dasharray="${(C*fr).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 70 70)" stroke-linecap="${fr>0&&fr<1?'round':'butt'}"/><text x="70" y="68" text-anchor="middle" class="dn-v">${tot}</text><text x="70" y="88" text-anchor="middle" class="dn-l">iklan</text></svg>
+    <div class="legend" style="flex-direction:column;gap:8px"><span><i style="background:var(--brand)"></i>Dijual · <b>${jual}</b> (${Math.round(fr*100)}%)</span><span><i style="background:var(--accent)"></i>Dicari · <b>${beli}</b> (${100-Math.round(fr*100)}%)</span></div></div>`:'<p class="muted">Belum ada iklan aktif.</p>';
+  // menunggu pakar
+  $('#rk-tunggu').innerHTML=tunggu.length?tunggu.slice(0,5).map(t=>`<div class="adm-row"><div><b>${esc(t.judul)}</b><br><span class="muted small">${esc(t.nama)} · ${esc(t.komoditas)} · ${lalu(t.created_at)}</span></div><a class="btn sm" href="#forum">Jawab</a></div>`).join('')+(tunggu.length>5?`<p class="muted small" style="margin-top:8px">dan ${tunggu.length-5} pertanyaan lainnya</p>`:''):'<p class="muted" style="padding:8px 0">Tidak ada yang menunggu. Mantap.</p>';
+  // robot
+  let st,tx;
+  if(!LIVE){st='nt';tx='Mode demo. Robot aktif setelah database dan GitHub Actions tersambung.'}
+  else if(!d.robot){st='bd';tx='Belum ada data dari robot. Jalankan "Tarik harga pangan (PIHPS BI)" di GitHub › Actions.'}
+  else{const jam=(now-new Date(d.robot.created_at))/3600e3;st=jam<48?'ok':jam<96?'wn':'bd';
+    tx=`Data baru terakhir masuk <b>${lalu(d.robot.created_at)}</b>, harga per ${tgl(d.robot.periode_mulai)}.`+(st==='ok'?' Robot berjalan normal.':st==='wn'?' Mungkin libur akhir pekan, atau robot terlewat. Cek GitHub › Actions bila berlanjut.':' Robot kemungkinan berhenti. Buka GitHub › Actions dan jalankan ulang.')}
+  $('#rk-robot').innerHTML=`<div class="health"><span class="hd ${st}">${AIC.robot}</span><div><span class="pill ${st}">${st==='ok'?'Normal':st==='wn'?'Perlu dicek':st==='bd'?'Bermasalah':'Demo'}</span><p style="margin-top:6px">${tx}</p></div></div>`;
+}
+function adminShell(main){
+  const menu=ADM_MENU.filter(m=>LIVE||['ringkasan','pengumuman','tampilan'].includes(m[0]));
+  if(!menu.find(m=>m[0]===ui.tab))ui.tab='ringkasan';
+  const [jd,ds]=ADM_JUDUL[ui.tab];
+  return `<div class="adm-shell"><div class="g"><div class="in adm-grid">
+    <aside class="adm-side glass" aria-label="Menu admin">
+      <div class="logo"><span class="lg" data-logo></span><span><b data-t="nama">${esc(T.nama)}</b><small>Ruang admin</small></span></div>
+      <nav class="adm-nav">${menu.map(([k,l])=>`<button type="button" data-tab="${k}" ${ui.tab===k?'aria-current="page"':''}>${AIC[k]}<span>${l}</span></button>`).join('')}</nav>
+      <div class="adm-foot"><span data-conn>${connPill()}</span>${LIVE?`<p class="small muted" style="overflow-wrap:anywhere">${esc(S.session.user.email)}</p><button class="btn sm ghost" id="logout">Keluar</button>`:''}</div>
+    </aside>
+    <div class="adm-main">
+      ${!LIVE?'<p class="note"><b>Mode demo.</b> Database belum disambungkan. Input harga dan moderasi aktif setelah <b>config.js</b> diisi; pengumuman dan tampilan hanya tersimpan sementara.</p>':''}
+      <div class="adm-head"><div>${ui.tab==='ringkasan'?`<p class="muted" style="font-weight:700">${sapaan()}, Admin</p>`:''}<h1>${jd}</h1><p class="muted">${ds}</p></div>
+        ${ui.tab==='ringkasan'?`<div class="acts-row">${LIVE?'<button class="btn" data-tab="harga">+ Input harga</button>':''}<button class="btn ghost" data-tab="pengumuman">Tulis pengumuman</button></div>`:''}</div>
+      ${main}
+    </div></div></div></div>`;
+}
+function bindAdmin(){
+  $$('[data-tab]').forEach(b=>b.onclick=()=>{if(ui.tab==='tampilan'&&b.dataset.tab!=='tampilan'){TD=null}ui.tab=b.dataset.tab;render();scrollTo(0,0)});
+  if(ui.tab==='ringkasan'&&$('#st-iklan')){fillRingkasan();loadRingkasan()}
+  if(ui.tab==='pengumuman')bindPgmAdmin();
+  if(ui.tab==='tampilan')bindTampilan();
+}
+
 function render(){
   let v=location.hash.slice(1);if(!P[v])v='beranda';if(v!=='admin')TD=null;cur=v;
   $('#menu').innerHTML=NAV.map(([k,l])=>`<a href="#${k}" class="${k===v?'on':''}" ${k===v?'aria-current="page"':''}>${l}</a>`).join('')+`<a href="#paket" class="cta ${v==='paket'?'on':''}">Paket</a>`;
@@ -985,7 +1247,7 @@ function render(){
 }
 function bind(v){
   if(v==='beranda'){fillTicker();$('#qs').onsubmit=e=>{e.preventDefault();ui.q=$('#qsi').value.trim();ui.kat='Semua';ui.sel=null;location.hash='harga'}}
-  if(v==='admin'&&(ui.tab==='tampilan'||!LIVE))bindTampilan();
+  if(v==='admin'&&(!LIVE||S.admin))bindAdmin();
   if(v==='harga'){
     $$('[data-kat]').forEach(b=>b.onclick=()=>{ui.kat=b.dataset.kat;$$('[data-kat]').forEach(x=>x.setAttribute('aria-pressed',x===b));ui.sel=null;fillHargaList();fillHargaDetail()});
     $('#pq').oninput=e=>{ui.q=e.target.value;ui.sel=null;fillHargaList();fillHargaDetail()};
@@ -1017,7 +1279,6 @@ function bind(v){
       const {error}=await sb.auth.signInWithPassword({email:$('#le').value.trim(),password:$('#lp').value});
       if(error){toast('Email atau kata sandi salah');btn.disabled=false}};
     const lo=$('#logout');if(lo)lo.onclick=()=>sb.auth.signOut();
-    $$('[data-tab]').forEach(b=>b.onclick=()=>{ui.tab=b.dataset.tab;render()});
     const hf=$('#hform');
     if(hf){
       $('#hm').value=new Date().toISOString().slice(0,10);
@@ -1059,7 +1320,7 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
 setTimeout(showInstall,2500);
 
 render();
-load('harga');load('iklan');load('tanya');loadT();
+load('harga');load('iklan');load('tanya');loadT();loadPgm();
 initAuth().then(()=>{if(cur==='admin')render()});
 startRealtime();
 </script>

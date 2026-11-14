@@ -230,8 +230,8 @@ section.s.last{padding-block:56px 72px}
 .av{width:42px;height:42px;border-radius:50%;background:var(--brand-soft);color:var(--brand-ink);display:grid;place-items:center;font-weight:700;flex:none;font-family:var(--f-head)}
 .thread h4{font-size:17px;overflow-wrap:anywhere}
 .thread .meta{font-size:13px;color:var(--muted);margin-top:2px}
-.thread p{overflow-wrap:anywhere}
-.reply{margin-top:8px;background:var(--sunken);border-radius:14px;padding:10px 14px;font-size:14.5px;overflow-wrap:anywhere}
+.thread p{overflow-wrap:anywhere;white-space:pre-line}
+.reply{white-space:pre-line;margin-top:8px;background:var(--sunken);border-radius:14px;padding:10px 14px;font-size:14.5px;overflow-wrap:anywhere}
 .reply.pk{background:var(--brand-soft)}
 .rform{margin-top:10px;display:flex;flex-direction:column;gap:8px}
 .rform .row2{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:end}
@@ -463,7 +463,7 @@ function lalu(iso){const s=(Date.now()-new Date(iso))/1000;if(s<60)return'baru s
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,3000)}
 function chg(r){if(r.harga_sebelumnya==null)return'<span class="muted">baru</span>';const c=(r.harga-r.harga_sebelumnya)/r.harga_sebelumnya*100;const t=Math.abs(c).toLocaleString('id-ID',{maximumFractionDigits:2})+'%';return c>0.005?`<span class="up">▲ ${t}</span>`:c<-0.005?`<span class="dn">▼ ${t}</span>`:'<span class="muted">= 0%</span>'}
 function metodeBadge(r){return r.metode==='otomatis'?'<span class="pill ok">Otomatis</span>':r.metode==='contoh'?'<span class="pill wn">Contoh</span>':'<span class="pill nt">Penetapan</span>'}
-function errMsg(e){const m=(e&&e.message)||String(e);if(/row-level security|permission/i.test(m))return'Anda tidak punya izin untuk tindakan ini.';if(/check constraint/i.test(m))return'Isian belum sesuai format. Periksa panjang teks dan nomor WhatsApp.';if(/duplicate|unique/i.test(m))return'Data dengan komoditas, wilayah, tanggal, dan sumber yang sama sudah ada.';if(/fetch|network/i.test(m))return'Koneksi internet terputus. Coba lagi.';return m}
+function errMsg(e){const m=(e&&e.message)||String(e);if(/row-level security|permission/i.test(m))return'Anda tidak punya izin untuk tindakan ini.';if(/jawaban_isi_check|pertanyaan_isi_check/i.test(m))return'Tulisan terlalu panjang untuk database. Jalankan file supabase/forum-panjang.sql di Supabase, lalu coba lagi.';if(/check constraint/i.test(m))return'Isian belum sesuai format. Periksa panjang teks dan nomor WhatsApp.';if(/duplicate|unique/i.test(m))return'Data dengan komoditas, wilayah, tanggal, dan sumber yang sama sudah ada.';if(/fetch|network/i.test(m))return'Koneksi internet terputus. Coba lagi.';return m}
 
 /* =====================================================================
    LAPISAN DATA (Supabase atau demo)
@@ -791,7 +791,7 @@ forum(){return `<div class="g"><div class="in">
       <label class="fld">Nama<input id="fn" required minlength="2" maxlength="40"></label>
       <label class="fld">Komoditas<select id="fk">${['Kelapa sawit','Padi','Kakao','Kopi','Karet','Pinang','Jagung','Lainnya'].map(x=>`<option>${x}</option>`).join('')}</select></label>
       <label class="fld">Judul pertanyaan<input id="ft" required minlength="5" maxlength="120"></label>
-      <label class="fld">Ceritakan masalahnya<textarea id="fb" rows="4" required minlength="5" maxlength="1000" placeholder="Umur tanaman, lokasi, gejala yang terlihat…"></textarea></label>
+      <label class="fld">Ceritakan masalahnya<textarea id="fb" rows="5" required minlength="5" maxlength="4000" placeholder="Umur tanaman, lokasi, gejala yang terlihat…"></textarea><span class="hint" data-count="fb"></span></label>
       <button class="btn" type="submit" id="fsub">Kirim pertanyaan</button>
      </form></div>
   </div></div></div></div>`},
@@ -926,14 +926,18 @@ function fillIklan(){
 }
 function fillTanya(){
   const el=$('#flist');if(!el)return;
+  const draf={n:$('#rn')?.value,i:$('#ri')?.value,fokus:document.activeElement&&document.activeElement.id};
   if(!S.tanya&&!S.err.tanya){el.innerHTML='<div class="empty">Memuat pertanyaan…</div>';return}
   const rows=(S.tanya||[]).filter(t=>t.status==='tayang');
   el.innerHTML=loadingOr('tanya',rows.length?rows.map(t=>{const js=(t.jawaban||[]).filter(j=>j.status==='tayang').sort((a,b)=>b.is_pakar-a.is_pakar||(a.created_at<b.created_at?-1:1));
     return `<div class="thread"><div class="av">${esc((t.nama||'?')[0].toUpperCase())}</div><div style="min-width:0;flex:1"><h4>${esc(t.judul)}</h4><p class="meta">${esc(t.nama)} · ${esc(t.komoditas)} · ${lalu(t.created_at)}</p><p style="margin-top:6px">${esc(t.isi)}</p>
     ${js.map(j=>`<div class="reply ${j.is_pakar?'pk':''}">${j.is_pakar?'<span class="pill ok" style="margin-right:6px">Pakar</span>':''}<b>${esc(j.nama)}:</b> ${esc(j.isi)}</div>`).join('')}
     ${js.some(j=>j.is_pakar)?'':'<p class="pill wn" style="margin-top:10px">Menunggu jawaban pakar</p>'}
-    ${ui.reply===t.id?`<form class="rform" data-rf="${t.id}"><div class="row2"><label class="fld">Nama<input id="rn" required minlength="2" maxlength="40" value="${S.admin?'Tim Pakar Nadi Terra':''}"></label><label class="fld">Jawaban<input id="ri" required minlength="2" maxlength="1000"></label><button class="btn sm" id="rsub">Kirim</button></div>${S.admin?'<label class="chk"><input type="checkbox" id="rp" checked> Jawab sebagai pakar</label>':''}</form>`:`<button class="btn sm ghost" data-reply="${t.id}" style="margin-top:10px">Jawab</button>`}
+    ${ui.reply===t.id?`<form class="rform" data-rf="${t.id}"><label class="fld">Nama<input id="rn" required minlength="2" maxlength="40" value="${S.admin?'Tim Pakar Nadi Terra':''}"></label><label class="fld">Jawaban<textarea id="ri" rows="5" required minlength="2" maxlength="4000" placeholder="Tulis jawaban selengkapnya. Boleh beberapa paragraf."></textarea><span class="hint" data-count="ri"></span></label>${S.admin?'<label class="chk"><input type="checkbox" id="rp" checked> Jawab sebagai pakar</label>':''}<div class="acts-row"><button class="btn sm" id="rsub">Kirim jawaban</button><button type="button" class="btn sm ghost" id="rbatal">Batal</button></div></form>`:`<button class="btn sm ghost" data-reply="${t.id}" style="margin-top:10px">Jawab</button>`}
     </div></div>`}).join(''):'<div class="empty">Belum ada pertanyaan.</div>');
+  if(draf.i!=null&&$('#ri')){$('#ri').value=draf.i;if(draf.n!=null)$('#rn').value=draf.n;if(draf.fokus)$('#'+draf.fokus)?.focus()}
+  bindCount();
+  const rb=$('#rbatal');if(rb)rb.onclick=()=>{ui.reply=null;fillTanya()};
   $$('[data-reply]').forEach(b=>b.onclick=()=>{ui.reply=+b.dataset.reply;fillTanya();const i=$('#ri');i&&i.focus()});
   $$('[data-rf]').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const btn=$('#rsub');btn.disabled=true;
     try{await API.addJawab({pertanyaan_id:+f.dataset.rf,nama:$('#rn').value.trim(),isi:$('#ri').value.trim(),is_pakar:!!($('#rp')&&$('#rp').checked)});ui.reply=null;toast('Jawaban terkirim');if(!LIVE)fillTanya();else load('tanya')}
@@ -954,6 +958,7 @@ function fillMod(){
   if(b)b.innerHTML=mk(S.tanya||[],'pertanyaan',x=>x.judul);
   $$('[data-mod]').forEach(btn=>btn.onclick=async()=>{const [t,id,st]=btn.dataset.mod.split(':');btn.disabled=true;try{await API.setStatus(t,+id,st);toast(st==='tayang'?'Ditampilkan lagi':'Disembunyikan');load(t==='iklan'?'iklan':'tanya')}catch(e){toast(errMsg(e));btn.disabled=false}});
 }
+function bindCount(){$$('[data-count]').forEach(h=>{const f=$('#'+h.dataset.count);if(!f)return;const max=+f.getAttribute('maxlength');const u=()=>{const n=f.value.length;h.textContent=`${n.toLocaleString('id-ID')} / ${max.toLocaleString('id-ID')} karakter`;h.style.color=n>max*.95?'var(--bad)':''};f.addEventListener('input',u);u()})}
 function bindCopy(){$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);toast('Nomor disalin')}catch(e){toast('Tekan lama nomor untuk menyalin')}})}
 
 /* =====================================================================
@@ -994,7 +999,7 @@ function bind(v){
     $('#fform').onsubmit=async e=>{e.preventDefault();const g=id=>$('#'+id).value.trim();const btn=$('#fsub');btn.disabled=true;
       try{await API.addTanya({nama:g('fn'),komoditas:g('fk'),judul:g('ft'),isi:g('fb')});e.target.reset();toast('Pertanyaan terkirim');if(!LIVE)S.tanya=await API.tanya();else await load('tanya');fillTanya()}
       catch(err){toast(errMsg(err))}btn.disabled=false};
-    fillTanya();
+    fillTanya();bindCount();
   }
   if(v==='paket')$$('[data-plan]').forEach(b=>b.onclick=()=>toast('Paket Premium segera dibuka'));
   if(v==='admin'&&LIVE){

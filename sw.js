@@ -1,7 +1,7 @@
 // Nadi Terra — service worker
 // Halaman selalu diambil terbaru dari internet; salinan tersimpan dipakai saat sinyal hilang.
 // Data harga, iklan, dan forum (Supabase) tidak disimpan di sini, selalu langsung dari server.
-const CACHE = 'nadi-terra-v2';
+const CACHE = 'nadi-terra-v3';
 const INTI = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 const CDN = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net'];
 

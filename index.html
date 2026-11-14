@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
@@ -10,248 +10,334 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Nadi Terra: platform agribisnis digital Indonesia. Harga komoditas resmi, diagnosa penyakit tanaman, pasar hasil tani, dan forum pakar dalam satu tempat.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: situs produk dengan bar atas tetap; modul sebagai halaman hash; beranda editorial, modul bergaya alat kerja */
+/* Layout: aplikasi agribisnis yang ramah HP — foto latar penuh di beranda, kartu harga bergeser, bar tab bawah di HP.
+   Warna utama, aksen, logo, dan foto bisa diganti admin (menu Admin > Tampilan). */
 :root{
-  --bg:#f1f4ee; --surface:#fff; --sunken:#e5ebe0; --line:#cfd9c9;
-  --ink:#122219; --muted:#56685b;
-  --palm:#1d5434; --palm-soft:#d5e8d9;
-  --kunyit:#d9961a; --kunyit-soft:#f8e7c2;
-  --good:#2b7a47; --warn:#a96d12; --bad:#b23a2a;
-  --good-bg:#dbeee0; --warn-bg:#f8e9cc; --bad-bg:#f6dcd6;
-  --hero:#123a24; --hero-ink:#eef6ea;
-  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
-  --f-body:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --brand:#1F9D55; --accent:#F5B82E; --on-brand:#ffffff;
+  --bg:#F3F6F1; --surface:#ffffff; --sunken:#EAF0E7; --line:#DCE5D7; --card-bd:transparent;
+  --ink:#16241B; --muted:#5B6B60; --foot:#10201A; --foot-ink:#E9F2EB;
+  --brand-soft:color-mix(in srgb,var(--brand) 13%,var(--surface));
+  --brand-ink:color-mix(in srgb,var(--brand) 80%,#000);
+  --accent-soft:color-mix(in srgb,var(--accent) 20%,var(--surface));
+  --good:#1E8549; --warn:#A8680C; --bad:#B4392A;
+  --good-bg:#DDF1E3; --warn-bg:#FBEBCB; --bad-bg:#F8DDD8;
+  --shadow:0 1px 2px rgba(22,40,28,.05),0 8px 24px rgba(22,40,28,.07);
+  --r:20px;
+  --f-head:"Lexend",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Nunito Sans",ui-sans-serif,system-ui,sans-serif;
+  /* nama lama, dipakai beberapa bagian halaman */
+  --palm:var(--brand); --palm-soft:var(--brand-soft); --kunyit:var(--accent); --kunyit-soft:var(--accent-soft);
+  --f-display:var(--f-head); --f-mono:var(--f-body); --hero:var(--foot); --hero-ink:var(--foot-ink);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0d1510; --surface:#152019; --sunken:#1b2820; --line:#2a3a2f;
-  --ink:#e5eee3; --muted:#9db0a1;
-  --palm:#7fcb98; --palm-soft:#1d3827;
-  --kunyit:#f0b23c; --kunyit-soft:#3a2d12;
-  --good:#7fcb98; --warn:#f0b23c; --bad:#ee8b7b;
-  --good-bg:#1d3827; --warn-bg:#3a2d12; --bad-bg:#3d1e19;
-  --hero:#0f2a1a; --hero-ink:#eef6ea; color-scheme:dark}}
+  --bg:#0E1411; --surface:#161F1A; --sunken:#1D2822; --line:#2A3830; --card-bd:#26332B;
+  --ink:#E7EFE8; --muted:#A0B1A4; --foot:#0A120D;
+  --brand-ink:color-mix(in srgb,var(--brand) 55%,#fff);
+  --brand-soft:color-mix(in srgb,var(--brand) 22%,var(--surface));
+  --good:#7FCF98; --warn:#F1B84A; --bad:#F08E7E;
+  --good-bg:#1C3727; --warn-bg:#3A2D12; --bad-bg:#3D1E19;
+  --shadow:none; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0d1510; --surface:#152019; --sunken:#1b2820; --line:#2a3a2f;
-  --ink:#e5eee3; --muted:#9db0a1;
-  --palm:#7fcb98; --palm-soft:#1d3827;
-  --kunyit:#f0b23c; --kunyit-soft:#3a2d12;
-  --good:#7fcb98; --warn:#f0b23c; --bad:#ee8b7b;
-  --good-bg:#1d3827; --warn-bg:#3a2d12; --bad-bg:#3d1e19;
-  --hero:#0f2a1a; --hero-ink:#eef6ea; color-scheme:dark}
+  --bg:#0E1411; --surface:#161F1A; --sunken:#1D2822; --line:#2A3830; --card-bd:#26332B;
+  --ink:#E7EFE8; --muted:#A0B1A4; --foot:#0A120D;
+  --brand-ink:color-mix(in srgb,var(--brand) 55%,#fff);
+  --brand-soft:color-mix(in srgb,var(--brand) 22%,var(--surface));
+  --good:#7FCF98; --warn:#F1B84A; --bad:#F08E7E;
+  --good-bg:#1C3727; --warn-bg:#3A2D12; --bad-bg:#3D1E19;
+  --shadow:none; color-scheme:dark}
 
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55}
-h1,h2,h3,h4{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.12}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-head);margin:0;line-height:1.18;letter-spacing:-.01em;text-wrap:balance;font-weight:600}
 p{margin:0}
-a{color:var(--palm)}
+a{color:var(--brand-ink)}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-:focus-visible{outline:3px solid var(--kunyit);outline-offset:2px}
-.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums;font-weight:700}
 .g{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.in{max-width:1140px;margin:0 auto}
-.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--kunyit)}
+.in{max-width:1160px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--brand-ink);background:var(--brand-soft);padding:4px 12px;border-radius:999px}
 .muted{color:var(--muted)}
-.small{font-size:13px}
+.small{font-size:13.5px}
 
+/* ---------- header ---------- */
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line)}
-.top .in{display:flex;align-items:center;gap:16px;height:64px;position:relative}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.logo b{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1}
-.logo small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:saturate(1.3) blur(10px);-webkit-backdrop-filter:saturate(1.3) blur(10px);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;gap:16px;height:68px;position:relative}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);min-width:0}
+.lg{width:42px;height:42px;border-radius:13px;overflow:hidden;flex:none;display:grid;place-items:center;background:var(--brand)}
+.lg img{width:100%;height:100%;object-fit:cover;display:block}
+.lg svg{width:28px;height:28px}
+.logo b{font-family:var(--f-head);font-weight:700;font-size:18px;line-height:1.1;display:block;white-space:nowrap}
+.logo small{display:block;font-size:12.5px;color:var(--muted);margin-top:1px;white-space:nowrap}
 .menu{display:flex;gap:2px;margin-left:auto;align-items:center}
-.menu a{padding:8px 11px;border-radius:8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px}
+.menu a{padding:9px 13px;border-radius:999px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px}
 .menu a:hover{background:var(--sunken)}
-.menu a.on{background:var(--palm-soft);color:var(--palm)}
-.menu a.cta{background:var(--palm);color:var(--surface);margin-left:6px}
-.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-weight:600}
+.menu a.on{background:var(--brand-soft);color:var(--brand-ink)}
+.menu a.cta{background:var(--brand);color:var(--on-brand);margin-left:6px}
+.burger{display:none;margin-left:auto;background:var(--sunken);border:0;border-radius:999px;padding:9px 16px;font-weight:700}
+.tabbar{display:none}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:10px;border:0;background:var(--palm);color:var(--surface);font-weight:700;text-decoration:none;font-size:15px}
+/* ---------- tombol, label, kartu ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:0;background:var(--brand);color:var(--on-brand);font-weight:800;text-decoration:none;font-size:15.5px;box-shadow:0 6px 16px color-mix(in srgb,var(--brand) 28%,transparent)}
+.btn:hover{filter:brightness(1.05)}
 .btn:disabled{opacity:.55;cursor:progress}
-.btn.kun{background:var(--kunyit);color:#1c1302}
-.btn.ghost{background:transparent;color:var(--palm);border:1.5px solid var(--palm)}
-.btn.danger{background:transparent;color:var(--bad);border:1.5px solid var(--bad)}
-.btn.sm{padding:7px 12px;font-size:13.5px}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.btn.kun{background:var(--accent);color:#1d1503;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--brand-ink);border:1.5px solid color-mix(in srgb,var(--brand) 45%,transparent);box-shadow:none}
+.btn.light{background:#fff;color:#14231a;box-shadow:none}
+.btn.danger{background:transparent;color:var(--bad);border:1.5px solid var(--bad);box-shadow:none}
+.btn.sm{padding:8px 14px;font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:999px;white-space:nowrap}
 .ok{background:var(--good-bg);color:var(--good)}.wn{background:var(--warn-bg);color:var(--warn)}.bd{background:var(--bad-bg);color:var(--bad)}.nt{background:var(--sunken);color:var(--muted)}
 .live::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
 @media (prefers-reduced-motion:no-preference){.live.ok::before{animation:blink 1.6s ease-in-out infinite}@keyframes blink{50%{opacity:.25}}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
-.note{font-size:13.5px;background:var(--kunyit-soft);border:1px dashed var(--kunyit);border-radius:10px;padding:10px 14px;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--card-bd);border-radius:var(--r);padding:22px;min-width:0;box-shadow:var(--shadow)}
+.note{font-size:14px;background:var(--accent-soft);border-radius:14px;padding:12px 16px;color:var(--ink)}
 .empty{padding:28px 16px;text-align:center;color:var(--muted)}
-
-.hero{background:var(--hero);color:var(--hero-ink);position:relative;overflow:hidden}
-.hero .in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:64px 72px}
-.hero h1{font-size:clamp(36px,6vw,64px);font-weight:800}
-.hero h1 em{font-style:normal;color:var(--kunyit)}
-.hero p.lead{font-size:18px;margin-top:18px;max-width:34em;opacity:.88}
-.hero .acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.hero .btn.ghost{color:var(--hero-ink);border-color:rgba(238,246,234,.5)}
-.pulse{position:absolute;inset:auto 0 0 0;height:90px;width:100%;opacity:.35;pointer-events:none}
-.ticker{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;min-width:0}
-.ticker .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);gap:10px}
-.ticker .row:last-of-type{border:0}
-.ticker small{opacity:.75;font-size:12px}
-.ticker .up{color:#7fdc9c}.ticker .dn{color:#ff9d8c}
 .up{color:var(--good)}.dn{color:var(--bad)}
 
-section.s{padding-block:64px}
-.sh{display:flex;flex-direction:column;gap:10px;max-width:640px;margin-bottom:32px}
-.sh h2{font-size:clamp(26px,3.6vw,40px);font-weight:800}
-.mods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.mod{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
-.mod:hover{border-color:var(--palm)}
-.mod .ic{width:46px;height:46px;border-radius:12px;background:var(--palm-soft);color:var(--palm);display:grid;place-items:center}
-.mod .ic svg{width:26px;height:26px}
-.mod h3{font-size:21px}
-.mod span.go{margin-top:auto;font-weight:700;color:var(--palm);font-size:14px}
-.mod.wide{grid-column:span 2;background:var(--palm);color:var(--surface);border-color:transparent}
-.mod.wide .ic{background:rgba(255,255,255,.15);color:var(--surface)}
-.mod.wide span.go{color:var(--kunyit)}
-.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:f}
-.flow div{border-top:3px solid var(--palm);padding-top:14px}
-.flow b{font-family:var(--f-display);font-size:18px;display:block;margin-bottom:6px}
-.flow div::before{counter-increment:f;content:"Langkah " counter(f);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;display:block;margin-bottom:6px}
-.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.who .card h3{font-size:18px;margin-bottom:6px}
-.band{background:var(--palm-soft)}
-.sdg{display:flex;flex-wrap:wrap;gap:10px}
-.sdg span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:600;font-size:14px}
-.sdg b{font-family:var(--f-mono);color:var(--palm);margin-right:6px}
+/* ---------- beranda ---------- */
+.hero{position:relative;isolation:isolate;overflow:hidden;color:#fff;border-radius:0 0 34px 34px;background:#1d3a26}
+.hero .bg{position:absolute;inset:0;z-index:-2}
+.hero .bg img,.hero .bg svg{width:100%;height:100%;object-fit:cover;display:block}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,18,10,.2) 0%,rgba(6,18,10,.45) 45%,rgba(6,18,10,.78) 100%)}
+.hero-in{padding-block:84px 112px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.hero h1{font-size:clamp(34px,5.4vw,60px);font-weight:700;max-width:15em;margin-top:18px;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.hero .lead{font-size:clamp(16px,1.6vw,19px);max-width:36em;margin-top:16px;opacity:.94}
+.qsearch{display:flex;align-items:center;gap:8px;background:#fff;color:#16241B;border-radius:999px;padding:6px 6px 6px 18px;max-width:580px;margin-top:28px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.qsearch svg{flex:none;color:#5B6B60}
+.qsearch input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:16px;padding:10px 4px;color:#16241B}
+.qsearch input::placeholder{color:#7a8a7f}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.quick a{color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}
+.quick a:hover{background:rgba(255,255,255,.24)}
+.lift{margin-top:-64px;position:relative;z-index:2}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px}
+.sec-h h2{font-size:clamp(22px,2.6vw,30px)}
+.sec-h a{font-weight:800;text-decoration:none;white-space:nowrap}
+.lift .sec-h h2,.lift .sec-h a{color:#fff}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,1fr);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;scrollbar-width:thin}
+.pc{scroll-snap-align:start;display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--card-bd);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);min-width:0}
+.pc:hover{outline:2px solid var(--brand-soft)}
+.pc .top-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pc .kat{font-size:12.5px;font-weight:800;color:var(--brand-ink)}
+.pc .nm{font-family:var(--f-head);font-weight:600;font-size:16.5px;line-height:1.3;margin-top:6px;overflow-wrap:anywhere}
+.pc .pr{font-size:26px;font-weight:800;margin-top:4px;line-height:1.1}
+.pc .pr small{font-size:13px;font-weight:600;color:var(--muted)}
+.pc .ft{font-size:13px;color:var(--muted);margin-top:auto;padding-top:8px}
+section.s{padding-block:56px 0}
+section.s.last{padding-block:56px 72px}
+.svc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.sv{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--card-bd);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);min-width:0}
+.sv:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:no-preference){.sv{transition:transform .15s}}
+.sv .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand-ink)}
+.sv:nth-child(2) .ic,.sv:nth-child(4) .ic{background:var(--accent-soft);color:color-mix(in srgb,var(--accent) 55%,var(--ink))}
+.sv .ic svg{width:28px;height:28px}
+.sv h3{font-size:17.5px}
+.sv p{font-size:14.5px;color:var(--muted)}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:36px;align-items:center}
+.about-img{border-radius:28px;overflow:hidden;aspect-ratio:4/3;max-width:100%;background:var(--sunken)}
+.about-img img,.about-img svg{width:100%;height:100%;object-fit:cover;display:block}
+.about h2{font-size:clamp(24px,3vw,34px);margin-top:12px}
+.steps4{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:16px;counter-reset:st}
+.steps4 li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;counter-increment:st}
+.steps4 li::before{content:counter(st);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:var(--on-brand);font-family:var(--f-head);font-weight:700;font-size:18px}
+.steps4 b{font-family:var(--f-head);font-weight:600;font-size:17px;display:block}
+.steps4 p{color:var(--muted);font-size:15px}
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.who .card{display:flex;flex-direction:column;gap:6px}
+.who h3{font-size:17px}
+.who p{font-size:14.5px}
+.cta{background:var(--brand);color:var(--on-brand);border-radius:30px;padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.3fr) auto;gap:24px;align-items:center}
+.cta h2{font-size:clamp(22px,2.8vw,32px)}
+.cta p{opacity:.9;margin-top:8px}
+.sdg{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.sdg span{background:color-mix(in srgb,var(--on-brand) 14%,transparent);border-radius:999px;padding:6px 13px;font-weight:700;font-size:13.5px}
+.cta .acts{display:flex;flex-direction:column;gap:10px}
+.cta .btn.ghost{color:var(--on-brand);border-color:color-mix(in srgb,var(--on-brand) 50%,transparent)}
 
-.ph{padding-block:36px 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.ph h1{font-size:clamp(28px,4.4vw,44px);font-weight:800;margin-top:6px}
+/* ---------- halaman modul ---------- */
+.ph{padding-block:34px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.ph h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-top:10px}
 .ph p{margin-top:8px;max-width:40em;color:var(--muted)}
 .pg{padding-bottom:64px;display:flex;flex-direction:column;gap:18px}
-
 .chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}
-.chip[aria-pressed="true"]{background:var(--palm);color:var(--surface);border-color:var(--palm)}
+.chip{border:0;background:var(--surface);box-shadow:var(--shadow);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14.5px;outline:1px solid var(--card-bd)}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--on-brand)}
 .tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-.search{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);width:260px;max-width:100%}
+.search{padding:11px 18px;border:1px solid var(--line);border-radius:999px;background:var(--surface);width:280px;max-width:100%}
 .tblw{overflow-x:auto}
-.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
-.tbl th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--line);white-space:nowrap}
-.tbl td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{text-align:left;font-size:12.5px;font-weight:800;color:var(--muted);padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
 .tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:var(--sunken)}
-.tbl tr.sel td{background:var(--palm-soft)}
+.tbl tr.sel td{background:var(--brand-soft)}
 .r{text-align:right}
 .split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
 .chart svg{width:100%;height:auto;display:block}
-.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.chart text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
 .wait{display:flex;flex-wrap:wrap;gap:8px}
-
-.fld{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:600}
-.fld input,.fld select,.fld textarea{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-weight:500;font-size:15px;width:100%}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700}
+.fld input,.fld select,.fld textarea{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);font-weight:500;font-size:15.5px;width:100%}
+.fld input[type=color]{padding:4px;height:46px;cursor:pointer}
+.fld .hint{font-weight:500;color:var(--muted);font-size:13px}
 .fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .fg .full{grid-column:1/-1}
-.chk{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}
-.chk input{width:18px;height:18px;accent-color:var(--palm)}
-
-.steps{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700}
-.steps span{padding:6px 12px;border-radius:999px;background:var(--sunken);color:var(--muted)}
-.steps span.on{background:var(--palm);color:var(--surface)}
-.crops{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-.crop{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:18px 14px;text-align:left;display:flex;flex-direction:column;gap:6px}
-.crop:hover{border-color:var(--palm)}
-.crop b{font-family:var(--f-display);font-size:18px}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:700}
+.chk input{width:18px;height:18px;accent-color:var(--brand)}
+.steps{display:flex;gap:8px;flex-wrap:wrap;font-size:13.5px;font-weight:800}
+.steps span{padding:7px 14px;border-radius:999px;background:var(--surface);color:var(--muted);box-shadow:var(--shadow)}
+.steps span.on{background:var(--brand);color:var(--on-brand)}
+.crops{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.crop{background:var(--surface);border:2px solid transparent;border-radius:var(--r);padding:20px 16px;text-align:left;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.crop:hover{border-color:var(--brand)}
+.crop b{font-family:var(--f-head);font-weight:600;font-size:18px}
 .crop small{color:var(--muted)}
 .sym{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.sym label{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer}
-.sym input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--palm)}
-.sym label:has(input:checked){border-color:var(--palm);background:var(--palm-soft)}
+.sym label{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1.5px solid var(--line);border-radius:16px;background:var(--surface);cursor:pointer}
+.sym input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--brand)}
+.sym label:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
 .res{display:flex;flex-direction:column;gap:14px}
-.dx{border:1px solid var(--line);border-left:5px solid var(--palm);background:var(--surface);border-radius:12px;padding:18px}
-.dx.lo{border-left-color:var(--line)}
+.dx{background:var(--surface);border:1px solid var(--card-bd);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);position:relative}
+.dx:first-child{outline:2px solid var(--brand)}
 .dx h3{font-size:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .dx ul{margin:10px 0 0;padding-left:20px}
 .dx li+li{margin-top:4px}
 .meter{height:8px;background:var(--sunken);border-radius:9px;margin-top:10px;overflow:hidden}
-.meter i{display:block;height:100%;background:var(--palm)}
-
+.meter i{display:block;height:100%;background:var(--brand);border-radius:9px}
 .listings{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .lst{display:flex;flex-direction:column;gap:8px}
 .lst h3{font-size:18px;overflow-wrap:anywhere}
-.lst .price{font-family:var(--f-mono);font-size:20px;color:var(--palm)}
-.lst .meta{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
-.lst .wa{display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--sunken);border-radius:8px;padding:8px 10px;font-size:13px;margin-top:auto}
-.thread{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.lst .price{font-size:22px;font-weight:800;color:var(--brand-ink);font-variant-numeric:tabular-nums}
+.lst .meta{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.lst .wa{display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--sunken);border-radius:14px;padding:8px 10px 8px 14px;font-size:14px;margin-top:auto}
+.thread{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
 .thread:last-child{border:0}
-.av{width:40px;height:40px;border-radius:50%;background:var(--palm-soft);color:var(--palm);display:grid;place-items:center;font-weight:800;flex:none;font-family:var(--f-display)}
+.av{width:42px;height:42px;border-radius:50%;background:var(--brand-soft);color:var(--brand-ink);display:grid;place-items:center;font-weight:700;flex:none;font-family:var(--f-head)}
 .thread h4{font-size:17px;overflow-wrap:anywhere}
-.thread .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.thread .meta{font-size:13px;color:var(--muted);margin-top:2px}
 .thread p{overflow-wrap:anywhere}
-.reply{margin-top:8px;background:var(--sunken);border-radius:10px;padding:10px 12px;font-size:14px;overflow-wrap:anywhere}
-.reply.pk{background:var(--palm-soft)}
+.reply{margin-top:8px;background:var(--sunken);border-radius:14px;padding:10px 14px;font-size:14.5px;overflow-wrap:anywhere}
+.reply.pk{background:var(--brand-soft)}
 .rform{margin-top:10px;display:flex;flex-direction:column;gap:8px}
 .rform .row2{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:end}
-
 .techs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.tech h3{font-size:19px;margin:8px 0 6px}
-.tech dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px;margin:12px 0 0}
-.tech dt{color:var(--muted);font-weight:600}.tech dd{margin:0}
-
+.tech h3{font-size:19px;margin:10px 0 6px}
+.tech dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:12px 0 0}
+.tech dt{color:var(--muted);font-weight:700}.tech dd{margin:0}
 .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .plan{display:flex;flex-direction:column;gap:14px}
-.plan.hl{border:2px solid var(--palm);padding:19px}
-.plan .amt{font-family:var(--f-display);font-size:34px;font-weight:800}
+.plan.hl{outline:2px solid var(--brand)}
+.plan .amt{font-family:var(--f-head);font-size:34px;font-weight:700}
 .plan .amt small{font-size:14px;font-weight:500;color:var(--muted);font-family:var(--f-body)}
-.plan ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:14.5px}
-.plan li{padding-left:24px;position:relative}
-.plan li::before{content:"";position:absolute;left:2px;top:7px;width:12px;height:7px;border-left:2.5px solid var(--palm);border-bottom:2.5px solid var(--palm);transform:rotate(-45deg)}
+.plan ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.plan li{padding-left:26px;position:relative}
+.plan li::before{content:"";position:absolute;left:3px;top:8px;width:12px;height:7px;border-left:2.5px solid var(--brand);border-bottom:2.5px solid var(--brand);transform:rotate(-45deg)}
 .plan .btn{margin-top:auto}
-
-.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.tabs button{background:none;border:0;padding:10px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent}
-.tabs button[aria-selected="true"]{color:var(--palm);border-bottom-color:var(--palm)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;background:var(--surface);padding:6px;border-radius:999px;box-shadow:var(--shadow);align-self:flex-start;max-width:100%}
+.tabs button{background:none;border:0;padding:9px 18px;font-weight:800;color:var(--muted);border-radius:999px}
+.tabs button[aria-selected="true"]{background:var(--brand);color:var(--on-brand)}
 .adm-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .adm-row:last-child{border:0}
 .adm-row>div{min-width:0;flex:1}
 
-footer{background:var(--hero);color:var(--hero-ink);padding-block:40px calc(40px + env(safe-area-inset-bottom,0px))}
-footer .in{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;font-size:14px}
-footer a{color:var(--hero-ink);opacity:.85;text-decoration:none;display:block;padding:3px 0}
-footer h4{font-size:14px;margin-bottom:8px;color:var(--kunyit)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:10px;font-weight:600;z-index:60;max-width:calc(100% - 32px)}
+/* ---------- admin: tampilan ---------- */
+.ttl{font-size:18px;margin:6px 0 12px}
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.themes button{display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:var(--bg);border:2px solid transparent;border-radius:16px;padding:12px;font-weight:700;font-size:14px;text-align:left}
+.themes button[aria-pressed="true"]{border-color:var(--brand)}
+.sw{display:flex}
+.sw i{width:26px;height:26px;border-radius:50%;border:2px solid var(--surface)}
+.sw i+i{margin-left:-8px}
+.imgpick{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:12px;background:var(--bg);border-radius:16px}
+.imgpick.wide{grid-template-columns:150px 1fr}
+.imgpick .pv{width:96px;height:96px;border-radius:16px;overflow:hidden;background:var(--brand);display:grid;place-items:center}
+.imgpick.wide .pv{width:150px;height:96px;background:var(--sunken)}
+.imgpick .pv img,.imgpick .pv svg{width:100%;height:100%;object-fit:cover;display:block}
+.imgpick .pv.logo svg{width:56px;height:56px}
+.imgpick .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tprev{position:relative;isolation:isolate;overflow:hidden;border-radius:18px;color:#fff;aspect-ratio:16/10;max-width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;background:#1d3a26}
+.tprev .bg{position:absolute;inset:0;z-index:-2}
+.tprev .bg img,.tprev .bg svg{width:100%;height:100%;object-fit:cover;display:block}
+.tprev::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,18,10,.1),rgba(6,18,10,.75))}
+.tprev .row{display:flex;align-items:center;gap:8px;position:absolute;top:14px;left:14px;font-weight:800;font-size:14px}
+.tprev .row .lg{width:30px;height:30px;border-radius:9px}
+.tprev .row .lg svg{width:20px;height:20px}
+.tprev b{font-family:var(--f-head);font-size:19px;line-height:1.2}
+.tprev .bt{display:inline-block;margin-top:10px;background:var(--brand);color:var(--on-brand);padding:6px 14px;border-radius:999px;font-weight:800;font-size:13px;align-self:flex-start}
+.sticky{position:sticky;top:calc(84px + env(safe-area-inset-top,0px))}
+.acts-row{display:flex;gap:10px;flex-wrap:wrap}
 
+/* ---------- footer ---------- */
+footer{background:var(--foot);color:var(--foot-ink);margin-top:0;padding-block:44px calc(44px + env(safe-area-inset-bottom,0px))}
+footer .in{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px;font-size:15px}
+footer a{color:var(--foot-ink);opacity:.85;text-decoration:none;display:block;padding:3px 0}
+footer h4{font-size:15px;margin-bottom:8px;color:var(--accent)}
+footer .logo{color:var(--foot-ink)}
+footer .logo small{color:var(--foot-ink);opacity:.7}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:700;z-index:60;max-width:calc(100% - 32px);text-align:center}
+
+@media (max-width:1020px){.svc{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:920px){
-  .menu{display:none;position:absolute;top:64px;left:-16px;right:-16px;flex-direction:column;align-items:stretch;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px))}
+  .menu{display:none;position:absolute;top:68px;left:-16px;right:-16px;flex-direction:column;align-items:stretch;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px));box-shadow:var(--shadow)}
   .menu.open{display:flex}
-  .menu a{padding:12px}
+  .menu a{padding:12px 14px;border-radius:14px}
   .menu a.cta{margin:6px 0 0;text-align:center}
   .burger{display:block}
-  .hero .in{grid-template-columns:1fr;padding-block:44px 56px}
-  .mods,.plans{grid-template-columns:1fr}
-  .mod.wide{grid-column:auto}
-  .flow,.who{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .split{grid-template-columns:1fr}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--surface);border-top:1px solid var(--line);padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:14px;text-decoration:none;color:var(--muted);font-size:11.5px;font-weight:800}
+  .tabbar a svg{width:24px;height:24px}
+  .tabbar a.on{color:var(--brand-ink);background:var(--brand-soft)}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+  .hero-in{padding-block:56px 100px}
+  .svc{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .svc .sv:first-child{grid-column:1/-1}
+  .about,.cta{grid-template-columns:1fr}
+  .who{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plans,.split{grid-template-columns:1fr}
+  .sticky{position:static}
   footer .in{grid-template-columns:1fr}
 }
-@media (max-width:560px){.flow,.who,.sym,.fg{grid-template-columns:1fr}.search{width:100%}.rform .row2{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .who,.sym,.fg{grid-template-columns:1fr}
+  .search{width:100%}
+  .rform .row2{grid-template-columns:1fr}
+  .qsearch .btn{padding:11px 16px}
+  .imgpick,.imgpick.wide{grid-template-columns:1fr}
+  .strip{grid-auto-columns:78%}
+}
 </style>
 
 <header class="top g">
   <div class="in">
-    <a class="logo" href="#beranda" aria-label="Nadi Terra, ke beranda">
-      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#d9961a"/><path d="M5 22h8l3-7 4 13 3-9 2 3h10" fill="none" stroke="#123a24" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span><b>Nadi Terra</b><small>Smart Farming</small></span>
+    <a class="logo" href="#beranda" aria-label="Ke beranda">
+      <span class="lg" data-logo></span>
+      <span><b data-t="nama">Nadi Terra</b><small data-t="sub">Smart Farming</small></span>
     </a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav class="menu" id="menu"></nav>
+    <nav class="menu" id="menu" aria-label="Semua halaman"></nav>
   </div>
 </header>
 <main id="app"></main>
 <footer class="g">
   <div class="in">
-    <div><b style="font-family:var(--f-display);font-size:22px">Nadi Terra</b><p style="margin-top:8px;opacity:.8;max-width:30em">Platform agribisnis digital yang menghubungkan petani, pekebun, pedagang, dan pakar dalam satu ekosistem data. Dikembangkan oleh tim mahasiswa Agribisnis, Institut Teknologi Sawit Indonesia, Medan.</p></div>
-    <div><h4>Modul</h4><a href="#harga">Terra Price</a><a href="#diagnosa">Terra Diagnose</a><a href="#pasar">Terra Market</a><a href="#forum">Expert Connect</a><a href="#teknologi">Terra Tech Hub</a></div>
+    <div>
+      <a class="logo" href="#beranda"><span class="lg" data-logo></span><span><b data-t="nama">Nadi Terra</b><small data-t="sub">Smart Farming</small></span></a>
+      <p style="margin-top:14px;opacity:.82;max-width:30em" data-t="slogan"></p>
+      <p style="margin-top:10px;opacity:.6;font-size:14px" data-t="alamat"></p>
+    </div>
+    <div><h4>Layanan</h4><a href="#harga">Terra Price</a><a href="#diagnosa">Terra Diagnose</a><a href="#pasar">Terra Market</a><a href="#forum">Expert Connect</a><a href="#teknologi">Terra Tech Hub</a></div>
     <div><h4>Perusahaan</h4><a href="#tentang">Tentang kami</a><a href="#paket">Paket layanan</a><a href="#admin">Masuk admin</a></div>
   </div>
 </footer>
+<nav class="tabbar" id="tabbar" aria-label="Navigasi utama"></nav>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -405,6 +491,7 @@ function startRealtime(){
    .on('postgres_changes',{event:'*',schema:'public',table:'iklan'},()=>soon('iklan'))
    .on('postgres_changes',{event:'*',schema:'public',table:'pertanyaan'},()=>soon('tanya'))
    .on('postgres_changes',{event:'*',schema:'public',table:'jawaban'},()=>soon('tanya'))
+   .on('postgres_changes',{event:'*',schema:'public',table:'pengaturan'},()=>loadT())
    .subscribe(st=>{S.conn=st==='SUBSCRIBED'?'langsung':(st==='CHANNEL_ERROR'||st==='TIMED_OUT'||st==='CLOSED')?'putus':'menyambung';fillConn()});
   // cadangan: segarkan berkala (mis. bila iklan disembunyikan admin)
   setInterval(()=>{if(document.visibilityState==='visible'){load('harga');load('iklan');load('tanya')}},90000);
@@ -425,51 +512,203 @@ function connPill(){
 function fillConn(){$$('[data-conn]').forEach(e=>e.innerHTML=connPill())}
 
 /* =====================================================================
+   TAMPILAN (logo, foto, warna, tulisan) — diatur admin, disimpan di
+   tabel "pengaturan" + penyimpanan gambar "tampilan" di Supabase
+   ===================================================================== */
+const TEMA={
+ segar:{n:'Daun segar',brand:'#1F9D55',accent:'#F5B82E'},
+ sawit:{n:'Buah sawit',brand:'#C4521C',accent:'#4C8C3A'},
+ pesisir:{n:'Pesisir',brand:'#0E7C86',accent:'#F2A541'},
+ tanah:{n:'Tanah subur',brand:'#7A5230',accent:'#93B83A'},
+ rimba:{n:'Rimba',brand:'#245C3B',accent:'#E9C46A'},
+ kopi:{n:'Kopi',brand:'#5B3A29',accent:'#D9A441'}
+};
+const T_DEF={
+ tema:'segar',brand:'#1F9D55',accent:'#F5B82E',
+ nama:'Nadi Terra',sub:'Smart Farming',
+ hero_judul:'Rasakan denyut harga, kebun, dan pasar dalam satu genggaman',
+ hero_teks:'Cek harga komoditas dari sumber resmi, kenali penyakit tanaman, jual hasil panen, dan tanya langsung ke pakar.',
+ slogan:'Platform agribisnis digital yang menghubungkan petani, pekebun, pedagang, dan pakar dalam satu ekosistem data.',
+ perusahaan:'PT Nadi Terra Digital Agribisnis (dalam pendirian)',
+ alamat:'Institut Teknologi Sawit Indonesia, Jl. Willem Iskandar, Medan, Sumatera Utara',
+ email:'',wa:'',logo_url:'',hero_url:'',foto_url:''
+};
+const T_KEYS=Object.keys(T_DEF);
+function cleanT(o){const t={...T_DEF};if(o&&typeof o==='object')for(const k of T_KEYS)if(typeof o[k]==='string')t[k]=o[k].slice(0,k.endsWith('_url')?2000000:400);if(!/^#[0-9a-f]{6}$/i.test(t.brand))t.brand=T_DEF.brand;if(!/^#[0-9a-f]{6}$/i.test(t.accent))t.accent=T_DEF.accent;return t}
+function cacheT(t){try{localStorage.setItem('nt_tampilan',JSON.stringify(t));return true}catch(e){return false}}
+function cachedT(){try{return JSON.parse(localStorage.getItem('nt_tampilan'))}catch(e){return null}}
+let T=cleanT(cachedT());
+let TD=null;           // draf yang sedang diedit admin
+S.tErr=null;
+
+const imgOk=u=>/^(https:\/\/|data:image\/(png|jpeg|webp);base64,|blob:)/i.test(u||'');
+function lum(hex){const n=parseInt(hex.slice(1),16),c=[n>>16&255,n>>8&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+const LOGO_SVG='<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 22h8l3.4-8 4.6 14 3.4-10 2.2 4H36" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function logoHTML(t){return imgOk(t.logo_url)?`<img src="${esc(t.logo_url)}" alt="">`:LOGO_SVG}
+
+/* Ilustrasi bawaan bila admin belum mengunggah foto: perbukitan dan barisan sawit pagi hari */
+function palm(x,y,s,c){let f='';const a=[-160,-130,-100,-75,-50,-20,10,35];a.forEach((d,i)=>{const r=d*Math.PI/180,L=(i%2?58:70)*s,ex=x+Math.cos(r)*L,ey=y-120*s+Math.sin(r)*L*0.55+L*0.35,cx=x+Math.cos(r)*L*.5,cy=y-120*s-22*s;f+=`<path d="M${x} ${y-120*s} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" stroke="${c}" stroke-width="${(6*s).toFixed(1)}" fill="none" stroke-linecap="round"/>`});
+  return `<path d="M${x} ${y}q${-8*s} ${-60*s} 0 ${-120*s}" stroke="${c}" stroke-width="${(7*s).toFixed(1)}" fill="none" stroke-linecap="round"/>${f}`}
+function heroArt(){
+  let p='';[[180,640,1.1],[420,610,.9],[640,650,1.25],[880,600,.8],[1100,640,1.15],[1340,605,.95],[1520,650,1.2]].forEach(v=>p+=palm(v[0],v[1],v[2],'#2E5A33'));
+  let q='';[[60,820,1.6],[330,860,1.9],[760,840,1.5],[1180,870,2],[1480,830,1.6]].forEach(v=>q+=palm(v[0],v[1],v[2],'#173A22'));
+  return `<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB7D6"/><stop offset=".55" stop-color="#F3DDAE"/><stop offset="1" stop-color="#F7C98B"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#sky)"/><circle cx="1180" cy="430" r="96" fill="#FFF1C4" opacity=".9"/>
+  <path d="M0 560C220 500 380 520 560 540S920 500 1120 520 1460 560 1600 530V900H0Z" fill="#9CC48A"/>
+  <path d="M0 640C260 590 470 620 700 630S1150 600 1600 630V900H0Z" fill="#5E9A55"/>${p}
+  <path d="M0 760C300 720 600 740 900 760S1400 740 1600 750V900H0Z" fill="#2F6B3A"/>${q}</svg>`}
+function heroBg(t){return imgOk(t.hero_url)?`<img src="${esc(t.hero_url)}" alt="">`:heroArt()}
+function fotoBg(t){return imgOk(t.foto_url)?`<img src="${esc(t.foto_url)}" alt="">`:imgOk(t.hero_url)?`<img src="${esc(t.hero_url)}" alt="">`:heroArt()}
+
+function applyT(t){
+  const r=document.documentElement.style;
+  r.setProperty('--brand',t.brand);r.setProperty('--accent',t.accent);r.setProperty('--on-brand',lum(t.brand)>.42?'#13201A':'#ffffff');
+  $$('[data-t]').forEach(e=>{e.textContent=t[e.dataset.t]||''});
+  $$('[data-logo]').forEach(e=>e.innerHTML=logoHTML(t));
+  $$('[data-hero-bg]').forEach(e=>e.innerHTML=heroBg(t));
+  $$('[data-foto]').forEach(e=>e.innerHTML=fotoBg(t));
+}
+async function loadT(){
+  if(!LIVE)return;
+  try{const d=await q(sb.from('pengaturan').select('nilai').eq('kunci','tampilan').maybeSingle());
+    S.tErr=null;if(d&&d.nilai){T=cleanT(d.nilai);cacheT(T);if(!TD){applyT(T);if(cur==='beranda'||cur==='tentang')render()}}}
+  catch(e){S.tErr=/pengaturan|relation|schema cache|does not exist/i.test(e.message||'')?'missing':errMsg(e)}
+}
+async function saveT(t){
+  if(!LIVE){if(!cacheT(t))throw new Error('Gambar terlalu besar untuk disimpan di mode demo. Perubahan hanya berlaku sampai halaman dimuat ulang.');return}
+  const {error}=await withTimeout(sb.from('pengaturan').upsert({kunci:'tampilan',nilai:t,updated_at:new Date().toISOString()}));
+  if(error)throw error;cacheT(t);
+}
+/* Perkecil gambar di HP/laptop sebelum diunggah supaya website tetap cepat */
+async function kecilkan(file,maxW,keepPng){
+  const url=URL.createObjectURL(file);
+  try{
+    const img=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(new Error('File ini bukan gambar yang bisa dibaca. Pakai JPG, PNG, atau WEBP.'));i.src=url});
+    const s=Math.min(1,maxW/img.naturalWidth),w=Math.round(img.naturalWidth*s),h=Math.round(img.naturalHeight*s);
+    const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+    const blob=(type,qual)=>new Promise(ok=>c.toBlob(ok,type,qual));
+    if(keepPng)return await blob('image/png');
+    let b=await blob('image/webp',.86);if(!b||b.type!=='image/webp')b=await blob('image/jpeg',.86);return b;
+  }finally{URL.revokeObjectURL(url)}
+}
+async function unggah(file,jenis){
+  if(!/^image\/(png|jpeg|webp)$/.test(file.type))throw new Error('Pakai gambar JPG, PNG, atau WEBP.');
+  if(file.size>15*1024*1024)throw new Error('Ukuran gambar maksimal 15 MB.');
+  const blob=await kecilkan(file,jenis==='logo'?512:1920,jenis==='logo'&&file.type==='image/png');
+  if(!LIVE)return await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(blob)});
+  const ext=blob.type==='image/png'?'png':blob.type==='image/webp'?'webp':'jpg';
+  const path=`${jenis}-${Date.now()}.${ext}`;
+  const {error}=await withTimeout(sb.storage.from('tampilan').upload(path,blob,{contentType:blob.type,cacheControl:'31536000',upsert:false}),30000);
+  if(error)throw new Error(/bucket|not found/i.test(error.message)?'Tempat penyimpanan gambar belum dibuat. Jalankan file supabase/tampilan.sql di Supabase.':errMsg(error));
+  return sb.storage.from('tampilan').getPublicUrl(path).data.publicUrl;
+}
+
+function tampilanHTML(){
+  if(!TD)TD={...T};const t=TD;
+  const pick=(key,label,hint,wide)=>`<div class="imgpick ${wide?'wide':''}"><div class="pv ${key==='logo_url'?'logo':''}" id="pv-${key}">${key==='logo_url'?logoHTML(t):key==='hero_url'?heroBg(t):fotoBg(t)}</div>
+    <div><b>${label}</b><p class="muted small">${hint}</p><div class="acts"><label class="btn sm">Pilih gambar<input type="file" accept="image/png,image/jpeg,image/webp" data-up="${key}" id="up-${key}" hidden></label>${imgOk(t[key])?`<button type="button" class="btn sm ghost" data-clr="${key}">Pakai bawaan</button>`:''}</div></div></div>`;
+  const txt=(k,l,area,max=160)=>`<label class="fld ${area?'full':''}">${l}${area?`<textarea id="t-${k}" data-tf="${k}" rows="2" maxlength="${max}">${esc(t[k])}</textarea>`:`<input id="t-${k}" data-tf="${k}" maxlength="${max}" value="${esc(t[k])}">`}</label>`;
+  return `${S.tErr==='missing'?'<p class="note"><b>Satu langkah lagi:</b> jalankan file <b>supabase/tampilan.sql</b> di Supabase › SQL Editor supaya pengaturan tampilan bisa disimpan.</p>':''}
+  <div class="split">
+   <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="card"><h2 class="ttl">Tema warna</h2>
+     <div class="themes">${Object.entries(TEMA).map(([k,v])=>`<button type="button" data-tema="${k}" aria-pressed="${t.tema===k}"><span class="sw"><i style="background:${v.brand}"></i><i style="background:${v.accent}"></i></span>${v.n}</button>`).join('')}</div>
+     <div class="fg" style="margin-top:14px"><label class="fld">Warna utama<input type="color" id="t-brand" value="${t.brand}"></label><label class="fld">Warna aksen<input type="color" id="t-accent" value="${t.accent}"></label></div>
+     <p class="muted small" style="margin-top:8px">Pilih tema, atau atur warna sendiri, misalnya disamakan dengan warna logo.</p></div>
+    <div class="card"><h2 class="ttl">Logo dan foto</h2><div style="display:flex;flex-direction:column;gap:10px">
+     ${pick('logo_url','Logo','Persegi, minimal 256×256 piksel. PNG dengan latar transparan paling bagus.')}
+     ${pick('hero_url','Foto latar beranda','Foto mendatar, minimal 1600×900 piksel. Misalnya kebun, panen, atau tim di lapangan.',1)}
+     ${pick('foto_url','Foto bagian "Cara kerja"','Opsional. Kalau kosong, dipakai foto latar beranda.',1)}
+    </div></div>
+    <div class="card"><h2 class="ttl">Tulisan</h2><div class="fg">
+     ${txt('nama','Nama usaha',0,40)}${txt('sub','Keterangan di bawah nama',0,40)}
+     ${txt('hero_judul','Judul besar di beranda',1,120)}${txt('hero_teks','Teks di bawah judul',1,240)}
+     ${txt('slogan','Kalimat di bagian bawah website',1,240)}
+     ${txt('perusahaan','Nama perusahaan',0,80)}${txt('alamat','Alamat',0,160)}
+     ${txt('email','Email kontak',0,80)}${txt('wa','Nomor WhatsApp kontak',0,20)}
+    </div></div>
+   </div>
+   <div class="card sticky" style="display:flex;flex-direction:column;gap:14px"><h2 class="ttl" style="margin:0">Pratinjau</h2>
+    <div class="tprev" id="tprev"></div>
+    <p class="muted small">Seluruh halaman ikut berubah selama Anda mengatur. Perubahan baru tampil untuk pengunjung setelah disimpan.</p>
+    <div class="acts-row"><button class="btn" id="t-save">Simpan tampilan</button><button class="btn ghost" id="t-undo">Batalkan</button></div>
+    <div id="t-resetw"><button class="btn sm danger" id="t-reset">Kembalikan ke bawaan</button></div>
+   </div>
+  </div>`;
+}
+function updPrev(){const el=$('#tprev');if(!el)return;el.innerHTML=`<div class="bg">${heroBg(TD)}</div><span class="row"><span class="lg">${logoHTML(TD)}</span>${esc(TD.nama)}</span><b>${esc(TD.hero_judul)}</b><span class="bt">Cek harga</span>`}
+function bindTampilan(){
+  if(!$('#tprev'))return;
+  const live=()=>{applyT(TD);updPrev()};
+  updPrev();
+  $$('[data-tema]').forEach(b=>b.onclick=()=>{const v=TEMA[b.dataset.tema];TD.tema=b.dataset.tema;TD.brand=v.brand;TD.accent=v.accent;$('#t-brand').value=v.brand;$('#t-accent').value=v.accent;$$('[data-tema]').forEach(x=>x.setAttribute('aria-pressed',x===b));live()});
+  $('#t-brand').oninput=e=>{TD.brand=e.target.value;TD.tema='kustom';$$('[data-tema]').forEach(x=>x.setAttribute('aria-pressed','false'));live()};
+  $('#t-accent').oninput=e=>{TD.accent=e.target.value;TD.tema='kustom';$$('[data-tema]').forEach(x=>x.setAttribute('aria-pressed','false'));live()};
+  $$('[data-tf]').forEach(i=>i.oninput=()=>{TD[i.dataset.tf]=i.value;live()});
+  $$('[data-up]').forEach(inp=>inp.onchange=async()=>{const f=inp.files&&inp.files[0];if(!f)return;const key=inp.dataset.up;const lbl=inp.parentElement;lbl.firstChild.textContent='Mengunggah…';
+    try{TD[key]=await unggah(f,key==='logo_url'?'logo':key==='hero_url'?'hero':'foto');toast('Gambar siap. Tekan Simpan tampilan untuk menerapkan.');render()}
+    catch(e){toast(errMsg(e));lbl.firstChild.textContent='Pilih gambar'}inp.value=''});
+  $$('[data-clr]').forEach(b=>b.onclick=()=>{TD[b.dataset.clr]='';render()});
+  $('#t-save').onclick=async()=>{const b=$('#t-save');b.disabled=true;try{const t=cleanT(TD);await saveT(t);T=t;TD=null;toast(LIVE?'Tampilan tersimpan dan langsung berlaku untuk semua pengunjung':'Tersimpan di browser ini (mode demo)');render()}catch(e){toast(errMsg(e));b.disabled=false}};
+  $('#t-undo').onclick=()=>{TD=null;applyT(T);render();toast('Perubahan dibatalkan')};
+  $('#t-reset').onclick=()=>{const w=$('#t-resetw');w.innerHTML='<span class="small">Semua logo, foto, warna, dan tulisan kembali ke bawaan.</span> <button class="btn sm danger" id="t-yes">Ya, kembalikan</button> <button class="btn sm ghost" id="t-no">Batal</button>';
+    $('#t-no').onclick=()=>render();$('#t-yes').onclick=()=>{TD={...T_DEF};render();toast('Bawaan dipasang. Tekan Simpan tampilan untuk menerapkan.')}};
+}
+
+/* =====================================================================
    HALAMAN
    ===================================================================== */
 const NAV=[['beranda','Beranda'],['harga','Harga'],['diagnosa','Diagnosa'],['pasar','Pasar'],['forum','Forum Pakar'],['teknologi','Tech Hub'],['tentang','Tentang']];
 let cur='beranda';
+const TABS=[['beranda','Beranda','home'],['harga','Harga','price'],['diagnosa','Diagnosa','diag'],['pasar','Pasar','market'],['forum','Forum','expert']];
+const TI={...IC,home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>'};
 let ui={kat:'Semua',q:'',sel:null,dg:{step:1,crop:null,picked:[]},mf:'Semua',reply:null,tab:'harga'};
 
 const P={
 beranda(){return `
-  <section class="hero g">
-    <svg class="pulse" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60H360l30-40 40 70 30-50 20 20h720" fill="none" stroke="#d9961a" stroke-width="2"/></svg>
-    <div class="in">
-      <div>
-        <span class="eyebrow">Platform agribisnis digital Indonesia</span>
-        <h1 style="margin-top:14px">Rasakan denyut <em>harga, kebun, dan pasar</em> dalam satu genggaman.</h1>
-        <p class="lead">Nadi Terra membantu petani dan pekebun mengecek harga komoditas dari sumber resmi, mengenali penyakit tanaman, menjual hasil panen, dan bertanya langsung ke pakar.</p>
-        <div class="acts"><a class="btn kun" href="#harga">Cek harga terbaru</a><a class="btn ghost" href="#diagnosa">Coba diagnosa tanaman</a></div>
-      </div>
-      <div class="ticker">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px"><b>Terra Price</b><small data-tick-status></small></div>
-        <div id="ticker"><p class="small" style="opacity:.75;padding:10px 0">Memuat harga…</p></div>
-        <a href="#harga" style="color:var(--kunyit);font-weight:700;font-size:14px;text-decoration:none;display:inline-block;margin-top:10px">Lihat semua harga →</a>
-      </div>
-    </div>
+  <section class="hero">
+    <div class="bg" data-hero-bg>${heroBg(T)}</div>
+    <div class="g hero-in"><div class="in">
+      <span class="tag">Platform agribisnis digital Indonesia</span>
+      <h1 data-t="hero_judul">${esc(T.hero_judul)}</h1>
+      <p class="lead" data-t="hero_teks">${esc(T.hero_teks)}</p>
+      <form class="qsearch" id="qs" role="search">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="qsi" type="search" placeholder="Cari harga komoditas, misalnya TBS atau beras" aria-label="Cari harga komoditas">
+        <button class="btn">Cari</button>
+      </form>
+      <div class="quick"><a href="#harga">Harga TBS minggu ini</a><a href="#diagnosa">Cek penyakit tanaman</a><a href="#pasar">Jual hasil panen</a><a href="#forum">Tanya pakar</a></div>
+    </div></div>
   </section>
-  <section class="s g"><div class="in">
-    <div class="sh"><span class="eyebrow">Lima modul inti</span><h2>Semua yang dibutuhkan dari kebun sampai pembeli</h2></div>
-    <div class="mods">
-      <a class="mod wide" href="#harga"><span class="ic">${IC.price}</span><h3>Terra Price</h3><p>Harga pangan diperbarui otomatis setiap hari dari Panel Harga Bank Indonesia, dan harga TBS mengikuti penetapan Disbun setiap minggu. Setiap angka menampilkan sumber dan tanggalnya.</p><span class="go">Buka Terra Price →</span></a>
-      <a class="mod" href="#diagnosa"><span class="ic">${IC.diag}</span><h3>Terra Diagnose</h3><p>Pilih gejala yang terlihat di tanaman, dapatkan dugaan penyakit dan langkah penanganannya.</p><span class="go">Mulai diagnosa →</span></a>
-      <a class="mod" href="#pasar"><span class="ic">${IC.market}</span><h3>Terra Market</h3><p>Pasang iklan jual atau beli hasil panen. Iklan langsung tampil untuk semua pengunjung.</p><span class="go">Ke pasar →</span></a>
-      <a class="mod" href="#forum"><span class="ic">${IC.expert}</span><h3>Expert Connect</h3><p>Tanya masalah kebun ke komunitas dan pakar. Jawaban pakar ditandai khusus.</p><span class="go">Buka forum →</span></a>
-      <a class="mod" href="#teknologi"><span class="ic">${IC.hub}</span><h3>Terra Tech Hub</h3><p>Teknologi dan program pertanian yang sudah terbukti, dijelaskan dengan bahasa sederhana.</p><span class="go">Lihat teknologi →</span></a>
+  <section class="g lift"><div class="in">
+    <div class="sec-h"><h2>Harga terbaru</h2><a href="#harga">Lihat semua →</a></div>
+    <div class="strip" id="ticker"><div class="pc"><span class="muted">Memuat harga…</span></div></div>
+  </div></section>
+  <section class="g s"><div class="in">
+    <div class="sec-h"><h2>Layanan untuk petani dan pekebun</h2></div>
+    <div class="svc">
+      <a class="sv" href="#harga"><span class="ic">${IC.price}</span><h3>Terra Price</h3><p>Harga pangan diperbarui otomatis setiap hari, harga TBS mengikuti penetapan Disbun.</p></a>
+      <a class="sv" href="#diagnosa"><span class="ic">${IC.diag}</span><h3>Terra Diagnose</h3><p>Pilih gejala di tanaman, dapatkan dugaan penyakit dan cara menanganinya.</p></a>
+      <a class="sv" href="#pasar"><span class="ic">${IC.market}</span><h3>Terra Market</h3><p>Pasang iklan jual atau beli hasil panen, langsung terhubung lewat WhatsApp.</p></a>
+      <a class="sv" href="#forum"><span class="ic">${IC.expert}</span><h3>Expert Connect</h3><p>Tanya masalah kebun ke komunitas dan pakar Nadi Terra.</p></a>
+      <a class="sv" href="#teknologi"><span class="ic">${IC.hub}</span><h3>Terra Tech Hub</h3><p>Teknologi dan program pertanian yang sudah terbukti di lapangan.</p></a>
     </div>
   </div></section>
-  <section class="s g band"><div class="in">
-    <div class="sh"><span class="eyebrow">Cara kerja</span><h2>Empat langkah, tanpa ribet</h2></div>
-    <div class="flow">
-      <div><b>Cek harga</b><p>Lihat harga resmi terbaru sebelum bertemu pengepul, supaya punya pegangan saat tawar-menawar.</p></div>
-      <div><b>Rawat kebun</b><p>Kenali gejala penyakit lebih awal lewat Terra Diagnose sebelum menyebar.</p></div>
-      <div><b>Tanya pakar</b><p>Masalah yang belum terjawab bisa ditanyakan di forum dan dijawab pakar.</p></div>
-      <div><b>Jual hasil panen</b><p>Pasang iklan di Terra Market dan terima tawaran langsung dari pembeli.</p></div>
+  <section class="g s"><div class="in about">
+    <div class="about-img" data-foto>${fotoBg(T)}</div>
+    <div>
+      <span class="eyebrow">Cara kerja</span>
+      <h2>Dari kebun sampai ke tangan pembeli</h2>
+      <ol class="steps4">
+        <li><div><b>Cek harga dulu</b><p>Lihat harga resmi terbaru sebelum bertemu pengepul, supaya punya pegangan saat tawar-menawar.</p></div></li>
+        <li><div><b>Rawat kebun</b><p>Kenali gejala penyakit lebih awal sebelum menyebar ke tanaman lain.</p></div></li>
+        <li><div><b>Tanya pakar</b><p>Masalah yang belum terjawab bisa ditanyakan di forum dan dijawab pakar.</p></div></li>
+        <li><div><b>Jual hasil panen</b><p>Pasang iklan di Terra Market dan terima tawaran langsung dari pembeli.</p></div></li>
+      </ol>
     </div>
   </div></section>
-  <section class="s g"><div class="in">
-    <div class="sh"><span class="eyebrow">Untuk siapa</span><h2>Dibuat untuk semua pelaku rantai pasok</h2></div>
+  <section class="g s"><div class="in">
+    <div class="sec-h"><h2>Dibuat untuk semua pelaku rantai pasok</h2></div>
     <div class="who">
       <div class="card"><h3>Petani & pekebun</h3><p class="muted">Harga, diagnosa, dan pasar dalam bahasa yang mudah dipahami.</p></div>
       <div class="card"><h3>Kelompok tani & koperasi</h3><p class="muted">Jual bersama dalam jumlah besar dan pantau harga acuan.</p></div>
@@ -477,11 +716,11 @@ beranda(){return `
       <div class="card"><h3>Perusahaan & lembaga</h3><p class="muted">Paket analitik data komoditas untuk perencanaan dan riset.</p></div>
     </div>
   </div></section>
-  <section class="s g band"><div class="in">
-    <div class="sh"><span class="eyebrow">Tujuan yang lebih besar</span><h2>Mendukung Tujuan Pembangunan Berkelanjutan</h2></div>
-    <div class="sdg">${[['1','Tanpa kemiskinan'],['2','Tanpa kelaparan'],['8','Pekerjaan layak'],['9','Industri & inovasi'],['10','Kurangi kesenjangan'],['12','Produksi bertanggung jawab'],['13','Aksi iklim'],['17','Kemitraan']].map(x=>`<span><b>SDG ${x[0]}</b>${x[1]}</span>`).join('')}</div>
-    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#paket">Lihat paket layanan</a><a class="btn ghost" href="#tentang">Tentang Nadi Terra</a></div>
-  </div></section>`},
+  <section class="g s last"><div class="in"><div class="cta">
+    <div><h2>Mendukung Tujuan Pembangunan Berkelanjutan</h2><p>Harga yang transparan, kehilangan panen yang berkurang, dan pasar yang lebih adil untuk petani.</p>
+      <div class="sdg">${[['1','Tanpa kemiskinan'],['2','Tanpa kelaparan'],['8','Pekerjaan layak'],['9','Industri & inovasi'],['10','Kurangi kesenjangan'],['12','Produksi bertanggung jawab'],['13','Aksi iklim'],['17','Kemitraan']].map(x=>`<span>SDG ${x[0]} · ${x[1]}</span>`).join('')}</div></div>
+    <div class="acts"><a class="btn light" href="#harga">Mulai cek harga</a><a class="btn ghost" href="#tentang">Tentang kami</a></div>
+  </div></div></section>`},
 
 harga(){return `<div class="g"><div class="in">
   <div class="ph"><div><span class="eyebrow">Terra Price</span><h1>Harga komoditas terbaru</h1><p>Setiap angka mencantumkan sumber dan periodenya. Ketuk satu komoditas untuk melihat riwayatnya.</p></div><span data-conn>${connPill()}</span></div>
@@ -556,16 +795,16 @@ tentang(){return `<div class="g"><div class="in"><div class="ph"><div><span clas
     <div><span class="eyebrow">Visi</span><p style="margin-top:6px;font-size:17px">Menjadi infrastruktur informasi digital utama ekosistem agribisnis Indonesia yang menghubungkan setiap pelaku rantai nilai pertanian, dari petani di desa terpencil hingga korporasi, dalam satu ekosistem data yang transparan dan akurat.</p></div>
     <div><span class="eyebrow">Misi</span><ol style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Membangun platform digital agribisnis terpadu yang dapat diakses seluruh lapisan masyarakat pertanian Indonesia.</li><li>Menghadirkan teknologi yang menyelesaikan persoalan nyata di lapangan, dari deteksi penyakit tanaman hingga informasi harga panen.</li><li>Mendorong transformasi digital pertanian secara inklusif, berkelanjutan, dan berdampak pada kesejahteraan petani.</li></ol></div>
    </div>
-   <div class="card" style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Kontak</span><p><b>PT Nadi Terra Digital Agribisnis</b> (dalam pendirian)</p><p class="muted">Institut Teknologi Sawit Indonesia<br>Jl. Willem Iskandar, Medan, Sumatera Utara</p><p class="muted small">Sumber data harga: Panel Harga Pangan Bank Indonesia (PIHPS) dan penetapan harga TBS Dinas Perkebunan.</p></div>
+   <div class="card" style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Kontak</span><p><b>${esc(T.perusahaan)}</b></p><p class="muted">${esc(T.alamat)}</p>${T.email?`<p>Email: <b style="user-select:all">${esc(T.email)}</b></p>`:''}${T.wa?`<p>WhatsApp: <b style="user-select:all">${esc(T.wa)}</b></p>`:''}<p class="muted small">Sumber data harga: Panel Harga Pangan Bank Indonesia (PIHPS) dan penetapan harga TBS Dinas Perkebunan.</p></div>
   </div></div></div></div>`},
 
 admin(){
   let body;
-  if(!LIVE)body=`<div class="card"><h2 style="font-size:20px">Database belum disambungkan</h2><p class="muted" style="margin-top:8px">Isi <b>config.js</b> dengan Project URL dan anon key dari Supabase, lalu unggah ulang website. Halaman admin aktif setelah itu.</p></div>`;
+  if(!LIVE){ui.tab='tampilan';body=`<p class="note"><b>Mode demo.</b> Database belum disambungkan, jadi pengaturan tampilan hanya tersimpan di browser ini. Input harga dan moderasi aktif setelah <b>config.js</b> diisi.</p>`+tampilanHTML()}
   else if(!S.session)body=`<div class="card" style="max-width:440px"><h2 style="font-size:20px;margin-bottom:12px">Masuk admin</h2><form id="lform" style="display:flex;flex-direction:column;gap:12px"><label class="fld">Email<input id="le" type="email" required autocomplete="username"></label><label class="fld">Kata sandi<input id="lp" type="password" required autocomplete="current-password"></label><button class="btn" id="lsub">Masuk</button></form><p class="muted small" style="margin-top:12px">Akun admin dibuat oleh pemilik proyek di dashboard Supabase.</p></div>`;
   else if(!S.admin)body=`<div class="card"><p>Akun <b>${esc(S.session.user.email)}</b> belum terdaftar sebagai admin.</p><p class="muted small" style="margin-top:6px">Daftarkan lewat perintah di bagian 8 file schema.sql.</p><button class="btn ghost sm" id="logout" style="margin-top:12px">Keluar</button></div>`;
   else{
-    const tabs=[['harga','Input harga'],['moderasi','Moderasi']];
+    const tabs=[['harga','Input harga'],['moderasi','Moderasi'],['tampilan','Tampilan']];
     body=`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><p class="muted">Masuk sebagai <b>${esc(S.session.user.email)}</b></p><button class="btn ghost sm" id="logout">Keluar</button></div>
     <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${ui.tab===k}" data-tab="${k}">${l}</button>`).join('')}</div>`;
     if(ui.tab==='harga'){
@@ -585,7 +824,7 @@ admin(){
         <div class="full"><button class="btn" id="hsub">Simpan harga</button></div>
       </form></div>
       <div class="card"><h2 style="font-size:20px;margin-bottom:4px">Input terakhir</h2><div id="arecent"><p class="muted">Memuat…</p></div></div></div>`;
-    }else{
+    }else if(ui.tab==='tampilan'){body+=tampilanHTML()}else{
       body+=`<div class="split"><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Iklan</h2><div id="amod-iklan"></div></div><div class="card"><h2 style="font-size:20px;margin-bottom:4px">Pertanyaan</h2><div id="amod-tanya"></div></div></div>
       <p class="muted small">Jawab sebagai pakar langsung dari halaman Forum Pakar saat masuk sebagai admin.</p>`;
     }
@@ -605,12 +844,14 @@ function fill(key){
   $$('[data-retry]').forEach(b=>b.onclick=()=>{S.err[b.dataset.retry]=null;load(b.dataset.retry)});
 }
 function fillTicker(){
-  const el=$('#ticker');if(!el)return;const st=$('[data-tick-status]');
-  if(st)st.textContent=LIVE?(S.conn==='langsung'?'tersambung':''):'mode demo';
-  if(S.err.harga){el.innerHTML=`<p class="small" style="opacity:.8;padding:10px 0">${esc(S.err.harga)}</p>`;return}
+  const el=$('#ticker');if(!el)return;
+  if(S.err.harga){el.innerHTML=`<div class="pc"><span class="muted">${esc(S.err.harga)}</span></div>`;return}
   if(!S.harga)return;
-  const rows=S.harga.slice().sort((a,b)=>(a.metode==='contoh')-(b.metode==='contoh')||(b.periode_mulai>a.periode_mulai?1:-1)).slice(0,5);
-  el.innerHTML=rows.length?rows.map(r=>`<div class="row"><div style="min-width:0"><b style="font-weight:600">${esc(r.komoditas)}</b><br><small>${esc(r.wilayah)} · ${periode(r)}</small></div><div style="text-align:right"><b class="num">${rp(r.harga)}</b><br><small class="num">${chg(r)}</small></div></div>`).join(''):'<p class="small" style="opacity:.8;padding:10px 0">Belum ada data harga.</p>';
+  const rows=S.harga.slice().sort((a,b)=>(a.metode==='contoh')-(b.metode==='contoh')||(b.periode_mulai>a.periode_mulai?1:-1)).slice(0,8);
+  el.innerHTML=rows.length?rows.map(r=>`<a class="pc" href="#harga" data-pick="${esc(r.komoditas+'|'+r.wilayah)}"><span class="top-row"><span class="kat">${esc(r.kategori)}</span>${metodeBadge(r)}</span>
+    <span class="nm">${esc(r.komoditas)}</span><span class="pr num">${rp(r.harga)}<small> / ${esc(r.satuan)}</small></span><span class="num small">${chg(r)}</span>
+    <span class="ft">${esc(r.wilayah)} · ${periode(r)}</span></a>`).join(''):'<div class="pc"><span class="muted">Belum ada data harga.</span></div>';
+  $$('[data-pick]').forEach(a=>a.onclick=()=>{ui.sel=a.dataset.pick;ui.q='';ui.kat='Semua'});
 }
 const hkey=r=>r.komoditas+'|'+r.wilayah;
 function hargaFiltered(){return (S.harga||[]).filter(r=>(ui.kat==='Semua'||r.kategori===ui.kat)&&r.komoditas.toLowerCase().includes(ui.q.toLowerCase())).sort((a,b)=>a.kategori.localeCompare(b.kategori)||a.komoditas.localeCompare(b.komoditas))}
@@ -702,14 +943,17 @@ function bindCopy(){$$('[data-copy]').forEach(b=>b.onclick=async()=>{try{await n
    RENDER & INTERAKSI
    ===================================================================== */
 function render(){
-  let v=location.hash.slice(1);if(!P[v])v='beranda';cur=v;
+  let v=location.hash.slice(1);if(!P[v])v='beranda';if(v!=='admin')TD=null;cur=v;
   $('#menu').innerHTML=NAV.map(([k,l])=>`<a href="#${k}" class="${k===v?'on':''}" ${k===v?'aria-current="page"':''}>${l}</a>`).join('')+`<a href="#paket" class="cta ${v==='paket'?'on':''}">Paket</a>`;
   $('#menu').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');
+  $('#tabbar').innerHTML=TABS.map(([k,l,ic])=>`<a href="#${k}" class="${k===v?'on':''}" ${k===v?'aria-current="page"':''}>${TI[ic]}<span>${l}</span></a>`).join('');
   $('#app').innerHTML=P[v]();
+  applyT(v==='admin'&&TD?TD:T);
   bind(v);
 }
 function bind(v){
-  if(v==='beranda')fillTicker();
+  if(v==='beranda'){fillTicker();$('#qs').onsubmit=e=>{e.preventDefault();ui.q=$('#qsi').value.trim();ui.kat='Semua';ui.sel=null;location.hash='harga'}}
+  if(v==='admin'&&(ui.tab==='tampilan'||!LIVE))bindTampilan();
   if(v==='harga'){
     $$('[data-kat]').forEach(b=>b.onclick=()=>{ui.kat=b.dataset.kat;$$('[data-kat]').forEach(x=>x.setAttribute('aria-pressed',x===b));ui.sel=null;fillHargaList();fillHargaDetail()});
     $('#pq').oninput=e=>{ui.q=e.target.value;ui.sel=null;fillHargaList();fillHargaDetail()};
@@ -759,7 +1003,7 @@ $('#burger').onclick=()=>{const m=$('#menu');const o=m.classList.toggle('open');
 addEventListener('hashchange',()=>{render();scrollTo(0,0)});
 
 render();
-load('harga');load('iklan');load('tanya');
+load('harga');load('iklan');load('tanya');loadT();
 initAuth().then(()=>{if(cur==='admin')render()});
 startRealtime();
 </script>
